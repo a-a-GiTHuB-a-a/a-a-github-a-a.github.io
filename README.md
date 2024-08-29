@@ -1,2 +1,1 @@
-# a-a-github-a-a.github.io
-A GitHub Pages build.
+This is just a GitHub pages site I made.
