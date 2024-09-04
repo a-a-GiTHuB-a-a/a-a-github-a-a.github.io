@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: Build content in directory `src` to directory `site`
         run: |
-          find . "build.js"
+          ls -A
           npm ci
           npm run build
   # Deploy job
