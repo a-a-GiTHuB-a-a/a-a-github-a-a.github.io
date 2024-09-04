@@ -28,6 +28,7 @@ jobs:
     steps:
       - name: Build content in directory `src` to directory `site`
         run: |
+          pwd
           npm ci
           npm run build
   # Deploy job
