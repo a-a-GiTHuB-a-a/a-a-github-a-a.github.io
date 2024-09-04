@@ -1,0 +1,27 @@
+<h1>Schemacell Documentation</h1>
+<strong>THIS IS A WORK IN PROGRESS!</strong> I made this page as a direct response to the fact that the only other documentation I could find was on <a href = "https://discord.gg/GKKYHFuxFK">the Discord server</a>.
+<h2 id = "toc">Table of Contents</h2>
+<div id = "toc"></div>
+<h2 id = "metadata">Metadata</h2>
+Metadata provides important information about a cell. The values are:
+<ul>
+	<li>
+		<code>name</code>: A string that represents the name of the cell in a human-readable format. By convention, it uses titlecase.
+	</li>
+	<li>
+		<code>author</code>: A string that represents the author. By convention, the author name should be recognizable as your own. For example, I use <code>"Da BOXEN"</code> for mine.
+	</li>
+	<li>
+		<code>id</code>: A string that gives an ID for the cell. By convention, it is all uppercase and separated with underscores. <em>Do not change IDs in updates!</em> It will break things! Also, avoid common names and duplicate names.
+	</li>
+	<li>
+		<code>texture</code>: A string that represents the filename for the cell's default texture. The texture file is checked for in the same directory as the cell file.
+	</li>
+	<li>
+		<code>updateIndex</code>: An integer that represents when the cell should be updated—lower indices go first. Generators use <code>1000</code>, clockwise rotators use <code>4000</code>, counterclockwise rotators <code>5000</code>, and movers <code>9000</code>. <em>Do not use zero!</em>
+	</li>
+</ul>
+Since these properties are determined on the title screen, they can be made dynamically.
+<h2 id = "overridables">Cell Functions</h2>
+These functions can be overridden to determine cell behavior. These functions take an object <code>this</code> as the first argument, and only <code>Push</code> returns anything.
+<h3 id = "overridables/push"><code>Push</code></h3>
