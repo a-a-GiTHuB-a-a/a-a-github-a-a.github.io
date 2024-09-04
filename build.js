@@ -16,6 +16,7 @@ if (path.relative(__dirname, build_dir).includes("..")) {
 }
 
 function process_dir(dir_path) {
+	console.log(`Checking directory ${dir_path}`);
 	const source_path = path.join(source_dir, dir_path);
 	const build_path = path.join(build_dir, dir_path);
 
@@ -38,6 +39,7 @@ function process_dir(dir_path) {
 }
 
 function process_file(file_path) {
+	console.log(`Building file ${file_path}`);
 	const source_path = path.join(source_dir, file_path);
 	let build_path = path.join(build_dir, file_path);
 

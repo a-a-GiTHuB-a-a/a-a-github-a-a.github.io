@@ -28,10 +28,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Build content in directory `src` to directory `site`
-        run: |
-          npm ci
-          npm run build
+      - name: Prepare build script
+        run: npm ci
+      - name: Build site content
+        run: npm run build
   # Deploy job
   deploy:
     name: Deploy
@@ -41,8 +41,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
