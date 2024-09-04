@@ -26,8 +26,8 @@ jobs:
     name: Build
     runs-on: [self-hosted, linux]
     steps:
-      - name: Convert content in src/ to site/
-        run: node build.js src/ site/
+      - name: Build content in directory `src` to directory `site`
+        run: node build.js src site
   # Deploy job
   deploy:
     name: Deploy
