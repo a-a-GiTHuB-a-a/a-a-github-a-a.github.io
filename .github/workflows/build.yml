@@ -26,12 +26,12 @@ jobs:
     name: Build
     runs-on: ubuntu-latest #idk, it's what the other one uses
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Build content in directory `src` to directory `site`
         run: |
-          ls -A
           npm ci
           npm run build
-        working-directory: "../../"
   # Deploy job
   deploy:
     name: Deploy
