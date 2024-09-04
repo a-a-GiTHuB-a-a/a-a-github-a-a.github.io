@@ -49,7 +49,7 @@ function process_file(file_path) {
 	switch (path.extname(source_path)) {
 		case ".ejs": {
 			new_content = ejs.render(template, {
-				...require(source_path.replace(".ejs", ".json")),
+				...JSON.parse(fs.readFileSync(source_path.replace(".ejs", ".json"), {encoding: "utf8"})),
 				"body": file
 			}, {
 				filename: file_path,

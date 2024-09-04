@@ -3,7 +3,7 @@
   "displayName": "Site Builder",
   "author": "a-a-GiTHuB-a-a",
   "scripts": {
-    "build": "node build.js ./src ./site"
+    "build": "node build.js src site"
   },
   "dependencies": {
     "ejs": "^3.1.10"
