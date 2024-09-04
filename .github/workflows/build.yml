@@ -24,7 +24,7 @@ concurrency:
 jobs:
   build:
     name: Build
-    runs-on: linux
+    runs-on: ubuntu-latest #idk, it's what the other one uses
     steps:
       - name: Build content in directory `src` to directory `site`
         run: |
