@@ -44,11 +44,10 @@ function process_file(file_path) {
 	let build_path = path.join(build_dir, file_path);
 
 	const file = fs.readFileSync(source_path, {encoding: "utf8"});
-	let new_content;
 
 	switch (path.extname(source_path)) {
 		case ".ejs": {
-			new_content = ejs.render(template, {
+			const new_content = ejs.render(template, {
 				...JSON.parse(fs.readFileSync(source_path.replace(".ejs", ".json"), {encoding: "utf8"})),
 				"body": file
 			}, {
@@ -56,18 +55,17 @@ function process_file(file_path) {
 				rmWhitespace: true,
 			});
 			build_path = build_path.replace(".ejs", ".html");
+			fs.writeFileSync(build_path, new_content);
 			break;
 		}
 		case ".json": {
 			break;
 		}
 		default: {
-			new_content = file;
+			fs.writeFileSync(build_path, file);
 			break;
 		}
 	}
-
-	fs.writeFileSync(build_path, new_content);
 }
 
 const template = fs.readFileSync("./template.ejs", {encoding: "utf8"});
