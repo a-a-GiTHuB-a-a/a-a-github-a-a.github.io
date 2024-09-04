@@ -24,7 +24,7 @@ concurrency:
 jobs:
   build:
     name: Build
-    runs-on: [self-hosted, linux]
+    runs-on: [self-hosted, linux, unix, ubuntu-latest]
     steps:
       - name: Build content in directory `src` to directory `site`
         run: node build.js src site
