@@ -28,9 +28,9 @@ jobs:
     steps:
       - name: Build content in directory `src` to directory `site`
         run: |
-          ls -A
           npm ci
           npm run build
+        working-directory: "."
   # Deploy job
   deploy:
     name: Deploy
