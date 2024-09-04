@@ -49,15 +49,16 @@ function process_file(file_path) {
 	switch (path.extname(source_path)) {
 		case ".ejs": {
 			new_content = ejs.render(template, {
+				...require(source_path.replace(".ejs", ".json")),
 				"body": file
 			}, {
 				filename: file_path,
 				rmWhitespace: true,
 			});
-			let path_obj = path.parse(build_path);
-			path_obj.ext = ".html";
-			path_obj.base = path_obj.base.replace(/\.\w+/, ".html");
-			build_path = path.format(path_obj);
+			build_path = build_path.replace(".ejs", ".html");
+			break;
+		}
+		case ".json": {
 			break;
 		}
 		default: {
