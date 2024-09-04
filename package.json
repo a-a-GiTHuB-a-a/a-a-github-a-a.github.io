@@ -1,5 +1,7 @@
 {
   "name": "site_builder",
+  "displayName": "Site Builder",
+  "author": "a-a-GiTHuB-a-a",
   "scripts": {
     "build": "node build.js src site"
   },
