@@ -47,8 +47,9 @@ function process_file(file_path) {
 
 	switch (path.extname(source_path)) {
 		case ".ejs": {
+			const metadata = JSON.parse(fs.readFileSync(source_path.replace(".ejs", ".json"), {encoding: "utf8"}));
 			const new_content = ejs.render(template, {
-				...JSON.parse(fs.readFileSync(source_path.replace(".ejs", ".json"), {encoding: "utf8"})),
+				...metadata,
 				"body": file
 			}, {
 				filename: file_path,
