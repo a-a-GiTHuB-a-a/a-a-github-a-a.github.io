@@ -22,9 +22,13 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest #idk, it's what the other one uses
+  # Hybrid Build-Deploy job
+  build_deploy:
+    name: Build and Deploy
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,17 +40,6 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Site Build
-  # Deploy job
-  deploy:
-    name: Deploy
-    needs: build
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
