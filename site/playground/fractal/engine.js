@@ -1,3 +1,4 @@
+//it feels like this is unnecessary
 class Fractal {
 	scale;
 	depth;
