@@ -32,6 +32,8 @@ jobs:
         run: npm ci
       - name: Build site content
         run: npm run build
+      - name: Commit and push to repo
+        uses: stefanzweifel/git-auto-commit-action@v5
   # Deploy job
   deploy:
     name: Deploy
