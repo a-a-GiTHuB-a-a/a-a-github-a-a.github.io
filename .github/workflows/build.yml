@@ -35,7 +35,7 @@ jobs:
       - name: Commit and push to repo
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: ${{github.event_name}}
+          commit_message: Site Build
   # Deploy job
   deploy:
     name: Deploy
