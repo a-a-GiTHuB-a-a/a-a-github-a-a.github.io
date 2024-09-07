@@ -34,6 +34,8 @@ jobs:
         run: npm run build
       - name: Commit and push to repo
         uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: ${{github.event_name}}
   # Deploy job
   deploy:
     name: Deploy
