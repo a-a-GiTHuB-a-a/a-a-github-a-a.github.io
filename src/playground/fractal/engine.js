@@ -122,7 +122,7 @@ function Draw(position, fractal) {
 	}
 }
 
-onFrame = (e) => {
+function onFrame(e) {
 	current_path = Draw(view.center, current_fractal);
 	view.translate(
 		current_fractal.scale * Math.cos(current_fractal.rotation),
@@ -130,5 +130,5 @@ onFrame = (e) => {
 	);
 };
 
-paper.setup("content");
-paper.activate();
+setup("content");
+activate();
