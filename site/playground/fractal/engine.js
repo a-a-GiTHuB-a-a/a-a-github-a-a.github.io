@@ -42,8 +42,8 @@ const var_re = /(?<varname>[a-z]+)\s+=\s+(?<value>[a-z]+)/m;
 const cmd_re = re("m")`(?<cmdname>[a-z]+)\s+(?<value>${num_re})`;
 
 $("#newfrac").on("submit", async function(e) {
-	e.preventDefault();
 	current_fractal = Compile(await $("#fracfile")[0].files[0].text());
+	return false;
 });
 
 async function Compile(contents) {
