@@ -30,7 +30,11 @@ function re(flags) {
 	return (...args) => new RegExp(t(...args), flags);
 }
 
-let current_fractal = new Fractal(100, 5);
+let current_fractal = new Fractal(100, 5, 0, [{
+	name: "line",
+	value: 1
+}]);
+let current_path = Draw(current_fractal);
 
 const num_re = /\d+(\.\d+)?/;
 const line_sep_re = /\s+;\s+/m;
@@ -115,3 +119,7 @@ function Draw(position, fractal) {
 		}
 	}
 }
+
+onFrame = (e) => {
+	current_path = Draw(current_fractal);
+};
