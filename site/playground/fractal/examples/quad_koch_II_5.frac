@@ -1,0 +1,14 @@
+scale=100;rotation=0;depth=5;
+Line .25;
+Rotate 90;
+Line .25;
+Rotate -90;
+Line .25;
+Rotate -90;
+Line .5;
+Rotate 90;
+Line .25;
+Rotate 90;
+Line .25;
+Rotate -90;
+Line .25;
