@@ -1,4 +1,8 @@
-$("#newfrac").on("submit", async function(e) {
-	current_fractal = Compile(await $("#fracfile")[0].files[0].text());
-	return false;
+$("#newfrac").on("submit", function(e) {
+	e.preventDefault();
+	e.stopPropagation();
+	const file = $("#fracfile")[0].files[0];
+	file.text().then((data) => {
+		current_fractal = Compile(data);
+	});
 });
