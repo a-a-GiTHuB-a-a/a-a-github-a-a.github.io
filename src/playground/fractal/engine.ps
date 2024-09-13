@@ -1,18 +1,3 @@
-//it feels like this is unnecessary
-class Fractal {
-	scale;
-	depth;
-	rotation;
-	commands;
-
-	Fractal(scale, depth, rotation, commands) {
-		this.scale = scale;
-		this.depth = depth;
-		this.rotation = rotation;
-		this.commands = commands;
-	}
-}
-
 function template(strings, ...values) {
 	s = strings[0];
 	let i = 0;
@@ -31,11 +16,18 @@ function re(flags) {
 	return (...args) => new RegExp(template(...args), flags);
 }
 
-let current_fractal = new Fractal(100, 5, 0, [{
-	name: "line",
-	value: 1
-}]);
-let current_path = Draw(view.center, current_fractal);
+window.current_fractal = {
+	scale: 100,
+	depth: 5,
+	rotation: 0,
+	commands: [
+		{
+			name: "line",
+			value: 1
+		}
+	]
+};
+let current_path = Draw(view.center, window.current_fractal);
 
 const num_re = /\d+(\.\d+)?/;
 const line_sep_re = /\s+;\s+/m;
@@ -46,7 +38,7 @@ async function Compile(contents) {
 	console.log("Compiling new fractal");
 	contents = contents.trim();
 	let lines = contents.split(line_sep_re);
-	let frac = new Fractal();
+	let frac = {};
 	let initial_scale = 100;
 	let depth = 5;
 	let cmds = [];
@@ -110,7 +102,7 @@ function Draw(position, fractal) {
 				}
 				case "line": {
 					scale *= command.value;
-					p.addSegments(Draw(p, new Fractal(scale, depth, rotation, commands)).segments);
+					p.addSegments(Draw(p, {scale, depth, rotation, commands}).segments);
 					break;
 				}
 			}
@@ -119,10 +111,10 @@ function Draw(position, fractal) {
 }
 
 function onFrame(e) {
-	current_path = Draw(view.center, current_fractal);
+	current_path = Draw(view.center, window.current_fractal);
 	view.translate(
-		current_fractal.scale * Math.cos(current_fractal.rotation),
-		current_fractal.scale * Math.sin(current_fractal.rotation)
+		window.current_fractal.scale * Math.cos(window.current_fractal.rotation),
+		window.current_fractal.scale * Math.sin(window.current_fractal.rotation)
 	);
 };
 
