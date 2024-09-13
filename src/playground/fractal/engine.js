@@ -1,3 +1,5 @@
+paper.setup($("#content")[0]);
+
 function template(strings, ...values) {
 	s = strings[0];
 	let i = 0;
@@ -16,7 +18,7 @@ function re(flags) {
 	return (...args) => new RegExp(template(...args), flags);
 }
 
-window.current_fractal = {
+let current_fractal = {
 	scale: 100,
 	depth: 5,
 	rotation: 0,
@@ -27,21 +29,23 @@ window.current_fractal = {
 		}
 	]
 };
-let current_path = Draw(view.center, window.current_fractal);
+let current_path = Draw(view.center, current_fractal);
 
 const num_re = /\d+(\.\d+)?/;
 const line_sep_re = /\s+;\s+/m;
 const var_re = /(?<varname>[a-z]+)\s+=\s+(?<value>[a-z]+)/m;
 const cmd_re = re("m")`(?<cmdname>[a-z]+)\s+(?<value>${num_re})`;
 
-async function Compile(contents) {
+function Compile(contents) {
 	console.log("Compiling new fractal");
 	contents = contents.trim();
 	let lines = contents.split(line_sep_re);
-	let frac = {};
-	let initial_scale = 100;
-	let depth = 5;
-	let cmds = [];
+	let frac = {
+		initial_scale: 100,
+		depth: 5,
+		rotation: 0,
+		commands: [],
+	};
 	for (let line in lines) {
 		let assign = var_re.exec(line);
 		if (assign !== null) {
@@ -49,15 +53,15 @@ async function Compile(contents) {
 				case "initialscale":
 				case "initial_scale":
 				case "initial-scale": {
-					initial_scale = +assign.groups.value;
+					frac.initial_scale = +assign.groups.value;
 					break;
 				}
 				case "depth": {
-					depth = +assign.groups.value;
+					frac.depth = +assign.groups.value;
 					break;
 				}
 				case "rotation": {
-					rotation = +assign.groups.value;
+					frac.rotation = +assign.groups.value;
 					break;
 				}
 			}
@@ -65,16 +69,12 @@ async function Compile(contents) {
 		}
 		let cmd = cmd_re.exec(line);
 		if (cmd !== null) {
-			cmds.push({
+			frac.commands.push({
 				name: cmd.groups.cmdname.toLowerCase(),
 				value: cmd.groups.value
 			});
 		}
 	}
-	frac.scale = initial_scale;
-	frac.depth = depth;
-	frac.rotation = rotation;
-	frac.commands = cmds;
 	console.log("Fractal compiling finished");
 	return frac;
 }
@@ -110,13 +110,19 @@ function Draw(position, fractal) {
 	}
 }
 
-function onFrame(e) {
-	current_path = Draw(view.center, window.current_fractal);
-	view.translate(
-		window.current_fractal.scale * Math.cos(window.current_fractal.rotation),
-		window.current_fractal.scale * Math.sin(window.current_fractal.rotation)
+paper.onFrame = (e) => {
+	current_path = Draw(view.center, current_fractal);
+	paper.view.translate(
+		current_fractal.scale * Math.cos(current_fractal.rotation),
+		current_fractal.scale * Math.sin(current_fractal.rotation)
 	);
 };
 
-setup("content");
-activate();
+$("#newfrac").on("submit", function(e) {
+	e.preventDefault();
+	e.stopPropagation();
+	const file = $("#fracfile")[0].files[0];
+	file.text().then((data) => {
+		current_fractal = Compile(data);
+	});
+});
