@@ -83,7 +83,7 @@ function Draw(position, fractal) {
 	let scale = fractal.scale;
 	let rotation = fractal.rotation;
 	let depth = fractal.depth;
-	if (depth == 0) {
+	if (fractal.depth === 0) {
 		return Path.Line({
 			from: position,
 			to: [
@@ -103,7 +103,7 @@ function Draw(position, fractal) {
 				}
 				case "line": {
 					scale *= command.value;
-					p.addSegments(Draw(p, {scale, depth, rotation, commands}).segments);
+					p.addSegments(Draw(p, fractal).segments);
 					break;
 				}
 			}
