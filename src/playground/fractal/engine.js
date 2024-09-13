@@ -29,7 +29,7 @@ let current_fractal = {
 		}
 	]
 };
-let current_path = Draw(view.center, current_fractal);
+let current_path = Draw(paper.view.center, current_fractal);
 
 const num_re = /\d+(\.\d+)?/;
 const line_sep_re = /\s+;\s+/m;
@@ -111,7 +111,7 @@ function Draw(position, fractal) {
 }
 
 paper.onFrame = (e) => {
-	current_path = Draw(view.center, current_fractal);
+	current_path = Draw(paper.view.center, current_fractal);
 	paper.view.translate(
 		current_fractal.scale * Math.cos(current_fractal.rotation),
 		current_fractal.scale * Math.sin(current_fractal.rotation)
