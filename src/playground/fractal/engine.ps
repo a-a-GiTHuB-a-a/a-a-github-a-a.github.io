@@ -13,7 +13,7 @@ class Fractal {
 	}
 }
 
-function t(strings, ...values) {
+function template(strings, ...values) {
 	s = strings[0];
 	let i = 0;
 	while (true) {
@@ -28,7 +28,7 @@ function t(strings, ...values) {
 }
 
 function re(flags) {
-	return (...args) => new RegExp(t(...args), flags);
+	return (...args) => new RegExp(template(...args), flags);
 }
 
 let current_fractal = new Fractal(100, 5, 0, [{
