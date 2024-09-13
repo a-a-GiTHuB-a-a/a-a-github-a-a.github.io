@@ -94,7 +94,7 @@ function Draw(position, fractal) {
 	} else {
 		depth--;
 		let p = new paper.Path();
-		p.add(new Segment(position));
+		p.add(new paper.Segment(position));
 		for (let command of fractal.commands) {
 			switch (command.name) {
 				case "rotate": {
@@ -108,6 +108,7 @@ function Draw(position, fractal) {
 				}
 			}
 		}
+		return p;
 	}
 }
 
