@@ -30,7 +30,7 @@ let current_fractal = {
 		}
 	]
 };
-let current_path = Draw(paper.view.center, current_fractal);
+let current_path = Draw(paper.view.center, current_fractal, {strokeColor: "#000000"});
 
 const ident_re = /[A-Za-z_-]+/;
 const num_re = /(?:-?\d+(?:\.\d*)?)|(?:-?\.\d*)/;
@@ -89,19 +89,22 @@ function Compile(contents) {
 	return frac;
 }
 
-function Draw(position, fractal) {
+function Draw(position, fractal, config) {
 	if (fractal.depth === 0) {
 		return paper.Path.Line({
 			from: position,
 			to: [
 				position.x + fractal.scale * Math.cos(fractal.rotation),
 				position.y + fractal.scale * Math.sin(fractal.rotation)
-			]
+			],
+			...config
 		});
 	} else {
 		fractal.depth--;
-		let p = new paper.Path();
-		p.add(new paper.Segment(position));
+		let p = new paper.Path({
+			segments: [position],
+			...config
+		});
 		for (let command of fractal.commands) {
 			switch (command.name) {
 				case "rotate": {
@@ -125,6 +128,6 @@ $("#newfrac").on("submit", function(e) {
 	const file = $("#fracfile")[0].files[0];
 	file.text().then((data) => {
 		current_fractal = Compile(data);
-		current_path = Draw(paper.view.center, current_fractal);
+		current_path = Draw(paper.view.center, current_fractal, {strokeColor: "#000000"});
 	});
 });
