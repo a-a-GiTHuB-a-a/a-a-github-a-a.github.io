@@ -74,6 +74,7 @@ function Compile(contents) {
 			let cmd = cmd_re.exec(line);
 			if (cmd !== null) {
 				console.log("Command detected!");
+				console.log(`Name: ${cmd.groups.cmdname.toLowerCase()}`);
 				frac.commands.push({
 					name: cmd.groups.cmdname.toLowerCase(),
 					value: parseFloat(cmd.groups.value)
