@@ -33,8 +33,8 @@ let current_path = Draw(paper.view.center, current_fractal);
 
 const num_re = /\d+(\.\d+)?/;
 const line_sep_re = /\s*;\s*/m;
-const var_re = /(?<varname>[a-z]+)\s+=\s+(?<value>[a-z]+)/m;
-const cmd_re = re("m")`(?<cmdname>[a-z]+)\\s+(?<value>${num_re})`;
+const var_re = /(?<varname>[a-z]+)\s*=\s*(?<value>[a-z]+)/m;
+const cmd_re = re("m")`(?<cmdname>[a-z]+)\s+(?<value>${num_re})`;
 
 function Compile(contents) {
 	console.group("Compiling new fractal");
