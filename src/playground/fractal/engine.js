@@ -4,6 +4,12 @@ function template(strings, ...values) {
 	console.log(strings, values);
 	s = strings[0];
 	let i = 0;
+	for (let i in values) {
+		let val = values[i];
+		if (val.constructor.name === "RegExp") {
+			values[i] = val.toString().substring(1, -1);
+		}
+	}
 	while (true) {
 		try {
 			s += values[i];
