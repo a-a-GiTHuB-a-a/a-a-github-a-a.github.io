@@ -31,7 +31,7 @@ let current_fractal = {
 };
 let current_path = Draw(paper.view.center, current_fractal);
 
-const ident_re = /[A-Za-z-_]/;
+const ident_re = /[A-Za-z-_]+/;
 const num_re = /\d+(\.\d+)?/;
 const line_sep_re = /\s*;\s*/m;
 const var_re = re("m")`(?<varname>${ident_re})\s*=\s*(?<value>${num_re})`;
