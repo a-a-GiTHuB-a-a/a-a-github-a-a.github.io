@@ -5,19 +5,13 @@ function template(strings, ...values) {
 	console.log(values);
 	s = strings[0];
 	let i = 0;
-	for (let i in values) {
+	while (i < values.length) {
 		let val = values[i];
 		if (val.constructor.name === "RegExp") {
-			values[i] = val.toString().substring(1, -1);
+			val = val.toString().substring(1, -1);
 		}
-	}
-	while (true) {
-		try {
-			s += values[i];
-			s += strings[i++];
-		} catch {
-			break;
-		}
+		s += val;
+		s += strings[i++];
 	}
 	return s;
 }
