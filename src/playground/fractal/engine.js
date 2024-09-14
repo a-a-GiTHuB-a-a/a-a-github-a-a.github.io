@@ -1,6 +1,8 @@
 paper.setup($("#content")[0]);
 
 function template(strings, ...values) {
+	console.log(strings);
+	console.log(values);
 	s = strings[0];
 	let i = 0;
 	for (let i in values) {
