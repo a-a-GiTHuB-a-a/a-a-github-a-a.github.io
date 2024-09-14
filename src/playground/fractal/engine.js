@@ -81,7 +81,7 @@ function Compile(contents) {
 
 function Draw(position, fractal) {
 	if (fractal.depth === 0) {
-		return Path.Line({
+		return paper.Path.Line({
 			from: position,
 			to: [
 				position.x + fractal.scale * Math.cos(fractal.rotation),
