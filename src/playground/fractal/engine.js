@@ -133,9 +133,9 @@ $("#newfrac").on("submit", function(e) {
 	file.text().then((data) => {
 		current_fractal = Compile(data);
 		current_path = Draw(current_fractal, {strokeColor: "#000000"});
-		current_path.visible = false;
+		current_path.rotate(3);
 		paper.view.update();
-		current_path.visible = true;
+		current_path.rotate(-3);
 		paper.view.update();
 	});
 });
