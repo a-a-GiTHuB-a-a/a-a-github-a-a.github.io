@@ -20,6 +20,7 @@ function re(flags) {
 }
 
 let current_fractal = {
+	position: paper.view.center,
 	scale: 100,
 	depth: 5,
 	rotation: 0,
@@ -30,7 +31,7 @@ let current_fractal = {
 		}
 	]
 };
-let current_path = Draw(paper.view.center, current_fractal, {strokeColor: "#000000"});
+let current_path = Draw(current_fractal, {strokeColor: "#000000"});
 
 const ident_re = /[A-Za-z_-]+/;
 const num_re = /(?:-?\d+(?:\.\d*)?)|(?:-?\.\d*)/;
@@ -43,6 +44,7 @@ function Compile(contents) {
 	contents = contents.trim();
 	let lines = contents.split(line_sep_re);
 	let frac = {
+		position: paper.view.center,
 		initial_scale: 100,
 		depth: 5,
 		rotation: 0,
@@ -89,20 +91,20 @@ function Compile(contents) {
 	return frac;
 }
 
-function Draw(position, fractal, config) {
+function Draw(fractal, config) {
 	if (fractal.depth === 0) {
 		return paper.Path.Line({
-			from: position,
+			from: fractal.position,
 			to: [
-				position.x + fractal.scale * Math.cos(fractal.rotation),
-				position.y + fractal.scale * Math.sin(fractal.rotation)
+				fractal.position.x + fractal.scale * Math.cos(fractal.rotation),
+				fractal.position.y + fractal.scale * Math.sin(fractal.rotation)
 			],
 			...config
 		});
 	} else {
 		fractal.depth--;
 		let p = new paper.Path({
-			segments: [position],
+			segments: [fractal.position],
 			...config
 		});
 		for (let command of fractal.commands) {
@@ -113,7 +115,9 @@ function Draw(position, fractal, config) {
 				}
 				case "line": {
 					fractal.scale *= command.value;
-					p.addSegments(Draw(p, fractal).segments);
+					const subsegs = Draw(p, fractal).segments;
+					p.addSegments(subsegs.slice(1));
+					fractal.position = subsegs[-1];
 					break;
 				}
 			}
@@ -128,6 +132,6 @@ $("#newfrac").on("submit", function(e) {
 	const file = $("#fracfile")[0].files[0];
 	file.text().then((data) => {
 		current_fractal = Compile(data);
-		current_path = Draw(paper.view.center, current_fractal, {strokeColor: "#000000"});
+		current_path = Draw(current_fractal, {strokeColor: "#000000"});
 	});
 });
