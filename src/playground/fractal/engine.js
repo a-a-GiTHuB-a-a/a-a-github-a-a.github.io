@@ -118,19 +118,12 @@ function Draw(position, fractal) {
 	}
 }
 
-paper.onFrame = (e) => {
-	current_path = Draw(paper.view.center, current_fractal);
-	paper.view.translate(
-		current_fractal.scale * Math.cos(current_fractal.rotation),
-		current_fractal.scale * Math.sin(current_fractal.rotation)
-	);
-};
-
 $("#newfrac").on("submit", function(e) {
 	e.preventDefault();
 	e.stopPropagation();
 	const file = $("#fracfile")[0].files[0];
 	file.text().then((data) => {
 		current_fractal = Compile(data);
+		current_path = Draw(paper.view.center, current_fractal);
 	});
 });
