@@ -68,6 +68,7 @@ function Compile(contents) {
 			continue;
 		}
 		let cmd = cmd_re.exec(line);
+		console.log(cmd);
 		if (cmd !== null) {
 			frac.commands.push({
 				name: cmd.groups.cmdname.toLowerCase(),
