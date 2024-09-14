@@ -76,7 +76,7 @@ function Compile(contents) {
 				console.log("Command detected!");
 				frac.commands.push({
 					name: cmd.groups.cmdname.toLowerCase(),
-					value: cmd.groups.value
+					value: parseFloat(cmd.groups.value)
 				});
 			}
 		}
