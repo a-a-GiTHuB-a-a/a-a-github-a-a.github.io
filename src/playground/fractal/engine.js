@@ -37,8 +37,7 @@ const var_re = /(?<varname>[a-z]+)\s+=\s+(?<value>[a-z]+)/m;
 const cmd_re = re("m")`(?<cmdname>[a-z]+)\\s+(?<value>${num_re})`;
 
 function Compile(contents) {
-	console.log("Compiling new fractal");
-	console.group();
+	console.group("Compiling new fractal");
 	contents = contents.trim();
 	let lines = contents.split(line_sep_re);
 	let frac = {
@@ -48,7 +47,7 @@ function Compile(contents) {
 		commands: [],
 	};
 	for (let lineIndex in lines) {
-		console.groupCollapsed();
+		console.groupCollapsed(`Line ${lineIndex}`);
 		const line = lines[lineIndex];
 		let assign = var_re.exec(line);
 		if (assign !== null) {
@@ -82,8 +81,8 @@ function Compile(contents) {
 		console.log(`Line was ${line}`);
 		console.groupEnd();
 	}
+	console.log("Fractal compiling finished!");
 	console.groupEnd();
-	console.log("Fractal compiling finished");
 	return frac;
 }
 
