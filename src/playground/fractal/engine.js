@@ -7,7 +7,7 @@ function template(strings, ...values) {
 		let val = values[i];
 		if (val.constructor.name === "RegExp") {
 			val = val.toString();
-			val = val.substring(1, val.length() - 1);
+			val = val.substring(1, val.length - 1);
 		}
 		s += val;
 		s += strings[++i];
