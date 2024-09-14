@@ -118,7 +118,7 @@ function Draw(fractal, config) {
 					const subsegs = Draw(fractal, config).segments;
 					console.log(subsegs);
 					p.addSegments(subsegs.slice(1));
-					fractal.position = subsegs[-1].point;
+					fractal.position = subsegs[subsegs.length-1].point;
 					break;
 				}
 			}
