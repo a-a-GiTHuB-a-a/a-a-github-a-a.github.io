@@ -1,13 +1,13 @@
 paper.setup($("#content")[0]);
 
 function template(strings, ...values) {
+	console.log(strings, values);
 	s = strings[0];
 	let i = 0;
 	while (true) {
 		try {
 			s += values[i];
-			s += strings[i+1];
-			i++;
+			s += strings[i++];
 		} catch {
 			break;
 		}
