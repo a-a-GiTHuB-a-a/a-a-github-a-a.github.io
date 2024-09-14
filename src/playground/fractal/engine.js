@@ -116,6 +116,7 @@ function Draw(fractal, config) {
 				case "line": {
 					fractal.scale *= command.value;
 					const subsegs = Draw(fractal, config).segments;
+					console.log(subsegs);
 					p.addSegments(subsegs.slice(1));
 					fractal.position = subsegs[-1].point;
 					break;
