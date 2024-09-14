@@ -22,7 +22,7 @@ function re(flags) {
 let current_fractal = {
 	position: paper.view.center,
 	scale: 100,
-	depth: 5,
+	depth: 0,
 	rotation: 0,
 	commands: [
 		{
