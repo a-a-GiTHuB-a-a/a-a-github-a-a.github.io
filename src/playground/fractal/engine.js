@@ -1,8 +1,6 @@
 paper.setup($("#content")[0]);
 
 function template(strings, ...values) {
-	console.log(strings);
-	console.log(values);
 	s = strings[0];
 	let i = 0;
 	while (i < values.length) {
@@ -11,7 +9,7 @@ function template(strings, ...values) {
 			val = val.toString().substring(1, -1);
 		}
 		s += val;
-		s += strings[i++];
+		s += strings[++i];
 	}
 	return s;
 }
