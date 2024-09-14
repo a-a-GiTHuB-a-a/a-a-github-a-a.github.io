@@ -92,7 +92,7 @@ function Compile(contents) {
 }
 
 function Draw(fractal, config) {
-	console.log(`Drawing fractal ${fractal}`);
+	console.log(`Drawing fractal ${JSON.stringify(fractal)}`);
 	if (fractal.depth === 0) {
 		return paper.Path.Line({
 			from: fractal.position,
