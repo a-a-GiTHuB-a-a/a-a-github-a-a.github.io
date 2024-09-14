@@ -80,29 +80,26 @@ function Compile(contents) {
 }
 
 function Draw(position, fractal) {
-	let scale = fractal.scale;
-	let rotation = fractal.rotation;
-	let depth = fractal.depth;
 	if (fractal.depth === 0) {
 		return Path.Line({
 			from: position,
 			to: [
-				position.x + scale * Math.cos(rotation),
-				position.y + scale * Math.sin(rotation)
+				position.x + fractal.scale * Math.cos(fractal.rotation),
+				position.y + fractal.scale * Math.sin(fractal.rotation)
 			]
 		});
 	} else {
-		depth--;
+		fractal.depth--;
 		let p = new paper.Path();
 		p.add(new paper.Segment(position));
 		for (let command of fractal.commands) {
 			switch (command.name) {
 				case "rotate": {
-					rotation += command.value;
+					fractal.rotation += command.value;
 					break;
 				}
 				case "line": {
-					scale *= command.value;
+					fractal.scale *= command.value;
 					p.addSegments(Draw(p, fractal).segments);
 					break;
 				}
