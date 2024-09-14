@@ -70,15 +70,15 @@ function Compile(contents) {
 					break;
 				}
 			}
-			continue;
-		}
-		let cmd = cmd_re.exec(line);
-		if (cmd !== null) {
-			console.log("Command detected!");
-			frac.commands.push({
-				name: cmd.groups.cmdname.toLowerCase(),
-				value: cmd.groups.value
-			});
+		} else {
+			let cmd = cmd_re.exec(line);
+			if (cmd !== null) {
+				console.log("Command detected!");
+				frac.commands.push({
+					name: cmd.groups.cmdname.toLowerCase(),
+					value: cmd.groups.value
+				});
+			}
 		}
 		console.log(`Line was ${line}`);
 		console.groupEnd();
