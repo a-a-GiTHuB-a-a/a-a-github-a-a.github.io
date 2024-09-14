@@ -38,6 +38,7 @@ const cmd_re = re("m")`(?<cmdname>[a-z]+)\\s+(?<value>${num_re})`;
 
 function Compile(contents) {
 	console.log("Compiling new fractal");
+	console.group();
 	contents = contents.trim();
 	let lines = contents.split(line_sep_re);
 	let frac = {
@@ -46,9 +47,12 @@ function Compile(contents) {
 		rotation: 0,
 		commands: [],
 	};
-	for (let line in lines) {
+	for (let lineIndex in lines) {
+		console.groupCollapsed();
+		const line = lines[lineIndex];
 		let assign = var_re.exec(line);
 		if (assign !== null) {
+			console.log("Declaration detected!");
 			switch (assign.groups.varname) {
 				case "initialscale":
 				case "initial_scale":
@@ -68,14 +72,17 @@ function Compile(contents) {
 			continue;
 		}
 		let cmd = cmd_re.exec(line);
-		console.log(cmd);
 		if (cmd !== null) {
+			console.log("Command detected!");
 			frac.commands.push({
 				name: cmd.groups.cmdname.toLowerCase(),
 				value: cmd.groups.value
 			});
 		}
+		console.log(`Line was ${line}`);
+		console.groupEnd();
 	}
+	console.groupEnd();
 	console.log("Fractal compiling finished");
 	return frac;
 }
