@@ -6,7 +6,8 @@ function template(strings, ...values) {
 	while (i < values.length) {
 		let val = values[i];
 		if (val.constructor.name === "RegExp") {
-			val = val.toString().substring(1, -1);
+			val = val.toString();
+			val = val.substring(1, val.length() - 1);
 		}
 		s += val;
 		s += strings[++i];
