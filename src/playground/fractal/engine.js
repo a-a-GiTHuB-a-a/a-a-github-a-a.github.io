@@ -1,7 +1,6 @@
 paper.setup($("#content")[0]);
 
 function template(strings, ...values) {
-	console.log(strings, values);
 	s = strings[0];
 	let i = 0;
 	for (let i in values) {
@@ -18,6 +17,7 @@ function template(strings, ...values) {
 			break;
 		}
 	}
+	return s;
 }
 
 function re(flags) {
