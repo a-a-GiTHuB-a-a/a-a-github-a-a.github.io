@@ -92,8 +92,11 @@ function Compile(contents) {
 }
 
 function Draw(fractal, config) {
+	let p;
+	console.group(fractal);
 	if (fractal.depth === 0) {
-		return paper.Path.Line({
+		console.log("Degenerate case found; backtracking");
+		p = paper.Path.Line({
 			from: fractal.position,
 			to: [
 				fractal.position.x + fractal.scale * Math.cos(fractal.rotation),
@@ -103,7 +106,7 @@ function Draw(fractal, config) {
 		});
 	} else {
 		fractal.depth--;
-		let p = new paper.Path({
+		p = new paper.Path({
 			segments: [fractal.position],
 			...config
 		});
@@ -121,8 +124,10 @@ function Draw(fractal, config) {
 				}
 			}
 		}
-		return p;
+		console.log("Backtracking now");
 	}
+	console.endGroup();
+	return p;
 }
 
 $("#newfrac").on("submit", function(e) {
