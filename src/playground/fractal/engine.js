@@ -126,7 +126,7 @@ function Draw(fractal, config) {
 		}
 		console.log("Backtracking now");
 	}
-	console.endGroup();
+	console.groupEnd();
 	return p;
 }
 
