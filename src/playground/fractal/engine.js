@@ -132,7 +132,7 @@ $("#newfrac").on("submit", function(e) {
 	const file = $("#fracfile")[0].files[0];
 	file.text().then((data) => {
 		current_fractal = Compile(data);
-		current_fractal.path.remove();
+		current_path.remove();
 		paper.view.update();
 		current_path = Draw(current_fractal, {strokeColor: "#000000"});
 		paper.view.update();
