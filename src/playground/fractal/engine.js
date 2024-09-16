@@ -133,7 +133,9 @@ $("#newfrac").on("submit", function(e) {
 	file.text().then((data) => {
 		current_fractal = Compile(data);
 		current_path.remove();
+		paper.view.update();
 		current_path = Draw(current_fractal, {strokeColor: "#000000"});
 		current_path.addTo(paper.project);
+		paper.view.update();
 	});
 });
