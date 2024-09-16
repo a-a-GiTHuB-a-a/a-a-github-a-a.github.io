@@ -32,6 +32,8 @@ let current_fractal = {
 	]
 };
 let current_path = Draw(current_fractal, {strokeColor: "#000000"});
+let old_path = current_path;
+old_path.remove();
 
 const ident_re = /[A-Za-z_-]+/;
 const num_re = /(?:-?\d+(?:\.\d*)?)|(?:-?\.\d*)/;
@@ -132,9 +134,9 @@ $("#newfrac").on("submit", function(e) {
 	const file = $("#fracfile")[0].files[0];
 	file.text().then((data) => {
 		current_fractal = Compile(data);
-		current_path.remove();
-		paper.view.update();
+		old_path = current_path;
 		current_path = Draw(current_fractal, {strokeColor: "#000000"});
-		paper.view.update();
+		current_path.insertAbove(old_path);
+		old_path.remove();
 	});
 });
