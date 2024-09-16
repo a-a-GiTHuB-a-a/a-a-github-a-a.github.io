@@ -103,6 +103,7 @@ function Draw(fractal, config) {
 		});
 	} else {
 		fractal.depth--;
+		console.log("Position: " + fractal.position);
 		let p = new paper.Path({
 			segments: [fractal.position],
 			...config
@@ -132,6 +133,7 @@ $("#newfrac").on("submit", function(e) {
 	const file = $("#fracfile")[0].files[0];
 	file.text().then((data) => {
 		current_fractal = Compile(data);
+
 		current_path.remove();
 		paper.view.update();
 		current_path = Draw(current_fractal, {strokeColor: "#000000"});
