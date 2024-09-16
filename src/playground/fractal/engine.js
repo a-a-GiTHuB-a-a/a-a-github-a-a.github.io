@@ -50,7 +50,6 @@ function Compile(contents) {
 		rotation: 0,
 		commands: [],
 	};
-	console.log(`Initial fractal: ${JSON.stringify(frac, null, "\t")}`);
 	for (let lineIndex in lines) {
 		console.groupCollapsed(`Line ${lineIndex}`);
 		const line = lines[lineIndex];
@@ -88,6 +87,7 @@ function Compile(contents) {
 		console.groupEnd();
 	}
 	console.log("Fractal compiling finished!");
+	console.log(`Final fractal: ${JSON.stringify(frac, null, "\t")}`);
 	console.groupEnd();
 	return frac;
 }
