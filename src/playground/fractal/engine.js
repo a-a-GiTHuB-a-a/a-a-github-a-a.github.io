@@ -1,7 +1,5 @@
 paper.setup($("#content")[0]);
 
-let doUpdate = false;
-
 function template(strings, ...values) {
 	s = strings[0];
 	let i = 0;
@@ -128,23 +126,15 @@ function Draw(fractal, config) {
 	}
 }
 
-paper.view.onFrame = () => {
-	if (doUpdate) {
-		current_path.rotate(3);
-		paper.view.update();
-		current_path.rotate(-3);
-		paper.view.update();
-		doUpdate = false;
-	}
-};
-
 $("#newfrac").on("submit", function(e) {
 	e.preventDefault();
 	e.stopPropagation();
 	const file = $("#fracfile")[0].files[0];
 	file.text().then((data) => {
 		current_fractal = Compile(data);
+		current_fractal.path.remove();
+		paper.view.update();
 		current_path = Draw(current_fractal, {strokeColor: "#000000"});
-		doUpdate = true;
+		paper.view.update();
 	});
 });
