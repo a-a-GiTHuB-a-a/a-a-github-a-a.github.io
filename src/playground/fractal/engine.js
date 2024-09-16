@@ -87,7 +87,6 @@ function Compile(contents) {
 		console.groupEnd();
 	}
 	console.log("Fractal compiling finished!");
-	console.log(`Final fractal: ${JSON.stringify(frac, null, "\t")}`);
 	console.groupEnd();
 	return frac;
 }
@@ -119,7 +118,6 @@ function Draw(fractal, config) {
 					const subsegs = Draw(fractal, config).segments;
 					p.addSegments(subsegs.slice(1));
 					fractal.position = subsegs[subsegs.length-1].point;
-					break;
 				}
 			}
 		}
