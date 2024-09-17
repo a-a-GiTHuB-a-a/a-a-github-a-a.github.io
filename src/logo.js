@@ -5,11 +5,11 @@ $(function() {
 	let icon;
 
 	if (month === 12 && (24 <= day) && (26 >= day)) {
-		icon = "/BOXEN Logo Christmas.png";
+		icon = "/BOXEN_Logo_Christmas.png";
 	} else if (month === 11) {
-		icon = "/BOXEN Logo Thanksgiving.png";
+		icon = "/BOXEN_Logo_Thanksgiving.png";
 	} else {
-		icon = "/BOXEN Logo.png";
+		icon = "/BOXEN_Logo.png";
 	}
 
 	$("#favicon").attr("href", icon);
