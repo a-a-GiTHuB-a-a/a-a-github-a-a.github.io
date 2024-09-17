@@ -95,7 +95,7 @@ function Draw(fractal, config) {
 	let p;
 	console.groupCollapsed(fractal);
 	if (fractal.depth <= 1) {
-		p = paper.Path.Line(fractal.position, new paper.Point(
+		p = new paper.Path.Line(fractal.position, new paper.Point(
 			fractal.position.x + fractal.scale * Math.cos(fractal.rotation),
 			fractal.position.y + fractal.scale * Math.sin(fractal.rotation)
 		));
