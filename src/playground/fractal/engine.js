@@ -94,7 +94,7 @@ function Compile(contents) {
 function Draw(fractal, config) {
 	let p;
 	console.groupCollapsed(fractal);
-	if (fractal.depth === 0) {
+	if (fractal.depth <= 1) {
 		p = paper.Path.Line({
 			from: fractal.position,
 			to: [
