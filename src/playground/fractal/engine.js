@@ -119,7 +119,7 @@ function Draw(fractal, config) {
 				case "line": {
 					fractal.scale *= command.value;
 					console.log("Fractal:", fractal);
-					const subsegs = Draw(structuredClone(fractal), config).segments;
+					const subsegs = Draw({...fractal}, config).segments;
 					p.addSegments(subsegs.slice(1));
 					fractal.position = subsegs[subsegs.length-1].point;
 				}
