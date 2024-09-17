@@ -118,10 +118,9 @@ function Draw(fractal, config) {
 				}
 				case "line": {
 					fractal.scale *= command.value;
-					const subsegs = Draw({...fractal}, config).segments;
-					console.log(subsegs);
-					p.addSegments(subsegs.slice(1));
-					fractal.position = subsegs[subsegs.length-1].point;
+					const partial_path = Draw({...fractal}, config);
+					p.addSegments(partial_path.segments.slice(1));
+					fractal.position = partial_path.lastSegment.point;
 				}
 			}
 		}
