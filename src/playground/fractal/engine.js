@@ -93,9 +93,8 @@ function Compile(contents) {
 
 function Draw(fractal, config) {
 	let p;
-	console.group(fractal);
+	console.groupCollapsed(fractal);
 	if (fractal.depth === 0) {
-		console.log("Degenerate case found; backtracking");
 		p = paper.Path.Line({
 			from: fractal.position,
 			to: [
@@ -104,6 +103,7 @@ function Draw(fractal, config) {
 			],
 			...config
 		});
+		console.log("Degenerate case found:", p);
 	} else {
 		fractal.depth--;
 		p = new paper.Path({
