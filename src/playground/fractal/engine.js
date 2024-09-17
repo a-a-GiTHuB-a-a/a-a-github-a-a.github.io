@@ -45,7 +45,7 @@ function Compile(contents) {
 	let lines = contents.split(line_sep_re);
 	let frac = {
 		position: paper.view.center,
-		initial_scale: 100,
+		scale: 100,
 		depth: 5,
 		rotation: 0,
 		commands: [],
@@ -60,7 +60,7 @@ function Compile(contents) {
 				case "initialscale":
 				case "initial_scale":
 				case "initial-scale": {
-					frac.initial_scale = +assign.groups.value;
+					frac.scale = +assign.groups.value;
 					break;
 				}
 				case "depth": {
@@ -139,7 +139,7 @@ $("#newfrac").on("submit", function(e) {
 
 		current_path.remove();
 		paper.view.update();
-		current_path = Draw(current_fractal, {strokeColor: "#000000"});
+		current_path = Draw(structuredClone(current_fractal), {strokeColor: "#000000"});
 		current_path.addTo(paper.project);
 		paper.view.update();
 	});
