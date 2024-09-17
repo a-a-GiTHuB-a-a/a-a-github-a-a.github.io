@@ -96,11 +96,16 @@ function Draw(fractal, config) {
 	console.groupCollapsed(fractal);
 	if (fractal.depth <= 1) {
 		console.log(fractal.position);
-		p = new paper.Path.Line(fractal.position, new paper.Point(
-			fractal.position.x + fractal.scale * Math.cos(fractal.rotation),
-			fractal.position.y + fractal.scale * Math.sin(fractal.rotation)
-		));
-		p.style = config;
+		p = new paper.Path({
+			segments: [
+				fractal.position,
+				[
+					fractal.position.x + fractal.scale * Math.cos(fractal.rotation),
+					fractal.position.y + fractal.scale * Math.sin(fractal.rotation)
+				]
+			],
+			...config,
+		});
 		console.log("Degenerate case found:", p);
 	} else {
 		fractal.depth--;
