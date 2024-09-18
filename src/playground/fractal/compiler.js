@@ -4,8 +4,8 @@ import * as AST from "./AST.js";
 const ident_re = /[A-Za-z_-]+/;
 const line_sep_re = /\s*;\s*/m;
 const num_re = /[+-]?(?:(?:[0-9]+\.[0-9]*)|(?:[0-9]*\.[0-9]+)|(?:[0-9]+))/;
-const var_re = re("m")`^(?<varname>${ident_re})\s*=\s*(?<value>[^=]*)$`;
-const cmd_re = re("m")`^(?<cmdname>${ident_re})\\s+(?<value>[^=]*)$`;
+const var_re = re`^(?<varname>${ident_re})\s*=\s*(?<value>[^=]*)$`;
+const cmd_re = re`^(?<cmdname>${ident_re})\\s+(?<value>[^=]*)$`;
 const op_list = ["+", "-", "*", "/"];
 const op_priorities = {
 	["+"]: 1,
@@ -39,6 +39,7 @@ function Parse(expr) {
 			char += token.length;
 			opReady = true;
 		} else if (!opReady && ((token = re`^${num_re}`.exec(expr)) !== null)) {
+			console.log("FISH");
 			output.push(new AST.NumExpr(token));
 			index += token.length;
 			char += token.length;
@@ -50,6 +51,7 @@ function Parse(expr) {
 			ops.push(token);
 			index++;
 			char++;
+			opReady = false;
 		} else {
 			token = expr[index];
 			switch (token) {
