@@ -16,3 +16,7 @@ function template(strings, ...values) {
 function re(flags) {
 	return (...args) => new RegExp(template(...args), flags);
 }
+
+export {
+	re
+};
