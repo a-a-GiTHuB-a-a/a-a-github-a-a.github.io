@@ -86,6 +86,7 @@ function Parse(expr) {
 			stacc.push(value);
 		}
 	}
+	console.log(stacc);
 	if (stacc.length !== 1) throw new Error("something went horrifically wrong with the arithmetic");
 	return stacc[0];
 }
