@@ -3,7 +3,7 @@ import * as AST from "./AST.js";
 
 const ident_re = /[A-Za-z_-]+/;
 const line_sep_re = /\s*;\s*/m;
-const num_re = /[+-]?(?:(?:[0-9]+\.[0-9]*)|(?:[0-9]*\.[0-9]+)|(?:[0-9]+))/m;
+const num_re = /[+-]?(?:(?:[0-9]+\.[0-9]*)|(?:[0-9]*\.[0-9]+)|(?:[0-9]+))/;
 const var_re = re("m")`^(?<varname>${ident_re})\s*=\s*(?<value>[^=]*)$`;
 const cmd_re = re("m")`^(?<cmdname>${ident_re})\\s+(?<value>[^=]*)$`;
 const op_list = ["+", "-", "*", "/"];
