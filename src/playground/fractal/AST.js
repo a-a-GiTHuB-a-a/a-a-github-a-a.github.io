@@ -1,11 +1,11 @@
 class Operator {
-	Oconstructor(opname) {
+	constructor(opname) {
 		this.name = opname;
 	}
 }
 
 class BinaryExpr {
-	Binconstructor(op, expr1, expr2) {
+	constructor(op, expr1, expr2) {
 		this.op = op;
 		this.expr1 = expr1;
 		this.expr2 = expr2;
