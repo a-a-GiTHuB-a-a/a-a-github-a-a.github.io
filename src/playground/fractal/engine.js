@@ -87,6 +87,7 @@ function Compile(contents) {
 		console.groupEnd();
 	}
 	console.log("Fractal compiling finished!");
+	console.log(frac);
 	console.groupEnd();
 	return frac;
 }
