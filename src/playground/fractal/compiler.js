@@ -116,8 +116,7 @@ function Compile(contents) {
 			if (value === undefined) continue;
 			switch (assign.groups.varname) {
 				case "initialscale":
-				case "initial_scale":
-				case "initial-scale": {
+				case "initial_scale": {
 					frac.scale = value;
 					break;
 				}
