@@ -15,7 +15,7 @@ function template(strings, ...values) {
 
 function re(...args) {
 	if (args.length === 1) {
-		return (...a) => new RegExp(template(...a), flags);
+		return (...a) => new RegExp(template(...a), args[0]);
 	} else if (args.length === 2) {
 		return new RegExp(template(...args));
 	}
