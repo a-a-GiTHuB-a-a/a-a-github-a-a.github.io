@@ -33,12 +33,12 @@ function Parse(expr) {
 	let token;
 	//part 1: process expression
 	while (index < expr.length) {
-		if (!opReady && ((token = re`^${ident_re}`.exec(expr.slice(index))) !== null)) {
+		if (!opReady && ((token = expr.slice(index).match(re`^${ident_re}`)) !== null)) {
 			output.push(new AST.VarExpr(token));
 			index += token.length;
 			char += token.length;
 			opReady = true;
-		} else if (!opReady && ((token = re`^${num_re}`.exec(expr.slice(index))) !== null)) {
+		} else if (!opReady && ((token = expr.slice(index).match(re`^${num_re}`)) !== null)) {
 			output.push(new AST.NumExpr(token));
 			index += token.length;
 			char += token.length;
