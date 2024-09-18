@@ -34,6 +34,7 @@ function Parse(expr) {
 	while (index < expr.length) {
 		if (!opReady && ((token = expr.slice(index).match(re`^${ident_re}`)) !== null)) {
 			token = token[0];
+			console.log(token);
 			output.push(new AST.VarExpr(token));
 			index += token.length;
 			char += token.length;
