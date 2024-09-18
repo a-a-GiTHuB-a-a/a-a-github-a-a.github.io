@@ -48,7 +48,7 @@ function Parse(expr) {
 			while (op_priorities[token] <= op_priorities[ops[ops.length-1]]) {
 				output.push(ops.pop());
 			}
-			ops.push(token);
+			ops.push(new AST.Operator(token));
 			index++;
 			char++;
 			opReady = false;
