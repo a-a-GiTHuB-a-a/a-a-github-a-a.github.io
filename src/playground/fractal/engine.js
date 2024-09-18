@@ -109,22 +109,23 @@ function Draw(fractal, config) {
 		});
 		console.log("Degenerate case found:", p);
 	} else {
-		fractal.depth--;
+		let {position, scale, depth, rotation} = fractal;
+		depth--;
 		p = new paper.Path({
-			segments: [fractal.position],
+			segments: [position],
 			...config
 		});
 		for (let command of fractal.commands) {
 			switch (command.name) {
 				case "rotate": {
-					fractal.rotation += command.value;
+					rotation += command.value;
 					break;
 				}
 				case "line": {
-					fractal.scale *= command.value;
-					const partial_path = Draw({...fractal}, config);
+					scale *= command.value;
+					const partial_path = Draw({position, scale, depth, rotation, commands:fractal.commands}, config);
 					p.addSegments(partial_path.segments.slice(1));
-					fractal.position = partial_path.lastSegment.point;
+					position = partial_path.lastSegment.point;
 				}
 			}
 		}
@@ -143,7 +144,7 @@ $("#newfrac").on("submit", function(e) {
 
 		current_path.remove();
 		paper.view.update();
-		current_path = Draw(structuredClone(current_fractal), {strokeColor: "#000000"});
+		current_path = Draw(current_fractal, {strokeColor: "#000000"});
 		current_path.addTo(paper.project);
 		paper.view.update();
 	});
