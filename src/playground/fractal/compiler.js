@@ -33,18 +33,17 @@ function Parse(expr) {
 	let token;
 	//part 1: process expression
 	while (index < expr.length) {
-		if (!opReady && ((token = re`^${ident_re}`.exec(expr)) !== null)) {
+		if (!opReady && ((token = re`^${ident_re}`.exec(expr.slice(index))) !== null)) {
 			output.push(new AST.VarExpr(token));
 			index += token.length;
 			char += token.length;
 			opReady = true;
-		} else if (!opReady && ((token = re`^${num_re}`.exec(expr)) !== null)) {
-			console.log("FISH");
+		} else if (!opReady && ((token = re`^${num_re}`.exec(expr.slice(index))) !== null)) {
 			output.push(new AST.NumExpr(token));
 			index += token.length;
 			char += token.length;
 			opReady = true;
-		} else if (opReady && op_list.contains(token = expr[0])) {
+		} else if (opReady && op_list.includes(token = expr[index])) {
 			while (op_priorities[token] <= op_priorities[ops[ops.length-1]]) {
 				output.push(ops.pop());
 			}
