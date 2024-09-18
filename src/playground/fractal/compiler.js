@@ -34,7 +34,6 @@ function Parse(expr) {
 	while (index < expr.length) {
 		if (!opReady && ((token = expr.slice(index).match(re`^${ident_re}`)) !== null)) {
 			token = token[0];
-			console.log(token);
 			output.push(new AST.VarExpr(token));
 			index += token.length;
 			char += token.length;
@@ -76,6 +75,7 @@ function Parse(expr) {
 	output.push(...ops.reverse());
 	
 	//part 2: construct AST
+	console.log(output);
 	let stacc = [];
 	for (let value of output) {
 		if (value.constructor.name === "Operator") {
