@@ -1,4 +1,4 @@
-const re_re = /^\/(?<content>.*)\/\w+$/s;
+const re_re = /^\/(?<content>.*)\/[dgimsuvy]*$/s;
 
 function template(strings, ...values) {
 	let s = strings[0];
