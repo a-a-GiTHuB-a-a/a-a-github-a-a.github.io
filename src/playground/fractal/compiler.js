@@ -23,6 +23,7 @@ class FracSyntaxError extends Error {
 }
 
 function Parse(expr) {
+	console.log(expr);
 	let output = [];
 	let ops = [];
 	let opReady = false;
