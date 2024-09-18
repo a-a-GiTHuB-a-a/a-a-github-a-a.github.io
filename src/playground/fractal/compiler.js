@@ -33,12 +33,13 @@ function Parse(expr) {
 	//part 1: process expression
 	while (index < expr.length) {
 		if (!opReady && ((token = expr.slice(index).match(re`^${ident_re}`)) !== null)) {
+			token = token[0];
 			output.push(new AST.VarExpr(token));
 			index += token.length;
 			char += token.length;
 			opReady = true;
 		} else if (!opReady && ((token = expr.slice(index).match(re`^${num_re}`)) !== null)) {
-			console.log("Matched number:", token);
+			token = token[0];
 			output.push(new AST.NumExpr(token));
 			index += token.length;
 			char += token.length;
