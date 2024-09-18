@@ -1,5 +1,5 @@
 function template(strings, ...values) {
-	s = strings[0];
+	let s = strings[0];
 	let i = 0;
 	while (i < values.length) {
 		let val = values[i];
