@@ -1,7 +1,7 @@
 import {re} from "./tags.js";
 import * as AST from "./AST.js";
 
-const ident_re = /[A-Za-z_-]+/;
+const ident_re = /[A-Za-z_]+/;
 const line_sep_re = /\s*;\s*/m;
 const num_re = /[+-]?(?:(?:[0-9]+\.[0-9]*)|(?:[0-9]*\.[0-9]+)|(?:[0-9]+))/;
 const var_re = re`^(?<varname>${ident_re})\s*=\s*(?<value>[^=]*)$`;
