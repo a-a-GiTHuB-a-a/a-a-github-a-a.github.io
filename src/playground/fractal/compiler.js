@@ -23,7 +23,6 @@ class FracSyntaxError extends Error {
 }
 
 function Parse(expr) {
-	console.log(expr);
 	let output = [];
 	let ops = [];
 	let opReady = false;
@@ -39,6 +38,7 @@ function Parse(expr) {
 			char += token.length;
 			opReady = true;
 		} else if (!opReady && ((token = expr.slice(index).match(re`^${num_re}`)) !== null)) {
+			console.log("Matched number:, token");
 			output.push(new AST.NumExpr(token));
 			index += token.length;
 			char += token.length;
