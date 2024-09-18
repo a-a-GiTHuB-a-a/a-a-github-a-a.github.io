@@ -122,8 +122,13 @@ function Draw(fractal, config) {
 					break;
 				}
 				case "line": {
-					scale *= command.value;
-					const partial_path = Draw({position, scale, depth, rotation, commands:fractal.commands}, config);
+					const partial_path = Draw({
+						position,
+						scale: scale * command.value,
+						depth,
+						rotation,
+						commands:fractal.commands
+					}, config);
 					p.addSegments(partial_path.segments.slice(1));
 					position = partial_path.lastSegment.point;
 				}
