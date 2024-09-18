@@ -13,8 +13,12 @@ function template(strings, ...values) {
 	return s;
 }
 
-function re(flags) {
-	return (...args) => new RegExp(template(...args), flags);
+function re(...args) {
+	if (args.length === 1) {
+		return (...a) => new RegExp(template(...a), flags);
+	} else if (args.length === 2) {
+		return new RegExp(template(...args));
+	}
 }
 
 export {
