@@ -101,8 +101,8 @@ function Draw(fractal, config) {
 			segments: [
 				fractal.position,
 				[
-					fractal.position.x + fractal.scale * Math.cos(fractal.rotation),
-					fractal.position.y + fractal.scale * Math.sin(fractal.rotation)
+					fractal.position.x + fractal.scale * Math.cos(fractal.rotation*Math.PI/180),
+					fractal.position.y + fractal.scale * Math.sin(fractal.rotation*Math.PI/180)
 				]
 			],
 			...config,
