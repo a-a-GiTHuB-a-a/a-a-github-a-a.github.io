@@ -1,0 +1,8 @@
+scale=100;rotation=0;depth=3;angle=45;sublength=.293;
+Line sublength;
+Rotate angle;
+Line sublength;
+Rotate -2 * angle;
+Line sublength;
+Rotate angle;
+Line sublength;
