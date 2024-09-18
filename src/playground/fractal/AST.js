@@ -1,11 +1,11 @@
 class Operator {
-	Operator(opname) {
+	Oconstructor(opname) {
 		this.name = opname;
 	}
 }
 
 class BinaryExpr {
-	BinaryExpr(op, expr1, expr2) {
+	Binconstructor(op, expr1, expr2) {
 		this.op = op;
 		this.expr1 = expr1;
 		this.expr2 = expr2;
@@ -24,7 +24,7 @@ class BinaryExpr {
 }
 
 class VarExpr {
-	VarExpr(varname) {
+	constructor(varname) {
 		this.varname = varname;
 	}
 
@@ -34,7 +34,7 @@ class VarExpr {
 }
 
 class NumExpr {
-	NumExpr(num) {
+	constructor(num) {
 		this.num = num;
 	}
 

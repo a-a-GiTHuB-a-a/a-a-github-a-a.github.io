@@ -16,7 +16,7 @@ const op_priorities = {
 };
 
 class FracSyntaxError extends Error {
-	FracSyntaxError(line, char, type = "Unknown syntax") {
+	constructor(line, char, type = "Unknown syntax") {
 		super(`${type} at line ${line}, character ${char}`);
 		this.name = "SyntaxError";
 	}
