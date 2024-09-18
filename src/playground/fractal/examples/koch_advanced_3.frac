@@ -1,0 +1,8 @@
+scale=100;rotation=0;depth=2;angle=60;
+Line .33;
+Rotate angle;
+Line .33;
+Rotate -2 * angle;
+Line .33;
+Rotate angle;
+Line .33;
