@@ -81,6 +81,8 @@ function Parse(expr) {
 			let b = stacc.pop();
 			let a = stacc.pop();
 			stacc.push(new AST.BinaryExpr(value, a, b));
+		} else {
+			stacc.push(value);
 		}
 	}
 	if (stacc.length !== 1) throw new Error("something went horrifically wrong with the arithmetic");
