@@ -23,14 +23,20 @@ function Draw(fractal, config) {
 		console.log("Degenerate case found:", p);
 	} else {
 		let {position, scale, depth, rotation} = fractal;
-		let context = fractal;
+		let context = {};
 		depth--;
 		p = new paper.Path({
 			segments: [position],
 			...config
 		});
 		for (let command of fractal.commands) {
-			let value = command.value.evaluate(context);
+			let value = command.value.evaluate({
+				...context,
+				position,
+				scale,
+				depth,
+				rotation,
+			});
 			switch (command.name) {
 				case "assign": {
 					console.log("Evaluating live assignment");
