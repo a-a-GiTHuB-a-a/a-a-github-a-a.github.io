@@ -75,7 +75,6 @@ function Parse(expr) {
 	output.push(...ops.reverse());
 	
 	//part 2: construct AST
-	console.log(output);
 	let stacc = [];
 	for (let value of output) {
 		if (value.constructor.name === "Operator") {
@@ -86,7 +85,6 @@ function Parse(expr) {
 			stacc.push(value);
 		}
 	}
-	console.log(stacc);
 	if (stacc.length !== 1) throw new Error("something went horrifically wrong with the arithmetic");
 	return stacc[0];
 }
