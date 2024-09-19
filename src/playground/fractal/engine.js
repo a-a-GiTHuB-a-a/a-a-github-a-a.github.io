@@ -15,7 +15,6 @@ let current_fractal = {
 	]
 };
 let current_path = Draw(current_fractal, {strokeColor: "#000000"});
-let old_path;
 
 function Draw(fractal, config) {
 	let p;
@@ -71,9 +70,7 @@ $("#newfrac").on("submit", function(e) {
 	const file = $("#fracfile")[0].files[0];
 	file.text().then((data) => {
 		current_fractal = Compile(data);
-		old_path = current_path;
-		current_path = Draw(current_fractal, {strokeColor: "#000000"});
-		old_path.replaceWith(current_path);
+		current_path.replaceWith(current_path = Draw(current_fractal, {strokeColor: "#000000"}));
 		paper.view.update();
 	});
 });
