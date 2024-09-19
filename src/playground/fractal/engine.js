@@ -10,7 +10,6 @@ function Draw(fractal, config) {
 	let p;
 	console.groupCollapsed(fractal);
 	if (fractal.depth <= 0) {
-		console.log(fractal.position);
 		p = new paper.Path({
 			segments: [
 				fractal.position,
@@ -24,6 +23,7 @@ function Draw(fractal, config) {
 		console.log("Degenerate case found:", p);
 	} else {
 		let {position, scale, depth, rotation} = fractal;
+		let context = fractal;
 		depth--;
 		p = new paper.Path({
 			segments: [position],
@@ -31,27 +31,18 @@ function Draw(fractal, config) {
 		});
 		for (let command of fractal.commands) {
 			switch (command.name) {
+				case "assign": {
+					context[command.varname] = command.value.evaluate(context);
+				}
 				case "rotate": {
-					rotation += command.value({
-						position,
-						scale,
-						depth,
-						rotation
-					});
+					rotation += command.value.evaluate(context);
 					break;
 				}
 				case "line": {
 					const partial_path = Draw({
-						position,
-						scale: scale * command.value({
-							position,
-							scale,
-							depth,
-							rotation
-						}),
-						depth,
-						rotation,
-						commands:fractal.commands
+						...context,
+						scale: scale * command.value.evaluate(context),
+						commands:fractal.commands,
 					}, config);
 					p.addSegments(partial_path.segments.slice(1));
 					position = partial_path.lastSegment.point;

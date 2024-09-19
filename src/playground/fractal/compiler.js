@@ -89,10 +89,6 @@ function Parse(expr) {
 	return stacc[0];
 }
 
-function Bind(expr, context) {
-	return (c) => Parse(expr).evaluate({...context, ...c});
-}
-
 function Compile(contents) {
 	console.group("Compiling new fractal");
 	contents = contents.trim();
@@ -104,39 +100,39 @@ function Compile(contents) {
 		rotation: 0,
 		commands: [],
 	};
-	let context = {};
 	for (let lineIndex in lines) {
 		console.groupCollapsed(`Line ${lineIndex}`);
 		const line = lines[lineIndex];
 		let assign = var_re.exec(line);
 		if (assign !== null) {
 			console.log("Declaration detected!");
-			let value = Bind(assign.groups.value, context);
+			let value = Parse(assign.groups.value);
 			if (value === undefined) continue;
 			switch (assign.groups.varname) {
-				case "initialscale":
-				case "initial_scale": {
-					frac.scale = value;
+				case "scale": {
+					frac.scale = value.evaluate({});
 					break;
 				}
 				case "depth": {
-					frac.depth = value;
+					frac.depth = value.evaluate({});
 					break;
 				}
 				case "rotation": {
-					frac.rotation = value;
+					frac.rotation = value.evaluate({});
 					break;
 				}
 				default: {
-					context[assign.groups.varname] = value;
+					frac.commands.push({
+						name: "assign",
+						varname: assign.groups.varname,
+						value,
+					});
 				}
 			}
 		} else {
 			let cmd = cmd_re.exec(line);
 			if (cmd !== null) {
-				console.log("Command detected!");
-				console.log(`Name: ${cmd.groups.cmdname.toLowerCase()}`);
-				let value = Bind(cmd.groups.value, context);
+				let value = Parse(cmd.groups.value);
 				if (value === undefined) continue;
 				frac.commands.push({
 					name: cmd.groups.cmdname.toLowerCase(),
@@ -155,6 +151,5 @@ function Compile(contents) {
 
 export {
 	Compile,
-	Bind,
 	FracSyntaxError
 };
