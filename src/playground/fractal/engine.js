@@ -30,14 +30,16 @@ function Draw(fractal, config) {
 			...config
 		});
 		for (let command of fractal.commands) {
+			let value = command.value.evaluate(context);
 			switch (command.name) {
 				case "assign": {
-					context[command.varname] = command.value.evaluate(context);
+					console.log("Evaluating live assignment");
+					context[command.varname] = value;
 					break;
 				}
 				case "rotate": {
-					console.log("Rotating");
-					rotation += command.value.evaluate(context);
+					console.log("Rotating by angle", value);
+					rotation += value;
 					break;
 				}
 				case "line": {
@@ -46,7 +48,7 @@ function Draw(fractal, config) {
 						position,
 						rotation,
 						depth,
-						scale: scale * command.value.evaluate(context),
+						scale: scale * value,
 						commands: fractal.commands,
 					}, config);
 					p.addSegments(partial_path.segments.slice(1));
