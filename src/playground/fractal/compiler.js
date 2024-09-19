@@ -91,8 +91,8 @@ function Parse(expr) {
 	return stacc[0];
 }
 
-function Evaluate(expr, context) {
-	return Parse(expr).evaluate(context);
+function Bind(expr, context) {
+	return (c) => Parse(expr).evaluate({...context, ...c});
 }
 
 function Compile(contents) {
@@ -113,7 +113,7 @@ function Compile(contents) {
 		let assign = var_re.exec(line);
 		if (assign !== null) {
 			console.log("Declaration detected!");
-			let value = Evaluate(assign.groups.value, context);
+			let value = Bind(assign.groups.value, context);
 			if (value === undefined) continue;
 			switch (assign.groups.varname) {
 				case "initialscale":
@@ -138,7 +138,7 @@ function Compile(contents) {
 			if (cmd !== null) {
 				console.log("Command detected!");
 				console.log(`Name: ${cmd.groups.cmdname.toLowerCase()}`);
-				let value = Evaluate(cmd.groups.value, context);
+				let value = Bind(cmd.groups.value, context);
 				if (value === undefined) continue;
 				frac.commands.push({
 					name: cmd.groups.cmdname.toLowerCase(),
@@ -157,6 +157,6 @@ function Compile(contents) {
 
 export {
 	Compile,
-	Evaluate,
+	Bind,
 	FracSyntaxError
 };

@@ -2,18 +2,8 @@ import {Compile} from "./compiler.js";
 
 paper.setup($("#content")[0]);
 
-let current_fractal = {
-	position: paper.view.center,
-	scale: 100,
-	depth: 0,
-	rotation: 0,
-	commands: [
-		{
-			name: "line",
-			value: 1
-		}
-	]
-};
+let current_fractal = Compile("Line 1");
+
 let current_path = Draw(current_fractal, {strokeColor: "#000000"});
 
 function Draw(fractal, config) {
@@ -42,13 +32,23 @@ function Draw(fractal, config) {
 		for (let command of fractal.commands) {
 			switch (command.name) {
 				case "rotate": {
-					rotation += command.value;
+					rotation += command.value({
+						position,
+						scale,
+						depth,
+						rotation
+					});
 					break;
 				}
 				case "line": {
 					const partial_path = Draw({
 						position,
-						scale: scale * command.value,
+						scale: scale * command.value({
+							position,
+							scale,
+							depth,
+							rotation
+						}),
 						depth,
 						rotation,
 						commands:fractal.commands
