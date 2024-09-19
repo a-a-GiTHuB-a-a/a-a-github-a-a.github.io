@@ -36,6 +36,7 @@ function Draw(fractal, config) {
 					break;
 				}
 				case "rotate": {
+					console.log("Rotating");
 					rotation += command.value.evaluate(context);
 					break;
 				}
