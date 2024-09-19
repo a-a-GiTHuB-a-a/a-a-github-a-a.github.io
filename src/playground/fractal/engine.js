@@ -33,6 +33,7 @@ function Draw(fractal, config) {
 			switch (command.name) {
 				case "assign": {
 					context[command.varname] = command.value.evaluate(context);
+					break;
 				}
 				case "rotate": {
 					rotation += command.value.evaluate(context);
@@ -41,8 +42,11 @@ function Draw(fractal, config) {
 				case "line": {
 					const partial_path = Draw({
 						...context,
+						position,
+						rotation,
+						depth,
 						scale: scale * command.value.evaluate(context),
-						commands:fractal.commands,
+						commands: fractal.commands,
 					}, config);
 					p.addSegments(partial_path.segments.slice(1));
 					position = partial_path.lastSegment.point;
