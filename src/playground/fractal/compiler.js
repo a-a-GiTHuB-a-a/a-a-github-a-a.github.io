@@ -95,7 +95,7 @@ function Compile(contents) {
 	let lines = contents.split(line_sep_re);
 	let frac = {
 		position: paper.view.center,
-		scale: 100,
+		scale: 500,
 		depth: 5,
 		rotation: 0,
 		commands: [],

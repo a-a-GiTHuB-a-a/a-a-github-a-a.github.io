@@ -75,7 +75,7 @@ $("#newfrac").on("submit", function(e) {
 	file.text().then((data) => {
 		current_fractal = Compile(data);
 		paper.project.activeLayer.removeChildren();
-		current_path = Draw(current_fractal, {strokeColor: "#000000"});
+		current_path = Draw(current_fractal, {strokeColor: "#000000", strokeWidth: .1});
 		paper.view.update();
 	});
 });
