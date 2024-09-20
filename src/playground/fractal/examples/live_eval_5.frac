@@ -1,9 +1,10 @@
 depth = 5;
+scale = 500;
 angle = 60;
-Line 1;
+Line .5;
 Rotate angle;
 Line depth/5;
 Rotate -2 * angle;
 Line depth/5;
 Rotate angle;
-Line 1;
+Line .5;
