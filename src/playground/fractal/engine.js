@@ -37,14 +37,6 @@ function Draw(fractal, config) {
 				depth,
 				rotation,
 			});
-			console.log("Context:", {
-				...context,
-				position,
-				scale,
-				depth,
-				rotation,
-			});
-			console.log("Value:", command.value);
 			switch (command.name) {
 				case "assign": {
 					console.log("Evaluating live assignment");
