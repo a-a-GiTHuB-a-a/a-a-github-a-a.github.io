@@ -1,15 +1,4 @@
-body {
-	overflow: hidden;
-}
-#page {
-	overflow: hidden;
-	display: flex;
-	flex-direction: column;
-}
-#precanvas {
-	flex: 0 1 auto;
-}
 #content {
-	flex: 1 1 auto;
+	border: 1px dashed black;
 	width: 100%;
 }
