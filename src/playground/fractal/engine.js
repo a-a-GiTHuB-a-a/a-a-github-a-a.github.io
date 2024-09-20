@@ -4,7 +4,7 @@ paper.setup($("#content")[0]);
 
 let current_fractal = Compile("Line 1");
 
-let current_path = Draw(current_fractal, {strokeColor: "#000000"});
+let current_path = Draw(current_fractal, {strokeColor: "#000000", strokeWidth: 1});
 paper.view.translate(current_path.firstSegment.point.subtract(current_path.lastSegment.point).divide(2));
 
 function Draw(fractal, config) {
@@ -77,7 +77,7 @@ $("#newfrac").on("submit", function(e) {
 		current_fractal = Compile(data);
 		paper.project.activeLayer.removeChildren();
 		paper.view.translate(current_path.lastSegment.point.subtract(current_path.firstSegment.point).divide(2));
-		current_path = Draw(current_fractal, {strokeColor: "#000000", strokeWidth: .1});
+		current_path = Draw(current_fractal, {strokeColor: "#000000", strokeWidth: 1});
 		paper.view.translate(current_path.firstSegment.point.subtract(current_path.lastSegment.point).divide(2));
 		paper.view.update();
 	});
