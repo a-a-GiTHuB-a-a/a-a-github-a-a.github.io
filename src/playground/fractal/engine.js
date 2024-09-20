@@ -82,3 +82,5 @@ $("#newfrac").on("submit", function(e) {
 		paper.view.update();
 	});
 });
+
+$("#content").css("height", `calc(100vh - ${$("#precanvas").css("height")})`);

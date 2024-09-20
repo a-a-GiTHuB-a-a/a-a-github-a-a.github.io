@@ -17,6 +17,9 @@
 		<% if (typeof title !== "undefined") { %>
 			<title><%- title %></title>
 		<% } %>
+		<% if (typeof head !== "undefined") { %>
+			<% head %>
+		<% } %>
 	</head>
 	<body>
 		<%- body %>
