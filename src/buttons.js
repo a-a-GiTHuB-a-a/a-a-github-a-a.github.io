@@ -1,5 +1,5 @@
 $(function() {
-	const buttons = $("button:hover,input[type='button']:hover,input[type='submit']:hover");
+	const buttons = $("button,input[type='button'],input[type='submit']");
 	function animate() {
 		buttons.animate({
 			glintPosition: "100%",
