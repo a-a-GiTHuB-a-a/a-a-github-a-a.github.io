@@ -5,9 +5,9 @@ html, body {
 h1 {
 	text-align: center;
 }
-button {
-	background-color: #9f9f9f;
+button,input[type="button"],input[type="submit"] {
+	background-color: #bfbfbf;
 }
-button:hover {
-	background-color: #5f5f5f;
+button:hover,input[type="button"]:hover,input[type="submit"]:hover {
+	background-color: #7f7f7f;
 }
