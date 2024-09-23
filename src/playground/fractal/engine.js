@@ -75,8 +75,8 @@ $("#newfrac").on("submit", function(e) {
 	const file = $("#fracfile")[0].files[0];
 	file.text().then((data) => {
 		current_fractal = Compile(data);
-		paper.project.activeLayer.removeChildren();
 		paper.view.translate(current_path.lastSegment.point.subtract(current_path.firstSegment.point).divide(2));
+		paper.project.activeLayer.removeChildren();
 		current_path = Draw(current_fractal, {strokeColor: "#000000", strokeWidth: 1});
 		paper.view.translate(current_path.firstSegment.point.subtract(current_path.lastSegment.point).divide(2));
 		paper.view.update();
