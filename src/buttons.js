@@ -1,7 +1,7 @@
 $(function() {
 	const buttons = $("button,input[type='button'],input[type='submit']");
 	function animate(elem) {
-		$({glintPosition: "-10%"}).animate({glintPosition: "-10%"}, {
+		$({glintPosition: "-10"}).animate({glintPosition: "-10"}, {
 			duration: 1000,
 			step(val, _) {
 				const color = elem.css("background-color");
