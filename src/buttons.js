@@ -5,7 +5,13 @@ $(function() {
 			duration: 1000,
 			step(val, _) {
 				const color = elem.css("background-color");
-				elem.css("background-image", `linear-gradient(90deg, ${color}, ${color} ${val-10}%, #9f9f9f ${val}%, ${color} ${val+10}%, ${color})`)
+				if (val < 0) {
+					elem.css("background-image", `linear-gradient(90deg, ${color} ${val-10}%, #9f9f9f ${val}%, ${color} ${val+10}%, ${color})`);
+				} else if (val > 100) {
+					elem.css("background-image", `linear-gradient(90deg, ${color}, ${color} ${val-10}%, #9f9f9f ${val}%, ${color} ${val+10}%)`);
+				} else {
+					elem.css("background-image", `linear-gradient(90deg, ${color}, ${color} ${val-10}%, #9f9f9f ${val}%, ${color} ${val+10}%, ${color})`);
+				}
 			}
 		});
 	}
