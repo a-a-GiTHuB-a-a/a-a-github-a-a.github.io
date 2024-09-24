@@ -70,8 +70,6 @@ function Draw(fractal, config) {
 }
 
 $("#fracfile").on("change", function(e) {
-	e.preventDefault();
-	e.stopPropagation();
 	const file = $(this)[0].files[0];
 	file.text().then((data) => {
 		current_fractal = Compile(data);
