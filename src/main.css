@@ -10,4 +10,5 @@ h1 {
 }
 .btn:hover {
 	background-color: #7f7f7f;
+	cursor: pointer;
 }

@@ -69,10 +69,10 @@ function Draw(fractal, config) {
 	return p;
 }
 
-$("#newfrac").on("submit", function(e) {
+$("#fracfile").on("change", function(e) {
 	e.preventDefault();
 	e.stopPropagation();
-	const file = $("#fracfile")[0].files[0];
+	const file = $(this)[0].files[0];
 	file.text().then((data) => {
 		current_fractal = Compile(data);
 		paper.view.translate(current_path.lastSegment.point.subtract(current_path.firstSegment.point).divide(2));
@@ -82,5 +82,3 @@ $("#newfrac").on("submit", function(e) {
 		paper.view.update();
 	});
 });
-
-$("#content").css("height", `calc(100vh - ${$("#precanvas").css("height")})`);
