@@ -2,17 +2,14 @@ $(function() {
 	const buttons = $("button,input[type='button'],input[type='submit']");
 	buttons.attr("glintPosition", "0%");
 	function animate(elem) {
-		elem.animate({
-			glintPosition: "100%",
-		}, {
+		$({glintPosition: "0%"}).animate({glintPosition: "100%"}, {
 			step(val, _) {
-				$(this).css("background-image", `linear-gradient(${$(this).css("background-color")}, #9f9f9f ${val}%, ${$(this).css("background-color")})`)
+				elem.css("background-image", `linear-gradient(${elem.css("background-color")}, #9f9f9f ${val}%, ${elem.css("background-color")}`)
 			},
 			finally() {
-				$(this).style("glintPosition", "0%");
-				animate($(this));
+				animate(elem);
 			}
 		});
 	}
-	animate(buttons);
+	buttons.each(function() {animate($(this))});
 });
