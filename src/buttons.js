@@ -1,11 +1,11 @@
 $(function() {
 	const buttons = $("button,input[type='button'],input[type='submit']");
-	buttons.attr("glintPosition", "0%");
 	function animate(elem) {
-		$({glintPosition: "0%"}).animate({glintPosition: "100%"}, {
+		$({glintPosition: "-10%"}).animate({glintPosition: "110%"}, {
 			duration: 1000,
 			step(val, _) {
-				elem.css("background-image", `linear-gradient(90deg, ${elem.css("background-color")}, #9f9f9f ${val}%, ${elem.css("background-color")}`)
+				const color = elem.css("background-color");
+				elem.css("background-image", `linear-gradient(90deg, ${color}, ${color} ${val-10}%, #9f9f9f ${val}%, ${color} ${val+10}%, ${color})`)
 			}
 		});
 	}
