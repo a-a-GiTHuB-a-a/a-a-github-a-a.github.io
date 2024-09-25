@@ -82,6 +82,8 @@ function Parse(expr) {
 	//part 1.1: push all the remaining operators to the output
 	output.push(...ops.reverse());
 	
+	console.log("Output stack:", output);
+	
 	//part 2: construct AST
 	let stacc = [];
 	for (let value of output) {
