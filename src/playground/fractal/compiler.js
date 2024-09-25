@@ -38,7 +38,7 @@ function Parse(expr) {
 	//part 1: process expression
 	while (index < expr.length) {
 		const substr = expr.substring(index);
-		if (token = substr.match(re`^${ident_re}`) !== null) {
+		if ((token = substr.match(re`^${ident_re}`)) !== null) {
 			token = token[0];
 			output.push(new AST.VarExpr(token));
 			index += token.length;
