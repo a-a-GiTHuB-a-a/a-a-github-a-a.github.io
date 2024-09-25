@@ -49,7 +49,15 @@ function Parse(expr) {
 			index += token.length;
 			char += token.length;
 		} else if ((token = op_objs.find(o => expr.substring(index, index + o.name.length) === o.name)) !== undefined) {
-			while (ops.length && ops[ops.length - 1].name !== "(" && ((token.priority < ops[ops.length-1].priority) || ((token.priority === ops[ops.length-1].priority) && token.assoc))) {
+			console.log("Operator found:", token);
+			while (
+				ops.length &&
+				(ops[ops.length - 1].name !== "(") &&
+				(
+					(token.priority < ops[ops.length-1].priority) ||
+					((token.priority === ops[ops.length-1].priority) && token.assoc)
+				)
+			) {
 				output.push(ops.pop());
 			}
 			if ((token.name === ")") && (ops[ops.length - 1] === "(")) {
