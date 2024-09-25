@@ -8,16 +8,15 @@ const var_re = re`^(?<varname>${ident_re})\\s*=\\s*(?<value>[^=]+)$`;
 const cmd_re = re`^(?<cmdname>${ident_re})\\s+(?<value>[^=]+)$`;
 const LARGE_GAP = 16;
 const op_objs = [
-	new AST.Operator("+", 2, 1, true),
-	new AST.Operator("-", 2, 1, true),
-	new AST.Operator("*", 2, 2, true),
-	new AST.Operator("/", 2, 2, true),
-	new AST.Operator("%", 2, 2, true),
-	new AST.Operator("^", 2, 3, false),
+	new AST.Operator("+", 1),
+	new AST.Operator("-", 1),
+	new AST.Operator("*", 2),
+	new AST.Operator("/", 2),
+	new AST.Operator("%", 2),
+	new AST.Operator("^", 3, 2, false),
 	new AST.Operator("(", null, LARGE_GAP, true), //A null value means it's special.
 	new AST.Operator(")", null, -LARGE_GAP, true),
 ];
-const opnames = op_objs.map(a => a.name);
 const function_objs = [
 	new AST.SpecialFunction("sqrt", 1),
 ];
@@ -49,7 +48,7 @@ function Parse(expr) {
 			output.push(new AST.NumExpr(token));
 			index += token.length;
 			char += token.length;
-		} else if ((token = opnames.find(o => expr.substring(index, index + o.length) === o.name)) !== undefined) {
+		} else if ((token = op_objs.find(o => expr.substring(index, index + o.length) === o.name)) !== undefined) {
 			while (ops[ops.length - 1] !== "(" && ((token.priority < ops[ops.length-1].priority) || ((token.priority === ops[ops.length-1].priority) && token.assoc))) {
 				output.push(ops.pop());
 			}

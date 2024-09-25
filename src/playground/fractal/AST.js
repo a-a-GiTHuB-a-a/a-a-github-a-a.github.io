@@ -1,19 +1,52 @@
+/**
+ * Represents an operator.
+ */
 class Operator {
-	constructor(opname, num_args, priority = 0, assoc_left = true) {
-		this.name = opname;
+	/**
+	 * Creates an Operator object.
+	 * @param {string} name - The name of the operator.
+	 * @param {number} priority - The priority the operator has.
+	 * @param {number} [num_args=2] - The number of arguments the operator has. Useless as of right now.
+	 * @param {boolean} [assoc_left=true] - Whether the operator has left associativity.
+	 */
+	constructor(name, priority = 0, num_args = 2, assoc_left = true) {
+		this.name = name;
 		this.num_args = num_args;
 		this.priority = priority;
 		this.assoc = assoc_left;
 	}
 }
 
+/**
+ * Represents functions…in the math sense, of course.
+ */
 class SpecialFunction {
-	constructor(opname, num_args) {
-		this.name = opname;
+	/**
+	 * 
+	 * @param {string} name - The name of the function.
+	 * @param {*} num_args - The number of arguments of the function.
+	 */
+	constructor(name, num_args) {
+		this.name = name;
 		this.num_args = num_args;
 	}
 }
 
+/**
+ * @callback EvalFunction
+ * @param {Object} context - The context from which the expression should be run.
+ * @returns {number} value - The value returned when the expression is run in this context.
+ */
+
+/**
+ * @interface Expression
+ * @property {EvalFunction} evaluate - An evaluation function.
+ */
+
+/**
+ * Represents a function expression.
+ * @implements Expression
+ */
 class FunctionExpr {
 	constructor(func, ...args) {
 		this.func = func;
@@ -27,6 +60,10 @@ class FunctionExpr {
 	}
 }
 
+/**
+ * Represents a expression with a binary operator.
+ * @implements Expression
+ */
 class BinaryExpr {
 	constructor(op, expr1, expr2) {
 		this.op = op;
@@ -48,6 +85,10 @@ class BinaryExpr {
 	}
 }
 
+/**
+ * Represents a variable expression.
+ * @implements Expression
+ */
 class VarExpr {
 	constructor(varname) {
 		this.varname = varname;
@@ -58,6 +99,10 @@ class VarExpr {
 	}
 }
 
+/**
+ * Represents a constant expression.
+ * @implements Expression
+ */
 class NumExpr {
 	constructor(num) {
 		this.num = num;
