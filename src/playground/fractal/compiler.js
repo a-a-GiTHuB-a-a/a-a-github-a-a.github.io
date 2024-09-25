@@ -94,6 +94,7 @@ function Parse(expr) {
 		}
 	}
 	if (stacc.length !== 1) throw new Error("something went horrifically wrong with the arithmetic");
+	console.log("Finished compiling. AST:", stacc[0]);
 	return stacc[0];
 }
 
@@ -159,5 +160,5 @@ function Compile(contents) {
 
 export {
 	Compile,
-	FracSyntaxError
+	FracSyntaxError,
 };
