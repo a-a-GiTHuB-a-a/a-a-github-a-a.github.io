@@ -56,8 +56,8 @@ function Parse(expr) {
 				ops.pop();
 			}
 			ops.push(token);
-			index += token.opname.length;
-			char += token.opname.length;
+			index += token.name.length;
+			char += token.name.length;
 		} else if ((token = function_objs.find(f => expr.substring(index, index + f.length) === f.name)) !== undefined) {
 			ops.push(token);
 		} else {
