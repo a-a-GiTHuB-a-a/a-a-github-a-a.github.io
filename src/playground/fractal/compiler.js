@@ -6,14 +6,21 @@ const line_sep_re = /\s*;\s*/m;
 const num_re = /[+-]?(?:(?:[0-9]+\.[0-9]*)|(?:[0-9]*\.[0-9]+)|(?:[0-9]+))/;
 const var_re = re`^(?<varname>${ident_re})\\s*=\\s*(?<value>[^=]+)$`;
 const cmd_re = re`^(?<cmdname>${ident_re})\\s+(?<value>[^=]+)$`;
-const op_list = ["+", "-", "*", "/"];
-const op_priorities = {
-	["+"]: 1,
-	["-"]: 1,
-	["*"]: 2,
-	["/"]: 2,
-	[undefined]: 0,
-};
+const LARGE_GAP = 16;
+const op_objs = [
+	new AST.Operator("+", 2, 1, true),
+	new AST.Operator("-", 2, 1, true),
+	new AST.Operator("*", 2, 2, true),
+	new AST.Operator("/", 2, 2, true),
+	new AST.Operator("%", 2, 2, true),
+	new AST.Operator("^", 2, 3, false),
+	new AST.Operator("(", null, LARGE_GAP, true), //A null value means it's special.
+	new AST.Operator(")", null, -LARGE_GAP, true),
+];
+const opnames = op_objs.map(a => a.name);
+const function_objs = [
+	new AST.SpecialFunction("sqrt", 1),
+];
 
 class FracSyntaxError extends Error {
 	constructor(line, char, type = "Unknown syntax") {
@@ -25,33 +32,35 @@ class FracSyntaxError extends Error {
 function Parse(expr) {
 	let output = [];
 	let ops = [];
-	let opReady = false;
 	let index = 0;
 	let line = 1;
 	let char = 1;
 	let token;
 	//part 1: process expression
 	while (index < expr.length) {
-		if (!opReady && ((token = expr.slice(index).match(re`^${ident_re}`)) !== null)) {
+		const substr = expr.substring(index);
+		if (token = substr.match(re`^${ident_re}`) !== null) {
 			token = token[0];
 			output.push(new AST.VarExpr(token));
 			index += token.length;
 			char += token.length;
-			opReady = true;
-		} else if (!opReady && ((token = expr.slice(index).match(re`^${num_re}`)) !== null)) {
+		} else if ((token = substr.match(re`^${num_re}`)) !== null) {
 			token = token[0];
 			output.push(new AST.NumExpr(token));
 			index += token.length;
 			char += token.length;
-			opReady = true;
-		} else if (opReady && op_list.includes(token = expr[index])) {
-			while (op_priorities[token] <= op_priorities[ops[ops.length-1]]) {
+		} else if ((token = opnames.find(o => expr.substring(index, index + o.length) === o.name)) !== undefined) {
+			while (ops[ops.length - 1] !== "(" && ((token.priority < ops[ops.length-1].priority) || ((token.priority === ops[ops.length-1].priority) && token.assoc))) {
 				output.push(ops.pop());
 			}
-			ops.push(new AST.Operator(token));
-			index++;
-			char++;
-			opReady = false;
+			if ((token.name === ")") && (ops[ops.length - 1] === "(")) {
+				ops.pop();
+			}
+			ops.push(token);
+			index += token.opname.length;
+			char += token.opname.length;
+		} else if ((token = function_objs.find(f => expr.substring(index, index + f.length) === f.name)) !== undefined) {
+			ops.push(token);
 		} else {
 			token = expr[index];
 			switch (token) {

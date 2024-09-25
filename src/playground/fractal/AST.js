@@ -1,6 +1,29 @@
 class Operator {
-	constructor(opname) {
+	constructor(opname, num_args, priority = 0, assoc_left = true) {
 		this.name = opname;
+		this.num_args = num_args;
+		this.priority = priority;
+		this.assoc = assoc_left;
+	}
+}
+
+class SpecialFunction {
+	constructor(opname, num_args) {
+		this.name = opname;
+		this.num_args = num_args;
+	}
+}
+
+class FunctionExpr {
+	constructor(func, ...args) {
+		this.func = func;
+		this.args = args;
+	}
+
+	evaluate(context) {
+		switch (this.func.name) {
+			case "sqrt": return Math.sqrt(...this.args);
+		}
 	}
 }
 
@@ -19,6 +42,8 @@ class BinaryExpr {
 			case "-": return a - b;
 			case "*": return a * b;
 			case "/": return a / b;
+			case "%": return a % b;
+			case "^": return a ** b;
 		}
 	}
 }
@@ -44,8 +69,10 @@ class NumExpr {
 }
 
 export {
+	FunctionExpr,
 	BinaryExpr,
 	VarExpr,
 	NumExpr,
 	Operator,
+	SpecialFunction,
 };
