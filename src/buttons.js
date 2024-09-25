@@ -1,5 +1,5 @@
 $(function() {
-	const buttons = $("button,input[type='button'],input[type='submit']");
+	const buttons = $(".btn");
 	function animate(elem) {
 		$({glintPosition: -animate.width}).animate({glintPosition: 100 + animate.width}, {
 			duration: 2000,
