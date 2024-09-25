@@ -37,6 +37,9 @@ function Parse(expr) {
 	let token;
 	//part 1: process expression
 	while (index < expr.length) {
+		console.group("Cycle");
+		console.log("Output:", output);
+		console.log("Operator stack:", ops);
 		const substr = expr.substring(index);
 		if ((token = substr.match(re`^${ident_re}`)) !== null) {
 			token = token[0];
@@ -49,7 +52,6 @@ function Parse(expr) {
 			index += token.length;
 			char += token.length;
 		} else if ((token = op_objs.find(o => expr.substring(index, index + o.name.length) === o.name)) !== undefined) {
-			console.log("Operator found:", token);
 			while (
 				ops.length &&
 				(ops[ops.length - 1].name !== "(") &&
@@ -86,6 +88,7 @@ function Parse(expr) {
 				}
 			}
 		}
+		console.groupEnd();
 	}
 	//part 1.1: push all the remaining operators to the output
 	output.push(...ops.reverse());
