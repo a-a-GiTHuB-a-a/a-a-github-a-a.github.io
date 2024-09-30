@@ -150,6 +150,7 @@ function Compile(contents) {
 	};
 	for (let lineIndex in lines) {
 		console.groupCollapsed(`Line ${lineIndex}`);
+		console.log(`Line: ${line}`);
 		const line = lines[lineIndex];
 		let assign = var_re.exec(line);
 		if (assign !== null) {
@@ -188,7 +189,6 @@ function Compile(contents) {
 				});
 			}
 		}
-		console.log(`Line was ${line}`);
 		console.groupEnd();
 	}
 	console.log("Fractal compiling finished!");
