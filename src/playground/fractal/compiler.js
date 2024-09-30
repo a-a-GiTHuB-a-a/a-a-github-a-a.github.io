@@ -14,8 +14,8 @@ const op_objs = [
 	new AST.Operator("/", 2),
 	new AST.Operator("%", 2),
 	new AST.Operator("^", 3, 2, false),
-	new AST.Operator("(", null, LARGE_GAP, true), //A null value means it's special.
-	new AST.Operator(")", null, -LARGE_GAP, true),
+	new AST.Operator("(", LARGE_GAP, null, true), //A null value means it's special.
+	new AST.Operator(")", -LARGE_GAP, null, true),
 ];
 const function_objs = [
 	new AST.SpecialFunction("sqrt", 1),

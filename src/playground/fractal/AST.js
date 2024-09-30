@@ -3,7 +3,7 @@
  */
 class Operator {
 	/**
-	 * Creates an Operator object.
+	 * @constructor
 	 * @param {string} name - The name of the operator.
 	 * @param {number} priority - The priority the operator has.
 	 * @param {number} [num_args=2] - The number of arguments the operator has. Useless as of right now.
@@ -15,6 +15,10 @@ class Operator {
 		this.priority = priority;
 		this.assoc = assoc_left;
 	}
+
+	toString() {
+		return this.name;
+	}
 }
 
 /**
@@ -22,7 +26,7 @@ class Operator {
  */
 class SpecialFunction {
 	/**
-	 * 
+	 * @constructor
 	 * @param {string} name - The name of the function.
 	 * @param {*} num_args - The number of arguments of the function.
 	 */
@@ -30,12 +34,16 @@ class SpecialFunction {
 		this.name = name;
 		this.num_args = num_args;
 	}
+
+	toString() {
+		return this.name;
+	}
 }
 
 /**
  * @callback EvalFunction
  * @param {Object} context - The context from which the expression should be run.
- * @returns {number} value - The value returned when the expression is run in this context.
+ * @returns {number} - The value returned when the expression is run in this context.
  */
 
 /**
@@ -48,6 +56,11 @@ class SpecialFunction {
  * @implements Expression
  */
 class FunctionExpr {
+	/**
+	 * @constructor
+	 * @param {string} func - The name of the function.
+	 * @param  {...Expression} args - The argument expressions to be passed into the function.
+	 */
 	constructor(func, ...args) {
 		this.func = func;
 		this.args = args;
@@ -55,8 +68,12 @@ class FunctionExpr {
 
 	evaluate(context) {
 		switch (this.func.name) {
-			case "sqrt": return Math.sqrt(...this.args);
+			case "sqrt": return Math.sqrt(...this.args.map(t => t.evaluate(context)));
 		}
+	}
+
+	toString() {
+		return `${this.name}(${this.args.join(", ")})`;
 	}
 }
 
@@ -65,6 +82,12 @@ class FunctionExpr {
  * @implements Expression
  */
 class BinaryExpr {
+	/**
+	 * @constructor
+	 * @param {Operator} op - The operator to run on the two expressions.
+	 * @param {Expression} expr1 - The first expression.
+	 * @param {Expression} expr2 - The second expression.
+	 */
 	constructor(op, expr1, expr2) {
 		this.op = op;
 		this.expr1 = expr1;
@@ -83,6 +106,10 @@ class BinaryExpr {
 			case "^": return a ** b;
 		}
 	}
+
+	toString() {
+		return `(${this.expr1}) ${this.op} (${this.expr2})`;
+	}
 }
 
 /**
@@ -90,12 +117,20 @@ class BinaryExpr {
  * @implements Expression
  */
 class VarExpr {
+	/**
+	 * @constructor
+	 * @param {string} varname - The name of the variable.
+	 */
 	constructor(varname) {
 		this.varname = varname;
 	}
 
 	evaluate(context) {
 		return context[this.varname];
+	}
+
+	toString() {
+		return this.varname;
 	}
 }
 
@@ -104,12 +139,20 @@ class VarExpr {
  * @implements Expression
  */
 class NumExpr {
+	/**
+	 * @constructor
+	 * @param {string} num - The number.
+	 */
 	constructor(num) {
 		this.num = num;
 	}
 
 	evaluate(context) {
 		return +this.num;
+	}
+
+	toString() {
+		return this.num
 	}
 }
 
