@@ -38,8 +38,8 @@ function Parse(expr) {
 	//part 1: process expression
 	while (index < expr.length) {
 		console.group("Cycle");
-		console.log("Output:", output);
-		console.log("Operator stack:", ops);
+		console.log("Output:", JSON.stringify(output));
+		console.log("Operator stack:", JSON.stringify(ops));
 		const substr = expr.substring(index);
 		if ((token = substr.match(re`^${ident_re}`)) !== null) {
 			token = token[0];
