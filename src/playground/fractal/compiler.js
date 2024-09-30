@@ -21,9 +21,32 @@ const function_objs = [
 	new AST.SpecialFunction("sqrt", 1),
 ];
 
+/**
+ * A general class for syntax errors in the fractal engine.
+ */
 class FracSyntaxError extends Error {
+	/**
+	 * @constructor
+	 * @param {number|null} line - The line at which the error occurred.
+	 * @param {number|null} char - The character of the line at which the error occurred.
+	 * @param {string} type - The type of error found.
+	 */
 	constructor(line, char, type = "Unknown syntax") {
-		super(`${type} at line ${line}, character ${char}`);
+		let name = type;
+		let attributed = false;
+		if (line !== null) {
+			attributed = true;
+			name += ` at line ${line}`;
+		}
+		if (char !== null) {
+			if (attributed) {
+				name += `, character ${char}`;
+			} else {
+				name += ` at line unknown, character ${char}`
+			}
+		}
+
+		super(name);
 		this.name = "SyntaxError";
 	}
 }
@@ -99,6 +122,9 @@ function Parse(expr) {
 	let stacc = [];
 	for (let value of output) {
 		if (value.constructor.name === "Operator") {
+			if (value.name === "(") {
+				throw new FracSyntaxError(null, null, "mismatched parentheses");
+			}
 			let b = stacc.pop();
 			let a = stacc.pop();
 			stacc.push(new AST.BinaryExpr(value, a, b));
