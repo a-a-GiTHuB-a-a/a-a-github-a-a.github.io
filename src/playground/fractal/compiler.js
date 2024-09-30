@@ -65,7 +65,7 @@ function Parse(expr) {
 			if ((token.name === ")") && (ops[ops.length - 1] === "(")) {
 				ops.pop();
 			}
-			ops.push(token);
+			if (token.name !== ")") ops.push(token);
 			index += token.name.length;
 			char += token.name.length;
 		} else if ((token = function_objs.find(f => expr.substring(index, index + f.length) === f.name)) !== undefined) {

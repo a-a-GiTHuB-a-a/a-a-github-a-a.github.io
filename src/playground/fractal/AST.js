@@ -21,7 +21,7 @@ class Operator {
 	}
 
 	toJSON() {
-		return `Operator(${this.name})`;
+		return `Operator("${this.name}")`;
 	}
 }
 
