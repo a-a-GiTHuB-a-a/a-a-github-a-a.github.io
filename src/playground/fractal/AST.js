@@ -19,6 +19,10 @@ class Operator {
 	toString() {
 		return this.name;
 	}
+
+	toJSON() {
+		return `Operator(${this.name})`;
+	}
 }
 
 /**
@@ -37,6 +41,10 @@ class SpecialFunction {
 
 	toString() {
 		return this.name;
+	}
+
+	toJSON() {
+		return `SpecialFunction(${this.name})`;
 	}
 }
 
@@ -75,6 +83,10 @@ class FunctionExpr {
 	toString() {
 		return `${this.name}(${this.args.join(", ")})`;
 	}
+
+	toJSON() {
+		return `FunctionExpr(${this.name},${this.args.join(",")})`;
+	}
 }
 
 /**
@@ -110,6 +122,10 @@ class BinaryExpr {
 	toString() {
 		return `(${this.expr1}) ${this.op} (${this.expr2})`;
 	}
+
+	toJSON() {
+		return `BinaryExpr((${this.expr1}) ${this.op} (${this.expr2}))`;
+	}
 }
 
 /**
@@ -132,6 +148,10 @@ class VarExpr {
 	toString() {
 		return this.varname;
 	}
+
+	toJSON() {
+		return `VarExpr(${this.varname})`;
+	}
 }
 
 /**
@@ -153,6 +173,10 @@ class NumExpr {
 
 	toString() {
 		return this.num
+	}
+
+	toJSON() {
+		return `NumExpr(${this.num})`;
 	}
 }
 
