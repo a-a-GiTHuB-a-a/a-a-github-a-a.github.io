@@ -150,8 +150,8 @@ function Compile(contents) {
 	};
 	for (let lineIndex in lines) {
 		console.groupCollapsed(`Line ${lineIndex}`);
-		console.log(`Line: ${line}`);
 		const line = lines[lineIndex];
+		console.log(`Line: ${line}`);
 		let assign = var_re.exec(line);
 		if (assign !== null) {
 			console.log("Declaration detected!");
