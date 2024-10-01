@@ -21,7 +21,7 @@ class Operator {
 	}
 
 	toJSON() {
-		return `Operator("${this.name}")`;
+		return {constructor: "Operator", name:this.name};
 	}
 }
 
@@ -44,7 +44,7 @@ class SpecialFunction {
 	}
 
 	toJSON() {
-		return `SpecialFunction(${this.name})`;
+		return {constructor: "SpecialFunction", name:this.name};
 	}
 }
 
@@ -85,7 +85,7 @@ class FunctionExpr {
 	}
 
 	toJSON() {
-		return `FunctionExpr(${this.name},${this.args.join(",")})`;
+		return {constructor: "FunctionExpr", ...this};
 	}
 }
 
@@ -124,7 +124,7 @@ class BinaryExpr {
 	}
 
 	toJSON() {
-		return `BinaryExpr((${this.expr1}) ${this.op} (${this.expr2}))`;
+		return {constructor: "BinaryExpr", ...this};
 	}
 }
 
@@ -150,7 +150,7 @@ class VarExpr {
 	}
 
 	toJSON() {
-		return `VarExpr(${this.varname})`;
+		return {constructor: "VarExpr", ...this};
 	}
 }
 
@@ -176,7 +176,7 @@ class NumExpr {
 	}
 
 	toJSON() {
-		return `NumExpr(${this.num})`;
+		return {constructor: "NumExpr", ...this};
 	}
 }
 
