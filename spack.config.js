@@ -8,8 +8,8 @@ module.exports = config({
 	workingDir: __dirname,
 	entry: {
 		fractal: {
-			import: path.join(source_path, "playground/fractal/engine.ts")
-			filename: path.join(build_path, "playground/fractal/engine.js")
+			import: path.join(source_path, "playground/fractal/engine.ts"),
+			filename: path.join(build_path, "playground/fractal/engine.js"),
 		},
-	}
+	},
 });
