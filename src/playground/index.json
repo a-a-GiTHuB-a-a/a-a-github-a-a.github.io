@@ -1,3 +1,4 @@
 {
-	"title": "Program Playground | Da BOXEN"
+	"title": "Program Playground | Da BOXEN",
+	"includeJquery": false
 }

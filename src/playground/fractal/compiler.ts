@@ -1,5 +1,5 @@
-import {re} from "./tags.js";
-import * as AST from "./AST.js";
+import {re} from "./tags.ts";
+import * as AST from "./AST.ts";
 
 const ident_re = /[A-Za-z_]+/;
 const line_sep_re = /\s*;\s*/m;
@@ -25,13 +25,7 @@ const function_objs = [
  * A general class for syntax errors in the fractal engine.
  */
 class FracSyntaxError extends Error {
-	/**
-	 * @constructor
-	 * @param {number|null} line - The line at which the error occurred.
-	 * @param {number|null} char - The character of the line at which the error occurred.
-	 * @param {string} type - The type of error found.
-	 */
-	constructor(line, char, type = "Unknown syntax") {
+	constructor(line:number|null, char:number|null, type:string = "Unknown syntax") {
 		let name = type;
 		let attributed = false;
 		if (line !== null) {
@@ -52,17 +46,15 @@ class FracSyntaxError extends Error {
 }
 
 /**
- * Parses an expression into an AST tree.
- * @param {string} expr 
- * @returns {AST.Expression}
+ * Parses an expression string and spits out an AST.
  */
-function Parse(expr) {
-	let output = [];
-	let ops = [];
-	let index = 0;
-	let line = 1;
-	let char = 1;
-	let token;
+function Parse(expr:string):AST.Expression {
+	let output:Array<AST.Operator|AST.SpecialFunction|AST.Expression> = [];
+	let ops:Array<AST.Operator|AST.SpecialFunction> = [];
+	let index:number = 0;
+	let line:number = 1;
+	let char:number = 1;
+	let token:any;
 	//part 1: process expression
 	while (index < expr.length) {
 		console.groupCollapsed("Cycle");
@@ -130,19 +122,23 @@ function Parse(expr) {
 	console.log("Output stack:", output);
 	
 	//part 2: construct AST
-	let stacc = [];
+	let stacc:Array<AST.Expression> = [];
 	for (let value of output) {
-		if (value.constructor.name === "Operator") {
+		if (value instanceof AST.Operator) {
 			if (value.name === "(") {
 				throw new FracSyntaxError(null, null, "mismatched parentheses");
 			}
 			let b = stacc.pop();
 			let a = stacc.pop();
 			stacc.push(new AST.BinaryExpr(value, a, b));
-		} else if (value.constructor.name === "SpecialFunction") {
+		} else if (value instanceof AST.SpecialFunction) {
 			let func = new AST.FunctionExpr(value);
 			for (let _ = 0; _ < value.num_args; _++) {
-				func.args.unshift(stacc.pop());
+				let arg = stacc.pop();
+				if (arg === undefined) {
+					throw new FracSyntaxError(null, null, "Insufficient function arguments");
+				}
+				func.args.unshift(arg);
 			}
 			stacc.push(func);
 		} else {
@@ -162,40 +158,25 @@ function Parse(expr) {
  * @property {number} rotation - The current rotation value of the fractal.
  * @property {object[]} commands - The list of commands to execute.
  */
-class Fractal {
-	/**
-	 * @constructor
-	 * @param {paper.Point} position - The position that the fractal will start at.
-	 * @param {number} scale - The scale of the fractal.
-	 * @param {number} depth - The depth that the fractal will recursively check.
-	 * @param {number} rotation - The current rotation value of the fractal.
-	 * @param {object[]} commands - The list of commands to execute.
-	 */
-	constructor({position, scale, depth, rotation, commands}) {
-		this.position = position;
-		this.scale = scale;
-		this.depth = depth;
-		this.rotation = rotation;
-		this.commands = commands;
-	}
+interface Fractal {
+	position:paper.Point;
+	scale:number;
+	depth:number;
+	rotation:number;
+	commands:Array<{value: AST.Expression, [key: string]: any}>;
 }
 
-/**
- * Parses a string that represents FRAC code and processes it into a usable fractal object.
- * @param {string} contents 
- * @returns {Fractal}
- */
-function Compile(contents) {
+function Compile(contents:string):Fractal {
 	console.group("Compiling new fractal");
 	contents = contents.trim();
 	let lines = contents.split(line_sep_re);
-	let frac = new Fractal({
+	let frac:Fractal = {
 		position: paper.view.center,
 		scale: 500,
 		depth: 5,
 		rotation: 0,
 		commands: [],
-	});
+	};
 	for (let lineIndex in lines) {
 		console.groupCollapsed(`Line ${lineIndex}`);
 		const line = lines[lineIndex];
@@ -203,9 +184,9 @@ function Compile(contents) {
 		let assign = var_re.exec(line);
 		if (assign !== null) {
 			console.log("Declaration detected!");
-			let value = Parse(assign.groups.value);
+			let value = Parse(assign.groups?.value as string);
 			if (value === undefined) continue;
-			switch (assign.groups.varname) {
+			switch (assign.groups?.varname as string) {
 				case "scale": {
 					frac.scale = value.evaluate({});
 					break;
@@ -221,7 +202,7 @@ function Compile(contents) {
 				default: {
 					frac.commands.push({
 						name: "assign",
-						varname: assign.groups.varname,
+						varname: assign.groups?.varname,
 						value,
 					});
 				}
@@ -229,10 +210,10 @@ function Compile(contents) {
 		} else {
 			let cmd = cmd_re.exec(line);
 			if (cmd !== null) {
-				let value = Parse(cmd.groups.value);
+				let value = Parse(cmd.groups?.value as string);
 				if (value === undefined) continue;
 				frac.commands.push({
-					name: cmd.groups.cmdname.toLowerCase(),
+					name: (cmd.groups?.cmdname as string).toLowerCase(),
 					value: value
 				});
 			}

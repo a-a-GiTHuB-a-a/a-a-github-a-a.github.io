@@ -1,4 +1,6 @@
-import {Compile, Fractal, FracSyntaxError} from "./compiler.js";
+import {Compile, Fractal} from "./compiler.ts";
+import paper from "paper";
+import $ from "jquery";
 
 paper.setup($("#content")[0]);
 
@@ -7,14 +9,8 @@ let current_fractal = Compile("Line 1");
 let current_path = Draw(current_fractal, {strokeColor: "#000000", strokeWidth: 1});
 paper.view.translate(current_path.firstSegment.point.subtract(current_path.lastSegment.point).divide(2));
 
-/**
- * Processes code in FRAC format and returns a Path.
- * @param {Fractal} fractal 
- * @param {object} config 
- * @returns {paper.Path}
- */
-function Draw(fractal, config) {
-	let p;
+function Draw(fractal:Fractal, config:object):paper.Path {
+	let p:paper.Path;
 	console.groupCollapsed(fractal);
 	if (fractal.depth <= 0) {
 		p = new paper.Path({
@@ -75,16 +71,11 @@ function Draw(fractal, config) {
 	return p;
 }
 
-/**
- * Gets the midpoint of a path.
- * @param {paper.Path} path - The path to find the midpoint of.
- * @returns {paper.Point}
- */
-function midpoint(path) {
+function midpoint(path:paper.Path):paper.Point {
 	return path.lastSegment.point.subtract(path.firstSegment.point).divide(2);
 }
 
-$("#fracfile").on("change", function(e) {
+$("#fracfile").on("change", function() {
 	const file = $(this)[0].files[0];
 	file.text().then((data) => {
 		current_fractal = Compile(data);
