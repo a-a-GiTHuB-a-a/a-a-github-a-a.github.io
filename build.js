@@ -71,7 +71,7 @@ function process_file(file_path) {
 					},
 				},
 			});
-			fs.writeFileSync(build_path, value.code);
+			fs.writeFileSync(build_path.replace(/\.ts/, ".js"), value.code);
 		}
 		default: {
 			fs.writeFileSync(build_path, file);
