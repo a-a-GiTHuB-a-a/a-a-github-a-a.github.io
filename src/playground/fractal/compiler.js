@@ -64,7 +64,9 @@ function Parse(expr) {
 		console.log("Output:", [...output]);
 		console.log("Operator stack:", [...ops]);
 		const substr = expr.substring(index);
-		if ((token = substr.match(re`^${ident_re}`)) !== null) {
+		if ((token = function_objs.find(f => expr.substring(index, index + f.length) === f.name)) !== undefined) {
+			ops.push(token);
+		} else if ((token = substr.match(re`^${ident_re}`)) !== null) {
 			token = token[0];
 			output.push(new AST.VarExpr(token));
 			index += token.length;
@@ -91,8 +93,6 @@ function Parse(expr) {
 			if (token.name !== ")") ops.push(token);
 			index += token.name.length;
 			char += token.name.length;
-		} else if ((token = function_objs.find(f => expr.substring(index, index + f.length) === f.name)) !== undefined) {
-			ops.push(token);
 		} else {
 			token = expr[index];
 			switch (token) {
