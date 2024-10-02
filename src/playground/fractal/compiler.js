@@ -60,7 +60,7 @@ function Parse(expr) {
 	let token;
 	//part 1: process expression
 	while (index < expr.length) {
-		console.group("Cycle");
+		console.groupCollapsed("Cycle");
 		console.log("Output:", [...output]);
 		console.log("Operator stack:", [...ops]);
 		const substr = expr.substring(index);
