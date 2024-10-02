@@ -1,7 +1,6 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const ejs = require("ejs");
-const swc = require("@swc/core");
 
 if (process.argv.length != 4) {
 	console.error("Fatal Error: must have 4 args");
@@ -62,16 +61,6 @@ function process_file(file_path) {
 		}
 		case ".json": {
 			break;
-		}
-		case ".ts": {
-			const value = swc.transformFileSync(source_path, {
-				jsc: {
-					parser: {
-						syntax: "typescript",
-					},
-				},
-			});
-			fs.writeFileSync(build_path.replace(/\.ts/, ".js"), value.code);
 		}
 		default: {
 			fs.writeFileSync(build_path, file);

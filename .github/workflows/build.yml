@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Prepare build script
         run: npm ci
-      - name: Build site content
+      - name: Build main site content
         run: npm run build
       - name: Commit and push to repo
         uses: stefanzweifel/git-auto-commit-action@v5
