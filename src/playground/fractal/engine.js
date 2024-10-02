@@ -1,4 +1,4 @@
-import {Compile} from "./compiler.js";
+import {Compile, Fractal, FracSyntaxError} from "./compiler.js";
 
 paper.setup($("#content")[0]);
 
@@ -7,6 +7,12 @@ let current_fractal = Compile("Line 1");
 let current_path = Draw(current_fractal, {strokeColor: "#000000", strokeWidth: 1});
 paper.view.translate(current_path.firstSegment.point.subtract(current_path.lastSegment.point).divide(2));
 
+/**
+ * Processes code in FRAC format and returns a Path.
+ * @param {Fractal} fractal 
+ * @param {object} config 
+ * @returns {paper.Path}
+ */
 function Draw(fractal, config) {
 	let p;
 	console.groupCollapsed(fractal);
@@ -69,15 +75,24 @@ function Draw(fractal, config) {
 	return p;
 }
 
+/**
+ * Gets the midpoint of a path.
+ * @param {paper.Path} path - The path to find the midpoint of.
+ * @returns {paper.Point}
+ */
+function midpoint(path) {
+	return path.lastSegment.point.subtract(path.firstSegment.point).divide(2);
+}
+
 $("#fracfile").on("change", function(e) {
 	const file = $(this)[0].files[0];
 	file.text().then((data) => {
 		current_fractal = Compile(data);
-		paper.view.translate(current_path.lastSegment.point.subtract(current_path.firstSegment.point).divide(2));
+		paper.view.translate(midpoint(current_path));
 		paper.project.activeLayer.removeChildren();
 		paper.view.update();
 		current_path = Draw(current_fractal, {strokeColor: "#000000", strokeWidth: 1});
-		paper.view.translate(current_path.firstSegment.point.subtract(current_path.lastSegment.point).divide(2));
+		paper.view.translate(midpoint(current_path).multiply(-1));
 		paper.view.update();
 	});
 });

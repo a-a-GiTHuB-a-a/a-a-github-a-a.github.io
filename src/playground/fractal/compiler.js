@@ -51,6 +51,11 @@ class FracSyntaxError extends Error {
 	}
 }
 
+/**
+ * Parses an expression into an AST tree.
+ * @param {string} expr 
+ * @returns {AST.Expression}
+ */
 function Parse(expr) {
 	let output = [];
 	let ops = [];
@@ -149,17 +154,48 @@ function Parse(expr) {
 	return stacc[0];
 }
 
+/**
+ * A class for representing drawable fractals.
+ * @property {paper.Point} position - The position that the fractal will start at.
+ * @property {number} scale - The scale of the fractal.
+ * @property {number} depth - The depth that the fractal will recursively check.
+ * @property {number} rotation - The current rotation value of the fractal.
+ * @property {object[]} commands - The list of commands to execute.
+ */
+class Fractal {
+	/**
+	 * @constructor
+	 * @param {paper.Point} position - The position that the fractal will start at.
+	 * @param {number} scale - The scale of the fractal.
+	 * @param {number} depth - The depth that the fractal will recursively check.
+	 * @param {number} rotation - The current rotation value of the fractal.
+	 * @param {object[]} commands - The list of commands to execute.
+	 */
+	constructor({position, scale, depth, rotation, commands}) {
+		this.position = position;
+		this.scale = scale;
+		this.depth = depth;
+		this.rotation = rotation;
+		this.commands = commands;
+	}
+}
+
+/**
+ * Parses a string that represents FRAC code and processes it into a usable fractal object.
+ * @param {string} contents 
+ * @returns {Fractal}
+ */
 function Compile(contents) {
 	console.group("Compiling new fractal");
 	contents = contents.trim();
 	let lines = contents.split(line_sep_re);
-	let frac = {
+	let frac = new Fractal({
 		position: paper.view.center,
 		scale: 500,
 		depth: 5,
 		rotation: 0,
 		commands: [],
-	};
+	});
 	for (let lineIndex in lines) {
 		console.groupCollapsed(`Line ${lineIndex}`);
 		const line = lines[lineIndex];
@@ -212,4 +248,5 @@ function Compile(contents) {
 export {
 	Compile,
 	FracSyntaxError,
+	Fractal,
 };

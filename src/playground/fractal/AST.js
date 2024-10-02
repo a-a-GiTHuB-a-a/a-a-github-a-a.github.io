@@ -58,12 +58,15 @@ class SpecialFunction {
  * @interface Expression
  * @property {EvalFunction} evaluate - An evaluation function.
  */
+class Expression {
+	evaluate(context) {}
+}
 
 /**
  * Represents a function expression.
  * @implements Expression
  */
-class FunctionExpr {
+class FunctionExpr extends Expression {
 	/**
 	 * @constructor
 	 * @param {SpecialFunction} func - The name of the function.
@@ -93,7 +96,7 @@ class FunctionExpr {
  * Represents a expression with a binary operator.
  * @implements Expression
  */
-class BinaryExpr {
+class BinaryExpr extends Expression {
 	/**
 	 * @constructor
 	 * @param {Operator} op - The operator to run on the two expressions.
@@ -132,7 +135,7 @@ class BinaryExpr {
  * Represents a variable expression.
  * @implements Expression
  */
-class VarExpr {
+class VarExpr extends Expression {
 	/**
 	 * @constructor
 	 * @param {string} varname - The name of the variable.
@@ -158,7 +161,7 @@ class VarExpr {
  * Represents a constant expression.
  * @implements Expression
  */
-class NumExpr {
+class NumExpr extends Expression {
 	/**
 	 * @constructor
 	 * @param {string} num - The number.
@@ -181,6 +184,7 @@ class NumExpr {
 }
 
 export {
+	Expression,
 	FunctionExpr,
 	BinaryExpr,
 	VarExpr,
