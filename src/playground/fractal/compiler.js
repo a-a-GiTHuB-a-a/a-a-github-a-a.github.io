@@ -89,8 +89,12 @@ function Parse(expr) {
 			) {
 				output.push(ops.pop());
 			}
-			if ((token.name === ")") && (ops[ops.length - 1] === "(")) {
+			if ((token.name === ")")) {
+				if (ops[ops.length - 1] !== "(") throw new FracSyntaxError(line, char, "mismatched parentheses");
 				ops.pop();
+				if (ops[ops.length - 1].constructor.name === "SpecialFunction") {
+					output.push(ops.pop());
+				}
 			}
 			if (token.name !== ")") ops.push(token);
 			index += token.name.length;
@@ -130,6 +134,12 @@ function Parse(expr) {
 			let b = stacc.pop();
 			let a = stacc.pop();
 			stacc.push(new AST.BinaryExpr(value, a, b));
+		} else if (value.constructor.name === "SpecialFunction") {
+			let func = new FunctionExpr(value);
+			for (let _ = 0; _ < value.num_args; _++) {
+				func.args.unshift(stacc.pop());
+			}
+			stacc.push(func);
 		} else {
 			stacc.push(value);
 		}

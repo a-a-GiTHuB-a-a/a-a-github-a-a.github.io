@@ -66,7 +66,7 @@ class SpecialFunction {
 class FunctionExpr {
 	/**
 	 * @constructor
-	 * @param {string} func - The name of the function.
+	 * @param {SpecialFunction} func - The name of the function.
 	 * @param  {...Expression} args - The argument expressions to be passed into the function.
 	 */
 	constructor(func, ...args) {
@@ -172,7 +172,7 @@ class NumExpr {
 	}
 
 	toString() {
-		return this.num
+		return this.num;
 	}
 
 	toJSON() {
