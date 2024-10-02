@@ -135,7 +135,7 @@ function Parse(expr) {
 			let a = stacc.pop();
 			stacc.push(new AST.BinaryExpr(value, a, b));
 		} else if (value.constructor.name === "SpecialFunction") {
-			let func = new FunctionExpr(value);
+			let func = new AST.FunctionExpr(value);
 			for (let _ = 0; _ < value.num_args; _++) {
 				func.args.unshift(stacc.pop());
 			}
