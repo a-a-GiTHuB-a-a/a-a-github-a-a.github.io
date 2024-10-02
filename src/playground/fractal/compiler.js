@@ -64,7 +64,7 @@ function Parse(expr) {
 		console.log("Output:", [...output]);
 		console.log("Operator stack:", [...ops]);
 		const substr = expr.substring(index);
-		if ((token = function_objs.find(f => expr.substring(index, index + f.length) === f.name)) !== undefined) {
+		if ((token = function_objs.find(f => expr.substring(index, index + f.name.length) === f.name)) !== undefined) {
 			ops.push(token);
 		} else if ((token = substr.match(re`^${ident_re}`)) !== null) {
 			token = token[0];
