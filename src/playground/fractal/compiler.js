@@ -90,7 +90,7 @@ function Parse(expr) {
 				output.push(ops.pop());
 			}
 			if ((token.name === ")")) {
-				if (ops[ops.length - 1] !== "(") throw new FracSyntaxError(line, char, "mismatched parentheses");
+				if (ops[ops.length - 1].name !== "(") throw new FracSyntaxError(line, char, "mismatched parentheses");
 				ops.pop();
 				if (ops[ops.length - 1].constructor.name === "SpecialFunction") {
 					output.push(ops.pop());
