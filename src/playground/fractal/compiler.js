@@ -66,6 +66,8 @@ function Parse(expr) {
 		const substr = expr.substring(index);
 		if ((token = function_objs.find(f => expr.substring(index, index + f.name.length) === f.name)) !== undefined) {
 			ops.push(token);
+			index += token.name.length;
+			char += token.name.length;
 		} else if ((token = substr.match(re`^${ident_re}`)) !== null) {
 			token = token[0];
 			output.push(new AST.VarExpr(token));
