@@ -66,7 +66,9 @@ function process_file(file_path) {
 		case ".ts": {
 			const value = swc.transformFileSync(source_path, {
 				jsc: {
-					syntax: "typescript"
+					parser: {
+						syntax: "typescript",
+					},
 				},
 			});
 			fs.writeFileSync(build_path, value.code);
