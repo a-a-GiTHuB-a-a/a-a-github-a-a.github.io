@@ -4,7 +4,7 @@
   "author": "a-a-GiTHuB-a-a",
   "scripts": {
     "build:pack": "npm run build:pack:dev",
-    "build:pack:dev": "webpack --mode=development",
+    "build:pack:dev": "webpack --mode=development --stats-error-details",
     "build:pack:prod": "webpack --mode=production --node-env=production",
     "build:main": "node build.js src site"
   },
