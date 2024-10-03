@@ -42,6 +42,10 @@ const config = {
     resolve: {
         extensions: [".tsx", ".ts", ".jsx", ".js", "..."],
         modules: [path.resolve(__dirname, "node_modules")],
+        fallback: {
+            jquery: require.resolve("jquery"),
+            paper: require.resolve("paper"),
+        },
     },
 };
 
