@@ -41,6 +41,10 @@ const config = {
     },
     resolve: {
         extensions: [".tsx", ".ts", ".jsx", ".js", "..."],
+        alias: {
+            jquery: path.resolve(__dirname, "./node_modules/jquery"),
+            paper: path.resolve(__dirname, "./node_modules/paper"),
+        },
     },
 };
 
