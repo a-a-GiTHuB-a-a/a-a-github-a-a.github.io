@@ -1,9 +1,12 @@
 {
-  "name": "site_builder",
+  "name": "my-webpack-project",
   "displayName": "Site Builder",
   "author": "a-a-GiTHuB-a-a",
   "scripts": {
-    "build": "npx spack && node build.js src site"
+    "build:pack": "npm run build:pack:dev",
+    "build:pack:dev": "webpack --mode=development",
+    "build:pack:prod": "webpack --mode=production --node-env=production",
+    "build:main": "node build.js src site"
   },
   "dependencies": {
     "ejs": "^3.1.10",
@@ -11,6 +14,14 @@
     "paper": "^0.12.18"
   },
   "devDependencies": {
-    "@swc/core": "^1.7.26"
-  }
+    "@webpack-cli/generators": "^3.0.7",
+    "css-loader": "^7.1.2",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.6.2",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "version": "1.0.0",
+  "description": "My webpack project"
 }

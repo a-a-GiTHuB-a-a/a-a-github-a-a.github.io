@@ -34,12 +34,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Prepare build script
         run: npm ci
-      - name: Build main site content
-        run: npm run build
-      - name: Commit and push to repo
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: Site Build
+      - name: Pack site content
+        run: npm run build:main
+      - name: Build site content
+        run: npm run build:pack
+      - name: Read directory (for debugging purposes)
+        run: ls -AR site
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
