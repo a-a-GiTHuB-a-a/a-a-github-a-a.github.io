@@ -77,12 +77,14 @@ function Parse(expr:string):AST.Expression {
 			index += token.length;
 			char += token.length;
 		} else if ((token = op_objs.find(o => expr.substring(index, index + o.name.length) === o.name)) !== undefined) {
+			let last:AST.Operator;
 			while (
 				ops.length &&
-				(ops[ops.length - 1].name !== "(") &&
+				(ops[ops.length - 1] instanceof AST.Operator) &&
+				((last = ops[ops.length - 1] as AST.Operator).name !== "(") &&
 				(
-					(token.priority < ops[ops.length-1].priority) ||
-					((token.priority === ops[ops.length-1].priority) && token.assoc)
+					(token.priority < last.priority) ||
+					((token.priority === last.priority) && token.assoc)
 				)
 			) {
 				output.push(ops.pop());
