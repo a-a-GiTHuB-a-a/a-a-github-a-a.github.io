@@ -7,6 +7,7 @@
     "allowJs": true,
     "paths": {
       "paper": ["./node_modules/paper/dist/paper-full.min.js"],
+      "@types/paper": ["./node_modules/paper/dist/paper.d.ts"],
       "jquery": ["./node_modules/jquery/dist/jquery.min.js"]
     }
   },
