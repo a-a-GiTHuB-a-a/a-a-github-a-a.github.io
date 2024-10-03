@@ -9,8 +9,7 @@ const isProduction = process.env.NODE_ENV == "production";
 const config = {
     entry: {
         frac: {
-            import: "./src/playground/fractal/engine.ts",
-            filename: "./playground/fractal/engine.js"
+            import: "src/playground/fractal/engine.ts",
         },
     },
     output: {
