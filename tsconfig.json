@@ -6,8 +6,8 @@
     "target": "ES2020",
     "allowJs": true,
     "paths": {
-      "paper": ["./node_modules/paper"],
-      "jquery": ["./node_modules/jquery"]
+      "paper": ["./node_modules/paper/dist/paper-full.min.js"],
+      "jquery": ["./node_modules/jquery/dist/jquery.min.js"]
     }
   },
   "moduleResolution": "nodenext"
