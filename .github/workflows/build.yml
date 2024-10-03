@@ -35,9 +35,9 @@ jobs:
       - name: Prepare build script
         run: npm ci
       - name: Pack site content
-        run: npm run build:main
-      - name: Build site content
         run: npm run build:pack
+      - name: Build site content
+        run: npm run build:main
       - name: Read directory (for debugging purposes)
         run: ls -AR site
       - name: Setup Pages

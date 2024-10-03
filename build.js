@@ -59,9 +59,11 @@ function process_file(file_path) {
 			fs.writeFileSync(build_path, new_content);
 			break;
 		}
-		case ".json": {
+		case ".ts":
+		case ".tsx":
+		case ".jsx":
+		case ".json":
 			break;
-		}
 		default: {
 			fs.writeFileSync(build_path, file);
 			break;
