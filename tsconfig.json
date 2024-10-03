@@ -4,7 +4,11 @@
     "noImplicitAny": true,
     "module": "ES2022",
     "target": "ES2020",
-    "allowJs": true
+    "allowJs": true,
+    "paths": {
+      "paper": ["./node_modules/paper"],
+      "jquery": ["./node_modules/jquery"]
+    }
   },
   "moduleResolution": "nodenext"
 }
