@@ -1,5 +1,6 @@
-import {re} from "./tags.ts";
-import * as AST from "./AST.ts";
+import {re} from "./tags";
+import * as AST from "./AST";
+import paper from "paper";
 
 const ident_re = /[A-Za-z_]+/;
 const line_sep_re = /\s*;\s*/m;

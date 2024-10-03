@@ -1,4 +1,5 @@
-import {Compile, Fractal} from "./compiler.ts";
+import {Compile, Fractal} from "./compiler";
+import {ContextObject} from "./AST";
 import paper from "paper";
 import $ from "jquery";
 
@@ -26,7 +27,7 @@ function Draw(fractal:Fractal, config:object):paper.Path {
 		console.log("Degenerate case found:", p);
 	} else {
 		let {position, scale, depth, rotation} = fractal;
-		let context = {};
+		let context:ContextObject = {};
 		depth--;
 		p = new paper.Path({
 			segments: [position],
@@ -77,7 +78,7 @@ function midpoint(path:paper.Path):paper.Point {
 
 $("#fracfile").on("change", function() {
 	const file = $(this)[0].files[0];
-	file.text().then((data) => {
+	file.text().then((data:string) => {
 		current_fractal = Compile(data);
 		paper.view.translate(midpoint(current_path));
 		paper.project.activeLayer.removeChildren();

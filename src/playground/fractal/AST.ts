@@ -1,7 +1,7 @@
 /**
  * Represents an operator.
  */
-class Operator {
+export class Operator {
 	name:string;
 	num_args:number|null;
 	priority:number;
@@ -18,7 +18,7 @@ class Operator {
 /**
  * Represents functions…in the math sense, of course.
  */
-class SpecialFunction {
+export class SpecialFunction {
 	name:string;
 	num_args:number;
 
@@ -31,15 +31,19 @@ class SpecialFunction {
 /**
  * Represents a generic value-yielding expression.
  */
-interface Expression {
-	evaluate(context:object): number;
+export interface Expression {
+	evaluate(context:ContextObject): number;
+}
+
+export interface ContextObject {
+	[varname:string]:number;
 }
 
 /**
  * Represents a function expression.
  * @implements Expression
  */
-class FunctionExpr implements Expression {
+export class FunctionExpr implements Expression {
 	func:SpecialFunction;
 	args:Array<Expression>;
 
@@ -48,7 +52,7 @@ class FunctionExpr implements Expression {
 		this.args = args;
 	}
 
-	evaluate(context:object):number {
+	evaluate(context:ContextObject):number {
 		let args = this.args.map(t => t.evaluate(context));
 		switch (this.func.name) {
 			case "sqrt": return Math.sqrt(args[0]);
@@ -61,7 +65,7 @@ class FunctionExpr implements Expression {
  * Represents a expression with a binary operator.
  * @implements Expression
  */
-class BinaryExpr implements Expression {
+export class BinaryExpr implements Expression {
 	op:Operator;
 	expr1:Expression;
 	expr2:Expression;
@@ -72,7 +76,7 @@ class BinaryExpr implements Expression {
 		this.expr2 = expr2;
 	}
 
-	evaluate(context:object):number {
+	evaluate(context:ContextObject):number {
 		const a = this.expr1.evaluate(context);
 		const b = this.expr2.evaluate(context);
 		switch (this.op.name) {
@@ -91,14 +95,14 @@ class BinaryExpr implements Expression {
  * Represents a variable expression.
  * @implements Expression
  */
-class VarExpr implements Expression {
+export class VarExpr implements Expression {
 	varname:string;
 
 	constructor(varname:string) {
 		this.varname = varname;
 	}
 
-	evaluate(context:object):number {
+	evaluate(context:ContextObject):number {
 		if (context[this.varname] !== undefined) {
 			return context[this.varname];
 		}
@@ -110,24 +114,14 @@ class VarExpr implements Expression {
  * Represents a constant expression.
  * @implements Expression
  */
-class NumExpr implements Expression {
+export class NumExpr implements Expression {
 	num:string;
 
-	constructor(num) {
+	constructor(num:string) {
 		this.num = num;
 	}
 
-	evaluate(context:object):number {
+	evaluate(context:ContextObject):number {
 		return +this.num;
 	}
 }
-
-export {
-	Expression,
-	FunctionExpr,
-	BinaryExpr,
-	VarExpr,
-	NumExpr,
-	Operator,
-	SpecialFunction,
-};
