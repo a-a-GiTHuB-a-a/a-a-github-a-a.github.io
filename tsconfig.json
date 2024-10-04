@@ -10,7 +10,8 @@
       "@types/paper": ["./node_modules/paper/dist/paper-core.d.ts"],
       "jquery": ["./node_modules/jquery/dist/jquery.min.js"],
       "@types/jquery": ["./node_modules/@types/jquery/index.d.ts"]
-    }
+    },
+    "types": ["@types/paper", "@types/jquery"]
   },
-  "moduleResolution": "nodenext"
+  "moduleResolution": "node"
 }
