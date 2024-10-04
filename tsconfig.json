@@ -11,7 +11,7 @@
       "jquery": ["./node_modules/jquery/dist/jquery.min.js"],
       "@types/jquery": ["./node_modules/@types/jquery/index.d.ts"]
     },
-    "types": ["paper", "jquery"]
+    "types": ["paper", "jquery", "sizzle"]
   },
   "moduleResolution": "node"
 }
