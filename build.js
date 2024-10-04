@@ -72,8 +72,4 @@ function process_file(file_path) {
 }
 
 const template = fs.readFileSync("./template.ejs", {encoding: "utf8"});
-fs.rmSync(build_dir, {
-	recursive: true,
-	force: true,
-});
 process_dir(".");
