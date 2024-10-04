@@ -3,7 +3,7 @@ import {ContextObject} from "./AST";
 import paper from "paper";
 import $ from "jquery";
 
-paper.setup($("#content")[0]);
+paper.setup($("canvas#content")[0] as HTMLCanvasElement);
 
 let current_fractal = Compile("Line 1");
 
@@ -75,8 +75,8 @@ function midpoint(path:paper.Path):paper.Point {
 	return path.lastSegment.point.subtract(path.firstSegment.point).divide(2);
 }
 
-$("#fracfile").on("change", function() {
-	const file = $(this)[0].files[0];
+$("#fracfile").on("change", function(this:HTMLInputElement) {
+	const file = this.files[0];
 	file.text().then((data:string) => {
 		current_fractal = Compile(data);
 		paper.view.translate(midpoint(current_path));
