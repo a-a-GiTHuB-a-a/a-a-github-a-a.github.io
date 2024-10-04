@@ -36,7 +36,6 @@ function Draw(fractal:Fractal, config:object):paper.Path {
 		for (let command of fractal.commands) {
 			let value = command.value.evaluate({
 				...context,
-				position,
 				scale,
 				depth,
 				rotation,
