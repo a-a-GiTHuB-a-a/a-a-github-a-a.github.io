@@ -10,10 +10,8 @@ const config = {
     entry: {
         frac: {
             import: path.resolve(__dirname, "src/playground/fractal/engine.ts"),
+            filename: path.resolve(__dirname, "site/playground/fractal/engine.js")
         },
-    },
-    output: {
-        path: path.resolve(__dirname, "site"),
     },
     plugins: [
         // Add your plugins here
