@@ -25,9 +25,9 @@ async function process_dir(dir_path) {
 
 	for await (let item of to_read) {
 		if (item.isDirectory()) {
-			process_dir(path.join(dir_path, item.name));
+			await process_dir(path.join(dir_path, item.name));
 		} else {
-			process_file(path.join(dir_path, item.name));
+			await process_file(path.join(dir_path, item.name));
 		}
 	}
 	
