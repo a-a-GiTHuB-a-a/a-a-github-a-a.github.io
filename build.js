@@ -30,8 +30,6 @@ async function process_dir(dir_path, opts) {
 			await process_file(path.join(dir_path, item.name), opts);
 		}
 	}
-	
-	await to_read.close();
 }
 
 async function process_file(file_path, opts) {
