@@ -10,7 +10,7 @@ const config = {
     entry: {
         frac: {
             import: path.resolve(__dirname, "src/playground/fractal/engine.ts"),
-            filename: "./site/playground/fractal/engine.js",
+            filename: "./playground/fractal/engine.js",
         },
     },
     output: {
