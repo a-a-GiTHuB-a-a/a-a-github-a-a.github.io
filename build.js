@@ -21,7 +21,11 @@ async function process_dir(dir_path) {
 	const build_path = path.join(build_dir, dir_path);
 
 	const to_read = await fsPromises.opendir(source_path);
-	await fsPromises.mkdir(build_path);
+	try {
+		fsPromises.stat(build_path);
+	} catch (e) {
+		await fsPromises.mkdir(build_path);
+	}
 
 	await Promise.all(to_read.map(item => {
 		if (item.isDirectory()) {
