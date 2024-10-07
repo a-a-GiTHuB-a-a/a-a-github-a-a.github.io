@@ -8,7 +8,7 @@ paper.setup($("canvas#content")[0] as HTMLCanvasElement);
 let current_fractal = Compile("Line 1");
 
 let current_path = Draw(current_fractal, {strokeColor: "#000000", strokeWidth: 1});
-paper.view.translate(current_path.firstSegment.point.subtract(current_path.lastSegment.point).divide(2));
+paper.view.translate(midpoint(current_path).multiply(-1));
 
 function Draw(fractal:Fractal, config:object):paper.Path {
 	let p:paper.Path;
@@ -83,6 +83,7 @@ $("#fracfile").on("change", function(this:HTMLInputElement) {
 		paper.project.activeLayer.removeChildren();
 		paper.view.update();
 		current_path = Draw(current_fractal, {strokeColor: "#000000", strokeWidth: 1});
+		paper.view.update();
 		paper.view.translate(midpoint(current_path).multiply(-1));
 		paper.view.update();
 	});
