@@ -27,7 +27,7 @@ async function process_dir(dir_path) {
 		await fsPromises.mkdir(build_path);
 	}
 
-	await Promise.all(to_read.map(item => {
+	await Promise.all([...to_read].map(item => {
 		if (item.isDirectory()) {
 			return process_dir(path.join(dir_path, item.name));
 		} else {
