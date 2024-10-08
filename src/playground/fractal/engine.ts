@@ -72,7 +72,7 @@ function Draw(fractal:Fractal, config:object):paper.Path {
 }
 
 function midpoint(path:paper.Path):paper.Point {
-	return path.lastSegment.point.subtract(path.firstSegment.point).divide(2);
+	return path.lastSegment.point.add(path.firstSegment.point).divide(2);
 }
 
 function center(path:paper.Path):void {
