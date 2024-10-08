@@ -76,7 +76,7 @@ function midpoint(path:paper.Path):paper.Point {
 }
 
 function center(path:paper.Path):void {
-	path.translate(midpoint(current_path).multiply(-1));
+	path.translate(midpoint(current_path));
 }
 
 $("#fracfile").on("change", function(this:HTMLInputElement) {
