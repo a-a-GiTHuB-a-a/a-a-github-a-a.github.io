@@ -93,7 +93,7 @@ $("#fracfile").on("change", function(this:HTMLInputElement) {
 $("#style").on("submit", function(this:HTMLFormElement) {
 	let old_config = current_config;
 	current_config.strokeWidth = +($("#width") as JQuery<HTMLInputElement>).val();
-	if (Object.keys(old_config).map((k:keyof Partial<paper.Style>) => old_config[k] === current_config[k]).reduce((a,b)=>a&&b,true)) {
+	if (!Object.keys(old_config).map((k:keyof Partial<paper.Style>) => old_config[k] === current_config[k]).reduce((a,b)=>a&&b,true)) {
 		redraw();
 	} 
 	return false;
