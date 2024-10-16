@@ -60,6 +60,7 @@ function Draw(fractal:Fractal, config:Partial<paper.Style>):paper.Path {
 						scale: scale * value,
 						commands: fractal.commands,
 					}, config);
+					partial_path.remove();
 					p.addSegments(partial_path.segments.slice(1));
 					position = partial_path.lastSegment.point;
 				}
