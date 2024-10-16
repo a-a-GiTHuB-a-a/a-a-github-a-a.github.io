@@ -95,7 +95,7 @@ $("#fracfile").on("change", function(this:HTMLInputElement) {
 $("#style").on("submit", function(this:HTMLFormElement, e:JQuery.SubmitEvent) {
 	e.preventDefault();
 	e.stopPropagation();
-	let old_config = structuredClone(current_config);
+	let old_config:StyleConfig = {...current_config};
 	current_config.strokeWidth = +($("#width") as JQuery<HTMLInputElement>).val();
 	if (!Object.keys(old_config).map((k:keyof StyleConfig) => old_config[k] === current_config[k]).reduce((a,b)=>a&&b,true)) {
 		redraw();
