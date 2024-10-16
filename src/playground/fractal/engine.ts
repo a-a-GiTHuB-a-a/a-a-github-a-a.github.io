@@ -85,7 +85,7 @@ $("#fracfile").on("change", function(this:HTMLInputElement) {
 		current_fractal = Compile(data);
 		paper.project.activeLayer.removeChildren();
 		current_path = Draw(current_fractal, {strokeColor: new paper.Color(0, 0, 0), strokeWidth: 1});
-		center(current_path);
+		//center(current_path);
 	});
 });
 
