@@ -71,12 +71,9 @@ function Draw(fractal:Fractal, config:Partial<paper.Style>):paper.Path {
 	return p;
 }
 
-function midpoint(path:paper.Path):paper.Point {
-	return path.lastSegment.point.add(path.firstSegment.point).divide(2);
-}
-
 function center(path:paper.Path):void {
-	path.position = path.position.subtract(midpoint(current_path));
+	let translateFactor:paper.Point = path.lastSegment.point.subtract(path.firstSegment.point).divide(2);
+	path.position = path.position.subtract(translateFactor);
 }
 
 $("#fracfile").on("change", function(this:HTMLInputElement) {
@@ -85,7 +82,7 @@ $("#fracfile").on("change", function(this:HTMLInputElement) {
 		current_fractal = Compile(data);
 		paper.project.activeLayer.removeChildren();
 		current_path = Draw(current_fractal, {strokeColor: new paper.Color(0, 0, 0), strokeWidth: 1});
-		//center(current_path);
+		center(current_path);
 	});
 });
 
