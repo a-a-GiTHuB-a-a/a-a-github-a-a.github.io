@@ -88,4 +88,4 @@ $("#fracfile").on("change", function(this:HTMLInputElement) {
 	});
 });
 
-export default paper;
+window.paper = paper;
