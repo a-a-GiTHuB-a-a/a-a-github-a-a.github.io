@@ -7,12 +7,12 @@ paper.setup($("canvas#content")[0] as HTMLCanvasElement);
 
 let current_fractal = Compile("Line 1");
 
-let current_path = Draw(current_fractal, {strokeColor: "#000000", strokeWidth: 1});
+let current_path = Draw(current_fractal, {strokeColor: new paper.Color(0, 0, 0), strokeWidth: 1});
 center(current_path);
 
-function Draw(fractal:Fractal, config:object):paper.Path {
+function Draw(fractal:Fractal, config:Partial<paper.Style>):paper.Path {
 	let p:paper.Path;
-	console.groupCollapsed(fractal);
+	console.groupCollapsed("subdraw");
 	if (fractal.depth <= 0) {
 		p = new paper.Path({
 			segments: [
@@ -65,7 +65,6 @@ function Draw(fractal:Fractal, config:object):paper.Path {
 				}
 			}
 		}
-		console.log("Backtracking now");
 	}
 	console.groupEnd();
 	return p;
@@ -84,7 +83,9 @@ $("#fracfile").on("change", function(this:HTMLInputElement) {
 	file.text().then((data:string) => {
 		current_fractal = Compile(data);
 		paper.project.activeLayer.removeChildren();
-		current_path = Draw(current_fractal, {strokeColor: "#000000", strokeWidth: 1});
+		current_path = Draw(current_fractal, {strokeColor: new paper.Color(0, 0, 0), strokeWidth: 1});
 		center(current_path);
 	});
 });
+
+export default paper;
