@@ -88,6 +88,5 @@ $("#fracfile").on("change", function(this:HTMLInputElement) {
 
 $("#style").on("submit", function(this:HTMLFormElement) {
 	current_config.strokeWidth = +($("#width") as JQuery<HTMLInputElement>).val();
+	return false;
 });
-
-window.paper = paper;
