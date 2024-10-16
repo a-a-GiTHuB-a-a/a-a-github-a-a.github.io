@@ -6,8 +6,8 @@ import $ from "jquery";
 paper.setup($("canvas#content")[0] as HTMLCanvasElement);
 
 let current_fractal = Compile("Line 1");
-
-let current_path = Draw(current_fractal, {strokeColor: new paper.Color(0, 0, 0), strokeWidth: 1});
+let current_config:Partial<paper.Style> = {strokeColor: new paper.Color(0, 0, 0), strokeWidth: 1};
+let current_path = Draw(current_fractal, current_config);
 center(current_path);
 
 function Draw(fractal:Fractal, config:Partial<paper.Style>):paper.Path {
@@ -48,7 +48,7 @@ function Draw(fractal:Fractal, config:Partial<paper.Style>):paper.Path {
 				}
 				case "rotate": {
 					console.log("Rotating by angle", value);
-					rotation += value;
+					rotation -= value; //counterclockwise is better.
 					break;
 				}
 				case "line": {
@@ -81,9 +81,13 @@ $("#fracfile").on("change", function(this:HTMLInputElement) {
 	file.text().then((data:string) => {
 		current_fractal = Compile(data);
 		paper.project.activeLayer.removeChildren();
-		current_path = Draw(current_fractal, {strokeColor: new paper.Color(0, 0, 0), strokeWidth: 1});
+		current_path = Draw(current_fractal, current_config);
 		center(current_path);
 	});
+});
+
+$("#style").on("submit", function(this:HTMLFormElement) {
+	current_config.strokeWidth = +($("#width") as JQuery<HTMLInputElement>).val();
 });
 
 window.paper = paper;
