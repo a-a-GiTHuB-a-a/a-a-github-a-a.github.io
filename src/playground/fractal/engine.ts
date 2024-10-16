@@ -76,17 +76,25 @@ function center(path:paper.Path):void {
 	path.position = path.position.subtract(translateFactor);
 }
 
+function redraw():void {
+	paper.project.activeLayer.removeChildren();
+	current_path = Draw(current_fractal, current_config);
+	center(current_path);
+}
+
 $("#fracfile").on("change", function(this:HTMLInputElement) {
 	const file = this.files[0];
 	file.text().then((data:string) => {
 		current_fractal = Compile(data);
-		paper.project.activeLayer.removeChildren();
-		current_path = Draw(current_fractal, current_config);
-		center(current_path);
+		redraw();
 	});
 });
 
 $("#style").on("submit", function(this:HTMLFormElement) {
+	let old_config = current_config;
 	current_config.strokeWidth = +($("#width") as JQuery<HTMLInputElement>).val();
+	if (!Object.entries(old_config).map(([t,a]:[string,any])=>(current_config as {[k:string]:any})[t]===a).reduce((a,b)=>a&&b,true)) {
+		redraw();
+	} 
 	return false;
 });
