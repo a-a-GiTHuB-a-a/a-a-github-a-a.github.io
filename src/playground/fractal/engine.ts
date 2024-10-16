@@ -5,12 +5,14 @@ import $ from "jquery";
 
 paper.setup($("canvas#content")[0] as HTMLCanvasElement);
 
+type StyleConfig = Partial<Omit<paper.Style, "view">>;
+
 let current_fractal = Compile("Line 1");
-let current_config:Partial<paper.Style> = {strokeColor: new paper.Color(0, 0, 0), strokeWidth: 1};
+let current_config:StyleConfig = {strokeColor: new paper.Color(0, 0, 0), strokeWidth: 1};
 let current_path = Draw(current_fractal, current_config);
 center(current_path);
 
-function Draw(fractal:Fractal, config:Partial<paper.Style>):paper.Path {
+function Draw(fractal:Fractal, config:StyleConfig):paper.Path {
 	let p:paper.Path;
 	console.groupCollapsed("subdraw");
 	if (fractal.depth <= 0) {
@@ -95,7 +97,7 @@ $("#style").on("submit", function(this:HTMLFormElement, e:JQuery.SubmitEvent) {
 	e.stopPropagation();
 	let old_config = structuredClone(current_config);
 	current_config.strokeWidth = +($("#width") as JQuery<HTMLInputElement>).val();
-	if (!Object.keys(old_config).map((k:keyof Partial<paper.Style>) => old_config[k] === current_config[k]).reduce((a,b)=>a&&b,true)) {
+	if (!Object.keys(old_config).map((k:keyof StyleConfig) => old_config[k] === current_config[k]).reduce((a,b)=>a&&b,true)) {
 		redraw();
 	} 
 	return false;
