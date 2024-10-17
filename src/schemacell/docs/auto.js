@@ -1,8 +1,7 @@
 $(function() {
 	let head_count = 0;
-	let start_heads = 2;
-	const toc_0 = $("#toc").append("<ul></ul>");
-	let toc_1;
+	let start_heads = 1;
+	const toc_1 = $("#toc").append("<ul></ul>");
 	let toc_2;
 	let toc_3;
 	let toc_4;
@@ -10,12 +9,6 @@ $(function() {
 	let toc_6;
 	$("*").each(function() {
 		switch(this.tagName) {
-			case "H1": {
-				if (head_count < start_heads) break;
-				toc_1 = $(`<li><a href = "#${this.id}" class = "toc-h1">${$(this).html()}</a></li>`);
-				toc_0.append(toc_1);
-				break;
-			}
 			case "H2": {
 				if (head_count < start_heads) break;
 				toc_2 = $(`<li><a href = "#${this.id}" class = "toc-h2">${$(this).html()}</a></li>`);
