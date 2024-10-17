@@ -1,4 +1,4 @@
-const toc_0 = $("#toc").appendElement("<ol></ol>");
+const toc_0 = $("#toc").append("<ol></ol>");
 let toc_1;
 let toc_2;
 let toc_3;
@@ -9,12 +9,12 @@ $("*").each(function() {
 	switch($(this).prop("tagName")) {
 		case "h1": {
 			toc_1 = $(`<li><a href = "#${$(this).attr("id")}">${$(this).html()}</a></li>`);
-			toc_0.appendElement(toc_1);
+			toc_0.append(toc_1);
 			break;
 		}
 		case "h2": {
 			toc_2 = $(`<li><a href = "#${$(this).attr("id")}">${$(this).html()}</a></li>`);
-			toc_1.appendElement(toc_2);
+			toc_1.append(toc_2);
 			break;
 		}
 	}
