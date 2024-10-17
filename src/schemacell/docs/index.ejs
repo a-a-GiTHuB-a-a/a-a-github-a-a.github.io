@@ -25,3 +25,17 @@ Since these properties are determined on the title screen, they can be made dyna
 <h2 id = "overridables">Cell Functions</h2>
 These functions can be overridden to determine cell behavior. These functions take an object <code>this</code> as the first argument, and only <code>Push</code> returns anything.
 <h3 id = "overridables/push"><code>Push</code></h3>
+<code><pre>
+function Push(this, dir, bias)
+	--push logic here
+end
+</pre></code>
+In addition to the cell being pushed, <code>Push</code> has two more arguments.
+<ul>
+	<li>
+		<code>dir</code>: The direction that the cell is being pushed. <strong>This is distinct from <code>this.direction</code>!</strong>
+	</li>
+	<li>
+		<code>bias</code>: The bias of the push. A negative bias means pushing backwards in the default <code>Push</code> function.
+	</li>
+</ul>
