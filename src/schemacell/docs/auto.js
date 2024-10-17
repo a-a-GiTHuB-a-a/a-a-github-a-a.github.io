@@ -7,7 +7,7 @@ $(function() {
 	let toc_5;
 	let toc_6;
 	$("*").each(function() {
-		switch($(this).prop("tagName")) {
+		switch(this.tagName) {
 			case "h1": {
 				toc_1 = $(`<li><a href = "#${$(this).attr("id")}">${$(this).html()}</a></li>`);
 				toc_0.append(toc_1);
