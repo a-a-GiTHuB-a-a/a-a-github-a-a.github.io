@@ -1,0 +1,21 @@
+.toc-h1 {
+	font-weight: 1000;
+	font-size: 48pt;
+}
+.toc-h2 {
+	font-weight: bold;
+	font-size: 36pt;
+}
+.toc-h3 {
+	font-style: italic;
+	font-size: 24pt;
+}
+.toc-h4 {
+	font-size: 18pt;
+}
+.toc-h5 {
+	font-size: 15pt;
+}
+.toc-h6 {
+	font-style: italic;
+}
