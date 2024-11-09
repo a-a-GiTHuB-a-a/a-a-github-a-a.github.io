@@ -67,6 +67,7 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.Path {
 					position = partial_path.lastSegment.point;
 				}
 				case "absoluteline": {
+					console.log("Drawing depth-ignorant line");
 					const lastSegment = p.segments.at(-1);
 					const newSegment = new paper.Segment({
 						point: lastSegment.point.add(new paper.Point(
