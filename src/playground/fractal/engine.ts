@@ -66,6 +66,16 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.Path {
 					p.addSegments(partial_path.segments.slice(1));
 					position = partial_path.lastSegment.point;
 				}
+				case "absoluteline": {
+					const lastSegment = p.segments.at(-1);
+					const newSegment = new paper.Segment({
+						point: lastSegment.point.add(new paper.Point(
+							scale * value * Math.cos(rotation*Math.PI/180),
+							scale * value * Math.sin(rotation*Math.PI/180),
+						)),
+					});
+					p.addSegments([newSegment]);
+				}
 			}
 		}
 	}

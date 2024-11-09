@@ -154,7 +154,7 @@ function Parse(expr:string):AST.Expression {
 }
 
 /**
- * A class for representing drawable fractals.
+ * An object that represents a drawable fractal.
  * @property {paper.Point} position - The position that the fractal will start at.
  * @property {number} scale - The scale of the fractal.
  * @property {number} depth - The depth that the fractal will recursively check.
