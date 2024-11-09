@@ -69,12 +69,12 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.Path {
 				}
 				case "absoluteline": {
 					console.log("Drawing depth-ignorant line");
-					const lastSegment = p.segments.at(-1);
+					position = position.add(new paper.Point(
+						scale * value * Math.cos(rotation*Math.PI/180),
+						scale * value * Math.sin(rotation*Math.PI/180),
+					));
 					const newSegment = new paper.Segment({
-						point: lastSegment.point.add(new paper.Point(
-							scale * value * Math.cos(rotation*Math.PI/180),
-							scale * value * Math.sin(rotation*Math.PI/180),
-						)),
+						point: position,
 					});
 					p.addSegments([newSegment]);
 					break;
