@@ -149,8 +149,37 @@ function Parse(expr:string):AST.Expression {
 		}
 	}
 	if (stacc.length !== 1) throw new Error("something went horrifically wrong with the arithmetic");
-	console.log("Finished compiling. AST:", stacc[0]);
-	return stacc[0];
+	const initialAST = stacc[0];
+	console.log("Finished compiling. AST:", initialAST);
+	const optimizedAST = OptimizeExpression(initialAST);
+	console.log("AST post-optimization:", optimizedAST);
+	return optimizedAST;
+}
+
+function OptimizeExpression(expr: AST.Expression):AST.Expression {
+	let new_expr:AST.Expression = optimize_cycle(expr);
+	while (new_expr !== expr) {
+		expr = new_expr;
+		new_expr = optimize_cycle(expr);
+	}
+	return new_expr;
+}
+
+function optimize_cycle(expr: AST.Expression):AST.Expression {
+	if (expr instanceof AST.BinaryExpr) {
+		expr.expr1 = optimize_cycle(expr.expr1);
+		expr.expr2 = optimize_cycle(expr.expr2);
+		if ((expr.expr1 instanceof AST.NumExpr) && (expr.expr2 instanceof AST.NumExpr)) {
+			expr = new AST.NumExpr(expr.evaluate({}).toString());
+		}
+		return expr;
+	} else if (expr instanceof AST.FunctionExpr) {
+		expr.args = expr.args.map(optimize_cycle);
+		if (expr.args.map(a => a instanceof AST.NumExpr).reduce((a,b)=>a&&b,true)) {
+			expr = new AST.NumExpr(expr.evaluate({}).toString());
+		}
+	}
+	return expr;
 }
 
 /**
