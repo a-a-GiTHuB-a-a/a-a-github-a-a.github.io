@@ -68,7 +68,7 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.Path {
 					position = partial_path.lastSegment.point;
 					break;
 				}
-				case "mirrorline": {
+				case "mirroredline": {
 					const partial_path = Draw({
 						...context,
 						position,
