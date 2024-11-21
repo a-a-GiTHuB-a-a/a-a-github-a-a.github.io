@@ -69,6 +69,7 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.Path {
 					break;
 				}
 				case "reflectedline":
+				case "flippedline":
 				case "mirroredline": {
 					const partial_path = Draw({
 						...context,
