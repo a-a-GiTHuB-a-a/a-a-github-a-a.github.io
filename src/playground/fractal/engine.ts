@@ -28,7 +28,7 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.Path {
 		});
 		console.log("Degenerate case found:", p);
 	} else {
-		let {position, scale, depth, rotation} = fractal;
+		let {position, scale, depth, rotation, reflected} = fractal;
 		let context:ContextObject = {};
 		depth--;
 		p = new paper.Path({
@@ -50,7 +50,7 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.Path {
 				}
 				case "rotate": {
 					console.log("Rotating by angle", value);
-					rotation -= value; //counterclockwise is better.
+					rotation += value*(Number(reflected)*2-1); //counterclockwise is better.
 					break;
 				}
 				case "line": {
@@ -60,6 +60,22 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.Path {
 						rotation,
 						depth,
 						scale: scale * value,
+						reflected,
+						commands: fractal.commands,
+					}, config);
+					partial_path.remove();
+					p.addSegments(partial_path.segments.slice(1));
+					position = partial_path.lastSegment.point;
+					break;
+				}
+				case "mirrorline": {
+					const partial_path = Draw({
+						...context,
+						position,
+						rotation,
+						depth,
+						scale: scale * value,
+						reflected: !reflected,
 						commands: fractal.commands,
 					}, config);
 					partial_path.remove();

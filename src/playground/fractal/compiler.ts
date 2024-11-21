@@ -37,7 +37,7 @@ class FracSyntaxError extends Error {
 			if (attributed) {
 				name += `, character ${char}`;
 			} else {
-				name += ` at line unknown, character ${char}`
+				name += ` at line unknown, character ${char}`;
 			}
 		}
 
@@ -195,6 +195,7 @@ interface Fractal {
 	scale:number;
 	depth:number;
 	rotation:number;
+	reflected:boolean;
 	commands:Array<{value: AST.Expression, [key: string]: any}>;
 }
 
@@ -207,6 +208,7 @@ function Compile(contents:string):Fractal {
 		scale: 500,
 		depth: 5,
 		rotation: 0,
+		reflected: false,
 		commands: [],
 	};
 	for (let lineIndex in lines) {
