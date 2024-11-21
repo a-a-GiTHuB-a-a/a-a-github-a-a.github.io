@@ -1,4 +1,4 @@
-depth = 15;
+depth = 5;
 scale = 200;
 length = sqrt(.5);
 Rotate 45;
