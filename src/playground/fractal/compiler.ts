@@ -1,4 +1,4 @@
-import {re} from "./tags";
+import {regex as re} from "regex";
 import * as AST from "./AST";
 import paper from "paper";
 
