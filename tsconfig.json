@@ -12,5 +12,5 @@
     },
     "types": ["paper"]
   },
-  "moduleResolution": "node"
+  "moduleResolution": "nodenext"
 }
