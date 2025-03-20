@@ -8,7 +8,7 @@
     "paths": {
       "paper": ["./node_modules/paper/dist/paper-core.min.js"],
       "regex": ["./node_modules/regex/dist/esm/regex.js"],
-      //"@types/regex": ["./node_modules/regex/dist/esm/regex.d.ts"]
+      "@types/regex": ["./node_modules/regex/dist/esm/regex.d.ts"]
     },
     "types": ["paper", "regex"]
   },
