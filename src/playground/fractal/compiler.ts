@@ -20,6 +20,7 @@ const op_objs = [
 ];
 const function_objs = [
 	new AST.SpecialFunction("sqrt", 1),
+	new AST.SpecialFunction("abs", 1),
 ];
 
 /**

@@ -56,6 +56,7 @@ export class FunctionExpr implements Expression {
 		let args = this.args.map(t => t.evaluate(context));
 		switch (this.func.name) {
 			case "sqrt": return Math.sqrt(args[0]);
+			case "sqrt": return Math.abs(args[0]);
 		}
 		throw new Error("unknown function");
 	}
