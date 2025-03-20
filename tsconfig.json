@@ -10,7 +10,7 @@
       "regex": ["./node_modules/regex/dist/esm/regex.js"],
       //"@types/regex": ["./node_modules/regex/dist/esm/regex.d.ts"]
     },
-    "types": ["paper"]
+    "types": ["paper", "regex"]
   },
   "moduleResolution": "nodenext"
 }
