@@ -41,7 +41,7 @@ async function process_file(file_path, opts) {
 
 	switch (path.extname(source_path)) {
 		case ".ejs": {
-			const metadata = JSON.parse(await fsPromises.readFile(source_path.replace(".ejs", ".json"), {encoding: "utf8"}));
+			const metadata = await fsPromises.readFile(source_path.replace(".ejs", ".json"), {encoding: "utf8"}).then(JSON.parse, () => {});
 			const new_content = ejs.render(opts.ejs_template, {
 				...metadata,
 				"body": file
