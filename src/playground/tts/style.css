@@ -1,9 +1,14 @@
 #block, #text, #row {
-	width: 100%;
+	width: 50%;
+}
+#text {
+	display: block;
+	resize: none;
+}
+#row {
+	display: flex;
+	flex-direction: row;
 }
 #submit_button {
 	width: 40%;
-}
-#speech {
-	width: 60%;
 }
