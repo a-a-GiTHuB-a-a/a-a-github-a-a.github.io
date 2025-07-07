@@ -1,7 +1,7 @@
 $(async function() {
 	let stub = "https://api.streamelements.com/kappa/v2/speech?voice=Joey&text=";
 	let can_convert = true;
-	$("#text_submit").on("submit", function(e) {
+	$("#submit_button").on("click", function(e) {
 		convert($("text"));
 	});
 
