@@ -1,5 +1,8 @@
-#block, #text, #row {
+#block {
 	width: 50%;
+}
+#text, #row {
+	width: 100%;
 }
 #text {
 	display: block;
@@ -8,6 +11,7 @@
 #row {
 	display: flex;
 	flex-direction: row;
+	align-items: stretch;
 }
 #submit_button {
 	width: 40%;
