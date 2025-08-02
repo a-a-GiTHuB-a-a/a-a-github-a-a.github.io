@@ -38,7 +38,7 @@ class FracSyntaxError extends Error {
 			if (attributed) {
 				name += `, character ${char}`;
 			} else {
-				name += ` at line unknown, character ${char}`;
+				name += ` at unknown line, character ${char}`;
 			}
 		}
 
@@ -235,27 +235,32 @@ function Compile(contents:string):Fractal {
 					break;
 				}
 				default: {
-					frac.commands.push({
+					let parsedLine = {
 						name: "assign",
 						varname: assign.groups?.varname,
 						value,
-					});
+					};
+					console.log("Parsed line:", parsedLine);
+					frac.commands.push(parsedLine);
 				}
 			}
 		} else {
+			console.log("Command detected!");
 			let cmd = cmd_re.exec(line);
 			if (cmd !== null) {
 				let value = Parse(cmd.groups?.value as string);
 				if (value === undefined) continue;
-				frac.commands.push({
+				let parsedLine = {
 					name: (cmd.groups?.cmdname as string).toLowerCase(),
-					value: value
-				});
+					value,
+				};
+				console.log("Parsed line:", parsedLine);
+				frac.commands.push(parsedLine);
 			}
 		}
 		console.groupEnd();
 	}
-	console.log("Fractal compiling finished!");
+	console.log("Fractal compiling finished! Finished product:");
 	console.log(frac);
 	console.groupEnd();
 	return frac;
