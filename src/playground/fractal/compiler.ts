@@ -4,7 +4,7 @@ import paper from "paper";
 
 const ident_re = re`[A-Za-z_]+`;
 const line_sep_re = re`\s*;\s*`;
-const num_re = re`[+-]?(?:[0-9]+\.[0-9]*|\.[0-9]+|[0-9]+)`;
+const num_re = re`[-+]?(?:[0-9]+\.[0-9]*|\.[0-9]+|[0-9]+)`;
 const var_re = re`^(?<varname>${ident_re})\s*=\s*(?<value>[^=]+)$`;
 const cmd_re = re`^(?<cmdname>${ident_re})\s+(?<value>[^=]+)$`;
 console.log(var_re);
