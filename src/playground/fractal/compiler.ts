@@ -2,11 +2,12 @@ import {regex as re} from "regex";
 import * as AST from "./AST";
 import paper from "paper";
 
-const ident_re = /[A-Za-z_]+/;
-const line_sep_re = /\s*;\s*/m;
-const num_re = /[+-]?(?:(?:[0-9]+\.[0-9]*)|(?:[0-9]*\.[0-9]+)|(?:[0-9]+))/;
+const ident_re = re`[A-Za-z_]+`;
+const line_sep_re = re("m")`\s*;\s*`;
+const num_re = re`[+-]?(?>(?:[0-9]+\.[0-9]*)|(?:\.[0-9]+)|(?:[0-9]+))`;
 const var_re = re`^(?<varname>${ident_re})\s*=\s*(?<value>[^=]+)$`;
 const cmd_re = re`^(?<cmdname>${ident_re})\s+(?<value>[^=]+)$`;
+console.log(var_re);
 const LARGE_GAP = 16;
 const op_objs = [
 	new AST.Operator("+", 1),
