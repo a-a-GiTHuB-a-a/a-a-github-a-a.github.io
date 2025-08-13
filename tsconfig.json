@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "module": "ES2022",
+    "target": "ES2022",
+    "allowJs": true,
+    "baseUrl": "./",
+    "paths": {
+      "paper": ["node_modules/paper/dist/paper-core.min.js"],
+      "regex": ["node_modules/regex/dist/esm/regex"]
+    },
+    "types": ["paper", "regex"]
+  },
+  "moduleResolution": "nodenext"
+}

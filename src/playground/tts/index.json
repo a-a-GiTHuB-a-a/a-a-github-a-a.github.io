@@ -1,0 +1,5 @@
+{
+	"title": "Text-to-Speech Device",
+	"includeJquery": true,
+	"head": "<link href = '/main.css' rel = 'stylesheet' type = 'text/css'/>"
+}
