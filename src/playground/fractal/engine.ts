@@ -123,7 +123,7 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 	return cluster;
 }
 
-function center(path:paper.Path):void {
+function center(path:paper.CompoundPath):void {
 	let translateFactor:paper.Point = path.lastSegment.point.subtract(path.firstSegment.point).divide(2);
 	path.position = path.position.subtract(translateFactor);
 }
