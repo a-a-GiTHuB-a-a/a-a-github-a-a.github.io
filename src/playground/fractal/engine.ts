@@ -66,8 +66,13 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						commands: fractal.commands,
 					}, config);
 					partial_path.remove();
-					p.addChild(partial_path);
+					cluster.addChild(p);
+					cluster.addChildren(partial_path.children);
 					position = partial_path.lastSegment.point;
+					p = new paper.Path({
+						segments: [position],
+						...config
+					});
 					break;
 				}
 				case "reflectedline":
@@ -83,9 +88,13 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						commands: fractal.commands,
 					}, config);
 					partial_path.remove();
-					p.addSegments(partial_path.segments.slice(1));
+					cluster.addChild(p);
+					cluster.addChildren(partial_path.children);
 					position = partial_path.lastSegment.point;
-					break;
+					p = new paper.Path({
+						segments: [position],
+						...config
+					});
 				}
 				case "absoluteline": {
 					console.log("Drawing depth-ignorant line");
