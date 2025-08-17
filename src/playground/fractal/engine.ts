@@ -119,6 +119,7 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						segments: [position],
 						...config
 					});
+					break;
 				}
 				default: {
 					console.log("Unknown command; skipping");
