@@ -28,7 +28,7 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 				...config,
 			}]
 		});
-		console.log("Degenerate case found:", p);
+		console.log("Degenerate case found:", cluster);
 	} else {
 		let {position, scale, depth, rotation, reflected} = fractal;
 		let context:ContextObject = {};
