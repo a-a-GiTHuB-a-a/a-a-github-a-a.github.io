@@ -55,7 +55,7 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					break;
 				}
 				case "line": {
-					const partial_path = Draw({
+					const partial_path:paper.CompoundPath = Draw({
 						...context,
 						position,
 						rotation,
@@ -64,6 +64,8 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						reflected,
 						commands: fractal.commands,
 					}, config);
+					partial_path.remove();
+					console.log(partial_path);
 					cluster.addChild(p);
 					cluster.addChildren(partial_path.children);
 					position = partial_path.lastSegment.point;
@@ -71,7 +73,6 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						segments: [position],
 						...config
 					});
-					partial_path.remove();
 					break;
 				}
 				case "reflectedline":
