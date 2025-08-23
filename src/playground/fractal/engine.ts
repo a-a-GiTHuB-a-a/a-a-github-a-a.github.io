@@ -16,19 +16,17 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 	let cluster:paper.CompoundPath;
 	console.groupCollapsed("subdraw");
 	if (fractal.depth <= 0) {
+		console.log("Degenerate case found:", cluster);
 		cluster = new paper.CompoundPath({
-			children: [{
-				segments: [
-					fractal.position,
-					[
-						fractal.position.x + fractal.scale * Math.cos(fractal.rotation*Math.PI/180),
-						fractal.position.y + fractal.scale * Math.sin(fractal.rotation*Math.PI/180)
-					]
+			children: [new paper.Path.Line({
+				from: fractal.position,
+				to: [
+					fractal.position.x + fractal.scale * Math.cos(fractal.rotation*Math.PI/180),
+					fractal.position.y + fractal.scale * Math.sin(fractal.rotation*Math.PI/180)
 				],
 				...config,
-			}]
+			})]
 		});
-		console.log("Degenerate case found:", cluster);
 	} else {
 		let {position, scale, depth, rotation, reflected} = fractal;
 		let context:ContextObject = {};
