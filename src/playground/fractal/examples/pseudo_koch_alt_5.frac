@@ -1,8 +1,0 @@
-depth=5;angle=60;
-Line 1/3;
-Rotate angle;
-AbsoluteLine 1/3;
-Rotate -2 * angle;
-AbsoluteLine 1/3;
-Rotate angle;
-Line 1/3;

@@ -1,8 +1,0 @@
-depth=10;
-Line .5;
-Rotate 90;
-Line .5;
-Rotate -180;
-Line .5;
-Rotate 90;
-Line .5
