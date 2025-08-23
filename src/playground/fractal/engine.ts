@@ -28,6 +28,7 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 			})]
 		});
 	} else {
+		cluster = new paper.CompoundPath(config);
 		let {position, scale, depth, rotation, reflected} = fractal;
 		let context:ContextObject = {};
 		depth--;
