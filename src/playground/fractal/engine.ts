@@ -64,7 +64,6 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						reflected,
 						commands: fractal.commands,
 					}, config);
-					console.log(partial_path.clone({deep: true, insert:false}));
 					cluster.addChild(p);
 					cluster.addChildren(partial_path.clone({insert: false, deep: true}).children);
 					position = partial_path.lastSegment.point;
