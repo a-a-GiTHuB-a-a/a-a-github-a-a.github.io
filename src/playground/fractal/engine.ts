@@ -8,7 +8,10 @@ paper.setup($("canvas#content")[0] as HTMLCanvasElement);
 type StyleConfig = Partial<Omit<paper.Style, "view">>;
 
 let current_fractal = Compile("Line 1");
-let current_config:StyleConfig = {strokeColor: new paper.Color(0, 0, 0), strokeWidth: 1};
+let current_config:StyleConfig = {
+	strokeColor: new paper.Color(0xbf, 0x7f, 0xff),
+	strokeWidth: 1
+};
 let current_path = Draw(current_fractal, current_config);
 center(current_path);
 
