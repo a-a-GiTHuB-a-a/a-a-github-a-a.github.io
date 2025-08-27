@@ -12,6 +12,18 @@ let current_config:StyleConfig = {strokeColor: new paper.Color(0, 0, 0), strokeW
 let current_path = Draw(current_fractal, current_config);
 center(current_path);
 
+/**
+ * @returns A {@link paper.Point} with the given magnitude and direction.
+ * @param magnitude The magnitude of the desired vector.
+ * @param direction The angle of the vector in degrees.
+ */
+function rectangularize(magnitude:number, direction:number):paper.Point {
+	return new paper.Point(
+		magnitude * Math.cos(direction * Math.PI/180),
+		magnitude * Math.sin(direction * Math.PI/180)
+	);
+}
+
 function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 	let cluster:paper.CompoundPath;
 	console.groupCollapsed("subdraw");
@@ -20,10 +32,7 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 		cluster = new paper.CompoundPath({
 			children: [new paper.Path.Line({
 				from: fractal.position,
-				to: [
-					fractal.position.x + fractal.scale * Math.cos(fractal.rotation*Math.PI/180),
-					fractal.position.y + fractal.scale * Math.sin(fractal.rotation*Math.PI/180)
-				],
+				to: fractal.position.add(rectangularize(fractal.scale, fractal.rotation)),
 				...config,
 			})]
 		});
@@ -97,10 +106,7 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 				}
 				case "absoluteline": {
 					console.log("Drawing depth-ignorant line");
-					position = position.add(new paper.Point(
-						scale * value * Math.cos(rotation*Math.PI/180),
-						scale * value * Math.sin(rotation*Math.PI/180),
-					));
+					position = position.add(rectangularize(scale * value, rotation));
 					const newSegment = new paper.Segment({
 						point: position,
 					});
@@ -110,10 +116,7 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 				case "jump": {
 					console.log("Jumping");
 					cluster.addChild(p);
-					position = position.add(new paper.Point(
-						scale * value * Math.cos(rotation*Math.PI/180),
-						scale * value * Math.sin(rotation*Math.PI/180),
-					));
+					position = position.add(rectangularize(scale * value, rotation));
 					p = new paper.Path({
 						segments: [position],
 						...config
