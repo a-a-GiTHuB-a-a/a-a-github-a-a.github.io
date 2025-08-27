@@ -50,3 +50,28 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+  deploy_local:
+    name: Build and Deploy (local version)
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare build script
+        run: npm ci
+      - name: Pack site content
+        run: npm run build:pack
+      - name: Build site content
+        run: npm run build:main
+      - name: Read directory (for debugging purposes)
+        run: ls -AR site
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload the site directory (modified by me)
+          path: "./site"
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
