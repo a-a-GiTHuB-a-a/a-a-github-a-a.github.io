@@ -1,12 +1,6 @@
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
 body {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 12pt;
-	background: linear-gradient(135deg, #1e293b, #0f172a);
 }
 h1 {
 	text-align: center;
