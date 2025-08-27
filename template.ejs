@@ -16,9 +16,11 @@
 		<script
 			src = "/logo.js"
 		></script>
+		<% if ((typeof removeButtonGlint === "undefined") || (removeButtonGlint === false)) { %>
 		<script
 			src = "/buttons.js"
 		></script>
+		<% } %>
 		<% if (typeof title !== "undefined") { %>
 			<title><%- title %></title>
 		<% } %>
