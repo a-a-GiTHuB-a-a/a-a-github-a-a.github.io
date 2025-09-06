@@ -99,13 +99,13 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						commands: fractal.commands,
 					}, config);
 					cluster.addChild(p);
-					cluster.addChildren(partial_path.children);
+					cluster.addChildren(partial_path.clone({insert: false, deep: true}).children);
 					position = partial_path.lastSegment.point;
-					partial_path.remove();
 					p = new paper.Path({
 						segments: [position],
 						...config
 					});
+					partial_path.remove();
 				}
 				case "absoluteline": {
 					console.log("Drawing depth-ignorant line");
