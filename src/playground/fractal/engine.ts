@@ -106,6 +106,7 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						...config
 					});
 					partial_path.remove();
+					break;
 				}
 				case "absoluteline": {
 					console.log("Drawing depth-ignorant line");
