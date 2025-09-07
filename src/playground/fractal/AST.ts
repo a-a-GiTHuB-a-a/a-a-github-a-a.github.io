@@ -20,10 +20,19 @@ export class Operator {
  */
 export class SpecialFunction {
 	name:string;
+	comp:(...args:number[]) => number;
 	num_args:number;
 
-	constructor(name:string, num_args:number) {
+	/**
+	 * Creates a new function type.
+	 * @param name The name of the function that can be used in code.
+	 * @param comp The evaluator, represented as a native function.
+	 * @example `Math.sqrt` for a square-root function
+	 * @param num_args The number of arguments the function takes.
+	 */
+	constructor(name:string, comp:(...args:number[]) => number, num_args:number) {
 		this.name = name;
+		this.comp = comp;
 		this.num_args = num_args;
 	}
 }
@@ -54,11 +63,7 @@ export class FunctionExpr implements Expression {
 
 	evaluate(context:ContextObject):number {
 		let args = this.args.map(t => t.evaluate(context));
-		switch (this.func.name) {
-			case "sqrt": return Math.sqrt(args[0]);
-			case "sqrt": return Math.abs(args[0]);
-		}
-		throw new Error("unknown function");
+		return this.func.comp(...args);
 	}
 }
 
