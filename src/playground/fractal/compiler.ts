@@ -250,12 +250,12 @@ function Compile(contents:string):Fractal {
 			if (cmd !== null) {
 				let value = Parse(cmd.groups?.value as string);
 				if (value === undefined) continue;
-				let parsedLine = {
+				let parsed_line = {
 					name: (cmd.groups?.cmdname as string).toLowerCase(),
 					value,
 				};
-				console.log("Parsed line:", parsedLine);
-				frac.commands.push(parsedLine);
+				console.log("Parsed line:", parsed_line);
+				frac.commands.push(parsed_line);
 			}
 		}
 		console.groupEnd();

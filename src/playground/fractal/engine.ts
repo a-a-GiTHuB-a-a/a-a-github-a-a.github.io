@@ -1,4 +1,4 @@
-import {Compile, Fractal} from "./compiler";
+import {Compile, FracSyntaxError, Fractal} from "./compiler";
 import {ContextObject} from "./AST";
 import paper from "paper";
 import $ from "jquery";
@@ -43,12 +43,14 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 		cluster = new paper.CompoundPath(config);
 		let {position, scale, depth, rotation, reflected} = fractal;
 		let context:ContextObject = {};
+		let anchors:Array<{line:number,id:number}> = [];
 		depth--;
 		let p = new paper.Path({
 			segments: [position],
 			...config
 		});
-		for (let command of fractal.commands) {
+		for (let index = 0; index < fractal.commands.length; index++) {
+			let command = fractal.commands[index];
 			let value = command.value.evaluate({
 				...context,
 				scale,
@@ -127,8 +129,24 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					});
 					break;
 				}
+				case "anchor": {
+					anchors[anchors.findIndex((v)=>v.line === index)] = {
+						line: index,
+						id: value
+					};
+					break;
+				}
+				case "warp": {
+					console.log(`Warping to anchor #${value}`);
+					let newLine = anchors.find((v) => v.id === value)?.line;
+					if (newLine === undefined) {
+						throw new FracSyntaxError(index, null, `No anchor with id ${value} found`);
+					}
+					index = newLine;
+					break;
+				}
 				default: {
-					console.log("Unknown command; skipping");
+					console.log(`Non-recognized command ${command.name}; skipping`);
 				}
 			}
 		}
