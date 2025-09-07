@@ -1,2 +1,15 @@
-depth=1;
-Line 1; Jump 1; Line 1;
+depth=1;twod_jump=142857;
+
+Line 1;
+exit = 15;
+arg1 = -1;
+arg2 = 1;
+Warp twod_jump;
+Anchor exit;
+Line 1;
+
+Anchor twod_jump;
+Rotate atan2(arg1, arg2);
+Jump sqrt(arg1^2 + arg2^2);
+Rotate -atan2(arg1, arg2);
+Warp exit;
