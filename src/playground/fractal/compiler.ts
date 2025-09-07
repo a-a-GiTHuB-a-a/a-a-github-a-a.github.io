@@ -115,6 +115,7 @@ function Parse(expr:string):AST.Expression {
 				}
 				case "\n": {
 					index++;
+					char = 1;
 					line++;
 					break;
 				}
