@@ -204,7 +204,7 @@ interface Fractal {
 	depth:number;
 	rotation:number;
 	reflected:boolean;
-	commands:Array<{value: AST.Expression, [key: string]: any}>;
+	commands:Array<{name: string, value: AST.Expression, [key: string]: any}>;
 }
 
 function Compile(contents:string):Fractal {

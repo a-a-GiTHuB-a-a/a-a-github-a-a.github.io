@@ -130,16 +130,47 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					break;
 				}
 				case "anchor": {
-					anchors[anchors.findIndex((v)=>v.line === index)] = {
+					let anchorpoint = {
 						line: index,
 						id: value
 					};
+					let r;
+					if ((r = anchors.findIndex((v)=>v.line === index)) !== -1) {
+						anchors[r] = anchorpoint;
+					} else {
+						anchors.push(anchorpoint);
+					}
 					break;
 				}
 				case "warp": {
 					console.log(`Warping to anchor #${value}`);
 					let newLine = anchors.find((v) => v.id === value)?.line;
 					if (newLine === undefined) {
+						for (let altindex = index; altindex < fractal.commands.length; altindex++) {
+							let altcommand = fractal.commands[altindex];
+							if (altcommand.name === "anchor") {
+								let altvalue = altcommand.value.evaluate({
+									...context,
+									scale,
+									depth,
+									rotation,
+								});
+								let anchorpoint = {
+									line: altindex,
+									id: altvalue
+								};
+								let r;
+								if ((r = anchors.findIndex((v)=>v.line === altindex)) !== -1) {
+									anchors[r] = anchorpoint;
+								} else {
+									anchors.push(anchorpoint);
+								}
+								if (altvalue === value) {
+									index = altindex;
+									break;
+								}
+							}
+						}
 						throw new FracSyntaxError(index, null, `No anchor with id ${value} found`);
 					}
 					index = newLine;
