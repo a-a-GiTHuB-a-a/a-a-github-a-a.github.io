@@ -17,7 +17,7 @@ const op_objs = [
 	new AST.Operator("^", 3, 2, false),
 	new AST.Operator("(", LARGE_GAP, null, true), //A null value means it's special.
 	new AST.Operator(")", -LARGE_GAP, null, true),
-	new AST.Operator(",", LARGE_GAP-1, null, true),
+	new AST.Operator(",", -LARGE_GAP, null, true),
 ];
 const function_objs = [
 	new AST.SpecialFunction("sqrt", Math.sqrt, 1),
@@ -96,13 +96,16 @@ function Parse(expr:string):AST.Expression {
 				output.push(ops.pop());
 			}
 			if ((token.name === ")")) {
-				if (ops[ops.length - 1].name !== "(") throw new FracSyntaxError(line, char, "mismatched parentheses");
+				if (ops[ops.length - 1].name !== "(") throw new FracSyntaxError(null, char, "mismatched parentheses");
 				ops.pop();
 				if (ops[ops.length - 1].constructor.name === "SpecialFunction") {
 					output.push(ops.pop());
 				}
+			} else if ((token.name === ",")) {
+				//idk man
+			} else {
+				ops.push(token);
 			}
-			if (token.name !== ")") ops.push(token);
 			index += token.name.length;
 			char += token.name.length;
 		} else {
