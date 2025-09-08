@@ -2,7 +2,7 @@ import {regex as re} from "regex";
 import * as AST from "./AST";
 import paper from "paper";
 
-const ident_re = re`[A-Za-z_]+`;
+const ident_re = re`[A-Za-z_][A-Za-z_0-9]*`;
 const line_sep_re = re`\s*;\s*`;
 const num_re = re`[\-+]?(?:[0-9]+\.[0-9]*|\.[0-9]+|[0-9]+)`;
 const var_re = re`^(?<varname>${ident_re})\s*=\s*(?<value>[^=]+)$`;
@@ -25,7 +25,6 @@ const function_objs = [
 	new AST.SpecialFunction("sin", Math.sin, 1),
 	new AST.SpecialFunction("cos", Math.cos, 1),
 	new AST.SpecialFunction("tan", Math.tan, 1),
-	new AST.SpecialFunction("atan", Math.atan, 1),
 	new AST.SpecialFunction("atan2", Math.atan2, 2),
 ];
 
