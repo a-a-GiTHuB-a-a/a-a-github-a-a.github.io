@@ -17,6 +17,7 @@ const op_objs = [
 	new AST.Operator("^", 3, 2, false),
 	new AST.Operator("(", LARGE_GAP, null, true), //A null value means it's special.
 	new AST.Operator(")", -LARGE_GAP, null, true),
+	new AST.Operator(",", LARGE_GAP-1, null, true),
 ];
 const function_objs = [
 	new AST.SpecialFunction("sqrt", Math.sqrt, 1),
@@ -59,7 +60,6 @@ function Parse(expr:string):AST.Expression {
 	let output:Array<AST.Operator|AST.SpecialFunction|AST.Expression> = [];
 	let ops:Array<AST.Operator|AST.SpecialFunction> = [];
 	let index:number = 0;
-	let line:number = 1;
 	let char:number = 1;
 	let token:any;
 	//part 1: process expression
@@ -115,12 +115,11 @@ function Parse(expr:string):AST.Expression {
 				}
 				case "\n": {
 					index++;
-					char = 1;
-					line++;
+					char++;
 					break;
 				}
 				default: {
-					throw new FracSyntaxError(line, char);
+					throw new FracSyntaxError(null, char, "Unknown syntax in expression");
 				}
 			}
 		}
