@@ -202,12 +202,14 @@ function redraw():void {
 	center(current_path);
 }
 
-const dragFactor = 2;
+let oldPointViewCoords:paper.Point;
+paper.tool.on("mousedown", function(e:paper.ToolEvent) {
+    oldPointViewCoords = paper.view.projectToView(e.point);
+});
 paper.tool.on("mousedrag", function(e:paper.ToolEvent) {
-	let delta = e.downPoint.subtract(e.point);
-	console.log("Cursor dragged by", delta);
-	console.log("Zoom amount:", paper.view.zoom);
-	paper.view.center = paper.view.center.add(delta.multiply(dragFactor));
+    const delta = e.point.subtract(paper.view.viewToProject(oldPointViewCoords));
+    oldPointViewCoords = paper.view.projectToView(e.point);
+    paper.view.translate(delta);
 });
 const scaleFactor = 1.1;
 $("#zoom_in").on("click", function(e:JQuery.ClickEvent) {
