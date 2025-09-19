@@ -3,6 +3,30 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+#wrapper {
+	position: relative;
+}
+#zoom_buttons, canvas {
+	position: absolute;
+}
+#zoom_buttons {
+	text-align: right;
+	margin: 50px;
+}
+.zoom_btn {
+	width: 50px;
+	height: 50px;
+}
+canvas {
+	margin-top: 2rem;
+	width: 90%;
+	max-width: 800px;
+	height: 500px;
+	background: #0f172a;
+	border: 2px solid #334155;
+	border-radius: 12px;
+	box-shadow: 0px 6px 20px rgba(0,0,0,0.4);
+}
 body {
 	background: linear-gradient(135deg, #1e293b, #0f172a);
 	line-height: 1.6;
@@ -86,14 +110,4 @@ form input[type="number"] {
 	text-align: center;
 	font-size: 1rem;
 	margin-right: 0.5rem;
-}
-canvas {
-	margin-top: 2rem;
-	width: 90%;
-	max-width: 800px;
-	height: 500px;
-	background: #0f172a;
-	border: 2px solid #334155;
-	border-radius: 12px;
-	box-shadow: 0px 6px 20px rgba(0,0,0,0.4);
 }

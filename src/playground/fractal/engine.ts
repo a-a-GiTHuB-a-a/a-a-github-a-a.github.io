@@ -200,6 +200,17 @@ function redraw():void {
 	center(current_path);
 }
 
+paper.view.on("mousedrag", function(e:paper.MouseEvent) {
+	paper.view.translate(e.delta.multiply(-1));
+});
+const scaleFactor = 1.1;
+$("#zoom_in").on("click", function(e:JQuery.ClickEvent) {
+	paper.view.scale(scaleFactor);
+});
+$("#zoom_out").on("click", function(e:JQuery.ClickEvent) {
+	paper.view.scale(1/scaleFactor);
+});
+
 $("#fracfile").on("change", function(this:HTMLInputElement) {
 	const file = this.files[0];
 	file.text().then((data:string) => {
