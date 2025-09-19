@@ -202,7 +202,8 @@ function redraw():void {
 
 const dragFactor = 1;
 paper.view.on("mousedrag", function(e:paper.MouseEvent) {
-	paper.view.translate(e.delta.multiply(-dragFactor/paper.view.zoom));
+	console.log("Cursor dragged by", e.delta);
+	paper.view.translate(e.delta.multiply(dragFactor/paper.view.zoom));
 });
 const scaleFactor = 1.1;
 $("#zoom_in").on("click", function(e:JQuery.ClickEvent) {

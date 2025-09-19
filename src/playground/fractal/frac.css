@@ -14,7 +14,7 @@
 	position: absolute;
 }
 #zoom_buttons {
-	float: right;
+	right: 0;
 	margin: 20px;
 }
 .zoom_btn {
