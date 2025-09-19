@@ -227,6 +227,7 @@ function Compile(contents:string):Fractal {
 		let comment = cmt_re.exec(line);
 		if (comment !== null) {
 			console.log("Hi commenter :D");
+			console.groupEnd();
 			continue;
 		}
 		let assign = var_re.exec(line);
