@@ -7,6 +7,7 @@ const line_sep_re = re`\s*;\s*`;
 const num_re = re`[\-+]?(?:[0-9]+\.[0-9]*|\.[0-9]+|[0-9]+)`;
 const var_re = re`^(?<varname>${ident_re})\s*=\s*(?<value>[^=]+)$`;
 const cmd_re = re`^(?<cmdname>${ident_re})\s+(?<value>[^=]+)$`;
+const cmt_re = re`^:`;
 const LARGE_GAP = 16;
 const op_objs = [
 	new AST.Operator("+", 1),
@@ -223,6 +224,11 @@ function Compile(contents:string):Fractal {
 		console.groupCollapsed(`Line ${lineIndex}`);
 		const line = lines[lineIndex];
 		console.log(`Line: ${line}`);
+		let comment = cmt_re.exec(line);
+		if (comment !== null) {
+			console.log("Hi commenter :D");
+			continue;
+		}
 		let assign = var_re.exec(line);
 		if (assign !== null) {
 			console.log("Declaration detected!");
