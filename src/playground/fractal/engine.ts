@@ -181,6 +181,9 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 				}
 			}
 		}
+		if (depth === 1) {
+			console.log("Delta:", cluster.lastSegment.point.subtract(cluster.firstSegment.point));
+		}
 	}
 	console.log("Compressing path");
 	cluster.simplify(1);
