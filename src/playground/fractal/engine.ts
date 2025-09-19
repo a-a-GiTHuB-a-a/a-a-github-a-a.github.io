@@ -203,6 +203,7 @@ function redraw():void {
 const dragFactor = 1;
 paper.view.on("mousedrag", function(e:paper.MouseEvent) {
 	console.log("Cursor dragged by", e.delta);
+	console.log("Zoom amount:", paper.view.zoom);
 	paper.view.translate(e.delta.multiply(dragFactor/paper.view.zoom));
 });
 const scaleFactor = 1.1;
