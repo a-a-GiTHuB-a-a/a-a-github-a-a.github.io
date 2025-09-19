@@ -211,7 +211,7 @@ paper.tool.on("mousedrag", function(e:paper.ToolEvent) {
     oldPointViewCoords = paper.view.projectToView(e.point);
     paper.view.translate(delta);
 });
-const scaleFactor = 1.1;
+const scaleFactor = 1.5;
 $("#zoom_in").on("click", function(e:JQuery.ClickEvent) {
 	paper.view.scale(scaleFactor);
 });
