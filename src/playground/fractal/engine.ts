@@ -207,7 +207,7 @@ paper.tool.on("mousedrag", function(e:paper.ToolEvent) {
 	let delta = e.downPoint.subtract(e.point);
 	console.log("Cursor dragged by", delta);
 	console.log("Zoom amount:", paper.view.zoom);
-	paper.view.translate(delta.multiply(dragFactor));
+	paper.view.center = paper.view.center.add(delta.multiply(dragFactor));
 });
 const scaleFactor = 1.1;
 $("#zoom_in").on("click", function(e:JQuery.ClickEvent) {
