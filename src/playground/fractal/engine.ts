@@ -202,7 +202,7 @@ function redraw():void {
 	center(current_path);
 }
 
-const dragFactor = 5;
+const dragFactor = 2;
 paper.tool.on("mousedrag", function(e:paper.ToolEvent) {
 	let delta = e.downPoint.subtract(e.point);
 	console.log("Cursor dragged by", delta);
