@@ -200,8 +200,9 @@ function redraw():void {
 	center(current_path);
 }
 
+const dragFactor = 1;
 paper.view.on("mousedrag", function(e:paper.MouseEvent) {
-	paper.view.translate(e.delta.multiply(-1));
+	paper.view.translate(e.delta.multiply(-dragFactor/paper.view.zoom));
 });
 const scaleFactor = 1.1;
 $("#zoom_in").on("click", function(e:JQuery.ClickEvent) {
