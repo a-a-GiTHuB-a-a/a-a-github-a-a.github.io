@@ -214,6 +214,7 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 				}
 			}
 		}
+		cluster.addChild(p);
 		cluster.addChild(new paper.Path(position));
 	}
 	console.groupEnd();
