@@ -81,15 +81,21 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						commands: fractal.commands,
 					}, config);
 					let first_child:paper.Path = partial_path.children[0] as paper.Path;
-					if (first_child.firstSegment.point.equals(p.lastSegment.point)) {
+					if (p.lastSegment.point.equals(first_child.firstSegment?.point)) {
 						console.log("Welding paths…");
 						partial_path.removeChildren(0, 1);
 						p.addSegments(first_child.segments.slice(1));
+						if (partial_path.lastSegment === null) {
+							position = p.lastSegment.point;
+						} else {
+							position = partial_path.lastSegment.point;
+							cluster.addChildren(partial_path.clone({insert: false, deep: true}).children);
+						}
 					} else {
 						cluster.addChild(p);
+						position = partial_path.lastSegment.point;
+						cluster.addChildren(partial_path.clone({insert: false, deep: true}).children);
 					}
-					cluster.addChildren(partial_path.clone({insert: false, deep: true}).children);
-					position = partial_path.lastSegment.point;
 					partial_path.remove();
 					p = new paper.Path({
 						segments: [position],
