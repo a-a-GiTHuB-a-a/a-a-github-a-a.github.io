@@ -80,14 +80,20 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						reflected,
 						commands: fractal.commands,
 					}, config);
-					cluster.addChild(p);
+					let first_child:paper.Path = partial_path.children[0] as paper.Path;
+					if (first_child.firstSegment == p.lastSegment) {
+						partial_path.removeChildren(0, 1);
+						p.addSegments(first_child.segments.slice(1));
+					} else {
+						cluster.addChild(p);
+					}
 					cluster.addChildren(partial_path.clone({insert: false, deep: true}).children);
 					position = partial_path.lastSegment.point;
+					partial_path.remove();
 					p = new paper.Path({
 						segments: [position],
 						...config
 					});
-					partial_path.remove();
 					break;
 				}
 				case "reflectedline":
@@ -102,14 +108,20 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						reflected: !reflected,
 						commands: fractal.commands,
 					}, config);
-					cluster.addChild(p);
+					let first_child:paper.Path = partial_path.children[0] as paper.Path;
+					if (first_child.firstSegment == p.lastSegment) {
+						partial_path.removeChildren(0, 1);
+						p.addSegments(first_child.segments.slice(1));
+					} else {
+						cluster.addChild(p);
+					}
 					cluster.addChildren(partial_path.clone({insert: false, deep: true}).children);
 					position = partial_path.lastSegment.point;
+					partial_path.remove();
 					p = new paper.Path({
 						segments: [position],
 						...config
 					});
-					partial_path.remove();
 					break;
 				}
 				case "absoluteline": {
