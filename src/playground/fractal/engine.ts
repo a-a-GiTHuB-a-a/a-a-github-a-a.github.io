@@ -216,8 +216,6 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 		}
 		cluster.addChild(new paper.Path(position));
 	}
-	console.log("Compressing path");
-	cluster.simplify(1);
 	console.groupEnd();
 	return cluster;
 }
