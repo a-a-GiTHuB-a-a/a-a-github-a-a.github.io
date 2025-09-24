@@ -14,7 +14,7 @@ let current_config:StyleConfig = {
 	strokeColor: new paper.Color(0xbf, 0x7f, 0xff),
 	strokeWidth: 1
 };
-let current_path = Draw(current_fractal, current_config);
+let current_path = draw_recurse(current_fractal, current_config);
 center(current_path);
 
 /**
@@ -30,6 +30,10 @@ function rectangularize(magnitude:number, direction:number):paper.Point {
 }
 
 function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
+	console.log("Drawing new fractal!");
+	return draw_recurse(fractal, config);
+}
+function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 	let cluster:paper.CompoundPath;
 	console.groupCollapsed("subdraw");
 	if (fractal.depth <= 0) {
@@ -71,7 +75,7 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					break;
 				}
 				case "line": {
-					const partial_path:paper.CompoundPath = Draw({
+					const partial_path:paper.CompoundPath = draw_recurse({
 						...context,
 						position,
 						rotation,
@@ -111,7 +115,7 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 				case "reflectedline":
 				case "flippedline":
 				case "mirroredline": {
-					const partial_path:paper.CompoundPath = Draw({
+					const partial_path:paper.CompoundPath = draw_recurse({
 						...context,
 						position,
 						rotation,
@@ -144,7 +148,7 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					break;
 				}
 				case "absoluteline": {
-					console.log("Drawing depth-ignorant line");
+					console.log("draw_recurseing depth-ignorant line");
 					position = position.add(rectangularize(scale * value, rotation));
 					const newSegment = new paper.Segment({
 						point: position,
@@ -257,11 +261,24 @@ $("#fracfile").on("change", function(this:HTMLInputElement) {
 	});
 });
 
+/**
+ * Taken from [this Stack Overflow answer]{@link https://stackoverflow.com/questions/175739/how-can-i-check-if-a-string-is-a-valid-number}.
+ * @param str A string, possibly containing a number.
+ * @returns Whether <code>str</code> is numeric or not.
+ */
+function isNumeric(str:string):boolean {
+	return !isNaN(+str) && !isNaN(parseFloat(str));
+}
 $("#style").on("submit", function(this:HTMLFormElement, e:JQuery.SubmitEvent) {
 	e.preventDefault();
 	e.stopPropagation();
 	let old_config:StyleConfig = {...current_config};
-	current_config.strokeWidth = +($("#width") as JQuery<HTMLInputElement>).val();
+	let stroke_width_input:JQuery<HTMLInputElement> = $("#width") as JQuery<HTMLInputElement>;
+	if (!isNumeric(stroke_width_input.val())) {
+		stroke_width_input.trigger("invalid");
+		return true;
+	}
+	current_config.strokeWidth = +stroke_width_input.val();
 	if (!Object.keys(old_config).map((k:keyof StyleConfig) => old_config[k] === current_config[k]).reduce((a,b)=>a&&b,true)) {
 		redraw();
 	} 
