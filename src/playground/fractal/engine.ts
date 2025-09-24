@@ -95,12 +95,12 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						cluster.addChild(p);
 						position = partial_path.lastSegment.point;
 						cluster.addChildren(partial_path.clone({insert: false, deep: true}).children);
+						p = new paper.Path({
+							segments: [position],
+							...config
+						});
 					}
 					partial_path.remove();
-					p = new paper.Path({
-						segments: [position],
-						...config
-					});
 					break;
 				}
 				case "reflectedline":
@@ -130,12 +130,12 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						cluster.addChild(p);
 						position = partial_path.lastSegment.point;
 						cluster.addChildren(partial_path.clone({insert: false, deep: true}).children);
+						p = new paper.Path({
+							segments: [position],
+							...config
+						});
 					}
 					partial_path.remove();
-					p = new paper.Path({
-						segments: [position],
-						...config
-					});
 					break;
 				}
 				case "absoluteline": {
