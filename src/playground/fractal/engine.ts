@@ -87,8 +87,6 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					let first_child:paper.Path = partial_path.children[0] as paper.Path;
 					if (p.lastSegment.point.equals(first_child.firstSegment?.point)) {
 						console.log("Welding paths…");
-						console.log(p);
-						console.log(first_child);
 						p.addSegments(first_child.segments.slice(1, first_child.segments.length));
 						first_child.remove();
 						partial_path.removeChildren(0, 1);
@@ -99,8 +97,6 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 							cluster.addChildren(partial_path.clone({insert: false, deep: true}).children);
 						}
 					} else {
-						console.log(p);
-						console.log(first_child);
 						cluster.addChild(p);
 						position = partial_path.lastSegment.point;
 						cluster.addChildren(partial_path.clone({insert: false, deep: true}).children);
@@ -128,6 +124,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					if (p.lastSegment.point.equals(first_child.firstSegment?.point)) {
 						console.log("Welding paths…");
 						p.addSegments(first_child.segments.slice(1, first_child.segments.length));
+						first_child.remove();
 						partial_path.removeChildren(0, 1);
 						if (partial_path.lastSegment === null) {
 							position = p.lastSegment.point;
