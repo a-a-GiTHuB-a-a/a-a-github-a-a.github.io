@@ -70,8 +70,8 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 			})]
 		});
 	} else {
-		cluster = new paper.CompoundPath(config);
 		let {position, scale, depth, rotation} = fractal;
+		cluster = new paper.CompoundPath({children: [new paper.Path([position])], style: config});
 		let context:ContextObject = {};
 		let anchors:Array<{line:number,id:number}> = [];
 		depth--;
