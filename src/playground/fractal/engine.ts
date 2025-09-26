@@ -36,8 +36,8 @@ function rectangularize(magnitude:number, direction:number):paper.Point {
  * @returns 
  */
 function weld(past:paper.CompoundPath, current:paper.CompoundPath):paper.CompoundPath {
-	console.log(past);
-	console.log(current);
+	console.log(past.children);
+	console.log(current.children);
 	let cluster = new paper.CompoundPath({style: past.style, children: past.children.slice(0, -1)});
 	let last_old:paper.Path = past.lastChild as paper.Path;
 	let first_new:paper.Path = current.firstChild as paper.Path;
