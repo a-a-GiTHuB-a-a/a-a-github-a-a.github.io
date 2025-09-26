@@ -29,6 +29,28 @@ function rectangularize(magnitude:number, direction:number):paper.Point {
 	);
 }
 
+/**
+ * Attempts to weld two compound paths together.
+ * @param past The path
+ * @param current 
+ * @returns 
+ */
+function weld(past:paper.CompoundPath, current:paper.CompoundPath):paper.CompoundPath {
+	let cluster = new paper.CompoundPath({children: past.children.slice(0, -1)});
+	let last_old:paper.Path = past.lastChild as paper.Path;
+	let first_new:paper.Path = current.firstChild as paper.Path;
+	if (last_old.lastSegment.point.equals(first_new.firstSegment?.point)) {
+		last_old.addSegments(first_new.segments.slice(1, first_new.segments.length));
+		cluster.addChild(last_old);
+		cluster.addChildren(current.children.slice(1));
+		first_new.remove();
+	} else {
+		cluster.addChild(last_old);
+		cluster.addChildren(current.clone({insert: false, deep: true}).children);
+	}
+	return cluster;
+}
+
 function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 	console.log("Drawing new fractal!");
 	return draw_recurse(fractal, config);
@@ -61,7 +83,6 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 				...context,
 				scale,
 				depth,
-				rotation,
 			});
 			switch (command.name) {
 				case "assign": {
@@ -71,77 +92,35 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 				}
 				case "rotate": {
 					console.log("Rotating by angle", value);
-					rotation += value*(Number(reflected)*2-1); //counterclockwise is better.
+					rotation += value; //counterclockwise is better.
 					break;
 				}
-				case "line": {
-					const partial_path:paper.CompoundPath = draw_recurse({
-						...context,
-						position,
-						rotation,
-						depth,
-						scale: scale * value,
-						reflected,
-						commands: fractal.commands,
-					}, config);
-					let first_child:paper.Path = partial_path.children[0] as paper.Path;
-					if (p.lastSegment.point.equals(first_child.firstSegment?.point)) {
-						console.log("Welding paths…");
-						p.addSegments(first_child.segments.slice(1, first_child.segments.length));
-						first_child.remove();
-						partial_path.removeChildren(0, 1);
-						if (partial_path.lastSegment === null) {
-							position = p.lastSegment.point;
-						} else {
-							position = partial_path.lastSegment.point;
-							cluster.addChildren(partial_path.clone({insert: false, deep: true}).children);
-						}
-					} else {
-						cluster.addChild(p);
-						position = partial_path.lastSegment.point;
-						cluster.addChildren(partial_path.clone({insert: false, deep: true}).children);
-						p = new paper.Path({
-							segments: [position],
-							...config
-						});
-					}
-					partial_path.remove();
-					break;
-				}
-				case "reflectedline":
 				case "flippedline":
-				case "mirroredline": {
-					const partial_path:paper.CompoundPath = draw_recurse({
+				case "mirroredline":
+				case "flippedmirroredline":
+				case "mirroredflippedline":
+				case "line": {
+					let flipped = command.name.includes("flipped");
+					let mirrored = command.name.includes("mirrored");
+					let partial_path:paper.CompoundPath = draw_recurse({
 						...context,
 						position,
-						rotation,
+						rotation: 0,
 						depth,
-						scale: scale * value,
-						reflected: !reflected,
+						scale: 1,
 						commands: fractal.commands,
 					}, config);
-					let first_child:paper.Path = partial_path.children[0] as paper.Path;
-					if (p.lastSegment.point.equals(first_child.firstSegment?.point)) {
-						console.log("Welding paths…");
-						p.addSegments(first_child.segments.slice(1, first_child.segments.length));
-						first_child.remove();
-						partial_path.removeChildren(0, 1);
-						if (partial_path.lastSegment === null) {
-							position = p.lastSegment.point;
-						} else {
-							position = partial_path.lastSegment.point;
-							cluster.addChildren(partial_path.clone({insert: false, deep: true}).children);
-						}
-					} else {
-						cluster.addChild(p);
-						position = partial_path.lastSegment.point;
-						cluster.addChildren(partial_path.clone({insert: false, deep: true}).children);
-						p = new paper.Path({
-							segments: [position],
-							...config
-						});
-					}
 					partial_path.remove();
+					let endpoint = partial_path.lastSegment.point;
+					let diff = endpoint.subtract(position);
+					partial_path.rotate(-diff.angle, position);
+					partial_path.scale(scale * value / position.getDistance(endpoint), position);
+					partial_path.scale(flipped ? -1 : 1, mirrored ? -1 : 1, position.add(endpoint).divide(2));
+					partial_path.rotate(rotation, position);
+					let welded = weld(new paper.CompoundPath({children: p}), partial_path);
+					p = welded.lastChild as paper.Path;
+					cluster.addChildren(welded.children.slice(0, -1));
+					welded.remove();
 					break;
 				}
 				case "absoluteline": {
