@@ -184,7 +184,9 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 				}
 			}
 		}
-		cluster.addChild(new paper.Path(position));
+		if (!position.equals(cluster.lastSegment.point)) {
+			cluster.addChild(new paper.Path(position));
+		}
 	}
 	console.groupEnd();
 	return cluster;
