@@ -42,6 +42,7 @@ function weld(past:paper.CompoundPath, current:paper.CompoundPath):paper.Compoun
 	let last_old:paper.Path = past.lastChild as paper.Path;
 	let first_new:paper.Path = current.firstChild as paper.Path;
 	if (last_old.lastSegment.point.equals(first_new.firstSegment?.point)) {
+		console.log("Can weld");
 		last_old.addSegments(first_new.segments.slice(1, first_new.segments.length));
 		cluster.addChild(last_old);
 		cluster.addChildren(current.children.slice(1));
@@ -50,6 +51,7 @@ function weld(past:paper.CompoundPath, current:paper.CompoundPath):paper.Compoun
 		cluster.addChild(last_old);
 		cluster.addChildren(current.clone({insert: false, deep: true}).children);
 	}
+	console.log(cluster.clone({insert: false}).children.map(child => (child as paper.Path).segments));
 	return cluster;
 }
 
@@ -108,14 +110,12 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						scale: 1,
 						commands: fractal.commands,
 					}, config);
-					console.log(partial_path.clone({insert: false}));
 					let endpoint = partial_path.lastSegment.point;
 					let diff = endpoint.subtract(position);
 					partial_path.rotate(-diff.angle, position);
 					partial_path.scale(scale * value / position.getDistance(endpoint), position);
 					partial_path.scale(flipped ? -1 : 1, mirrored ? -1 : 1, position.add(endpoint).divide(2));
 					partial_path.rotate(rotation, position);
-					console.log(partial_path.clone({insert: false}));
 					cluster = weld(cluster, partial_path);
 					partial_path.remove();
 					break;
