@@ -75,10 +75,6 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 		let context:ContextObject = {};
 		let anchors:Array<{line:number,id:number}> = [];
 		depth--;
-		let p = new paper.Path({
-			segments: [position],
-			...config
-		});
 		for (let index = 0; index < fractal.commands.length; index++) {
 			let command = fractal.commands[index];
 			let value = command.value.evaluate({
@@ -119,29 +115,21 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					partial_path.scale(scale * value / position.getDistance(endpoint), position);
 					partial_path.scale(flipped ? -1 : 1, mirrored ? -1 : 1, position.add(endpoint).divide(2));
 					partial_path.rotate(rotation, position);
-					let welded = weld(new paper.CompoundPath({children: p}), partial_path);
-					p = welded.lastChild as paper.Path;
-					cluster.addChildren(welded.children.slice(0, -1));
-					welded.remove();
+					cluster = weld(cluster, partial_path);
 					break;
 				}
 				case "absoluteline": {
-					console.log("draw_recurseing depth-ignorant line");
+					console.log("drawing depth-ignorant line");
 					position = position.add(rectangularize(scale * value, rotation));
 					const newSegment = new paper.Segment({
 						point: position,
 					});
-					p.addSegments([newSegment]);
+					cluster = weld(cluster, new paper.CompoundPath({children: newSegment}));
 					break;
 				}
 				case "jump": {
 					console.log("Jumping");
-					cluster.addChild(p);
 					position = position.add(rectangularize(scale * value, rotation));
-					p = new paper.Path({
-						segments: [position],
-						...config
-					});
 					break;
 				}
 				case "anchor": {
@@ -196,7 +184,6 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 				}
 			}
 		}
-		cluster.addChild(p);
 		cluster.addChild(new paper.Path(position));
 	}
 	console.groupEnd();
