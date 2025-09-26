@@ -36,7 +36,9 @@ function rectangularize(magnitude:number, direction:number):paper.Point {
  * @returns 
  */
 function weld(past:paper.CompoundPath, current:paper.CompoundPath):paper.CompoundPath {
-	let cluster = new paper.CompoundPath({children: past.children.slice(0, -1)});
+	console.log(past);
+	console.log(current);
+	let cluster = new paper.CompoundPath({style: past.style, children: past.children.slice(0, -1)});
 	let last_old:paper.Path = past.lastChild as paper.Path;
 	let first_new:paper.Path = current.firstChild as paper.Path;
 	if (last_old.lastSegment.point.equals(first_new.firstSegment?.point)) {
@@ -59,7 +61,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 	let cluster:paper.CompoundPath;
 	console.groupCollapsed("subdraw");
 	if (fractal.depth <= 0) {
-		console.log("Degenerate case found:", cluster);
+		console.log("Degenerate case found");
 		cluster = new paper.CompoundPath({
 			children: [new paper.Path.Line({
 				from: fractal.position,
