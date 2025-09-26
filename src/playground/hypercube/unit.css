@@ -1,0 +1,25 @@
+#wrapper {
+	position: relative;
+	margin-top: 2rem;
+	height: 500px;
+	width: 90%;
+	max-width: 800px;
+}
+#zoom_buttons, canvas {
+	position: absolute;
+}
+#zoom_buttons {
+	right: 0;
+	margin: 20px;
+}
+.zoom_btn {
+	width: 20px;
+	height: 20px;
+}
+.zoom_btn:hover {
+	cursor: pointer;
+}
+#content {
+	width: 100%;
+	height: 100%;
+}
