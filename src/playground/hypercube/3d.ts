@@ -28,10 +28,6 @@ export class Point3 implements Iterable<number, undefined, undefined> {
 		return [this.x, this.y, this.z];
 	}
 
-	project(plane:OriginPlane3):paper.Point {
-
-	};
-
 	scale(sx:number,sy:number,sz:number):Point3;
 	scale(s:number):Point3;
 	scale(...args:number[]):Point3 {
@@ -51,17 +47,26 @@ export class Point3 implements Iterable<number, undefined, undefined> {
 	}
 };
 export class OriginPlane3 {
-	bx:Point3;
-	by:Point3;
+	orthogonal:Point3;
 
 	/**
-	 * Define a plane through the origin in terms of two basis vectors. Orthonormalizes automatically.
-	 * @param kx x vector
-	 * @param ky combination of x and y vectors
+	 * @argument orthogonal The vector orthogonal to the plane.
 	 */
-	constructor(kx:Point3, ky:Point3) {
-		this.bx = kx.scale(1/kx.norm());
-		this.by = kx.scale(1/kx.norm());
+	constructor(orthogonal:Point3) {
+		this.orthogonal = orthogonal;
+	}
+
+	get projection_matrix():Matrix3 {
+		let x = this.orthogonal.x;
+		let y = this.orthogonal.y;
+		let z = this.orthogonal.z;
+		let n2 = x*x+y*y+z*z;
+		return Matrix3.fromColumns(
+			[1-x*x/n2, -x*y/n2, -x*z/n2],
+			[-y*x/n2, 1-y*y/n2, -y*z/n2],
+			[-z*x/n2, -z*y/n2, 1-z*z/n2],
+			Point3.origin
+		);
 	}
 };
 export type PointLike = Point3|[number, number, number];
