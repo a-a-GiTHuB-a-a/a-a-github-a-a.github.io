@@ -108,7 +108,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						scale: 1,
 						commands: fractal.commands,
 					}, config);
-					partial_path.remove();
+					console.log(partial_path.clone({insert: false}));
 					let endpoint = partial_path.lastSegment.point;
 					let diff = endpoint.subtract(position);
 					partial_path.rotate(-diff.angle, position);
@@ -116,6 +116,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					partial_path.scale(flipped ? -1 : 1, mirrored ? -1 : 1, position.add(endpoint).divide(2));
 					partial_path.rotate(rotation, position);
 					cluster = weld(cluster, partial_path);
+					partial_path.remove();
 					break;
 				}
 				case "absoluteline": {
