@@ -36,8 +36,8 @@ function rectangularize(magnitude:number, direction:number):paper.Point {
  * @returns 
  */
 function weld(past:paper.CompoundPath, current:paper.CompoundPath):paper.CompoundPath {
-	console.log(past.clone({insert: false}).children.map(child => (child as paper.Path).segments));
-	console.log(current.clone({insert: false}).children.map(child => (child as paper.Path).segments));
+	console.log("Past:", past.clone({insert: false}).children.map(child => (child as paper.Path).segments));
+	console.log("Current:", current.clone({insert: false}).children.map(child => (child as paper.Path).segments));
 	let cluster = new paper.CompoundPath({style: past.style, children: past.children.slice(0, -1)});
 	let last_old:paper.Path = past.lastChild as paper.Path;
 	let first_new:paper.Path = current.firstChild as paper.Path;
@@ -51,7 +51,7 @@ function weld(past:paper.CompoundPath, current:paper.CompoundPath):paper.Compoun
 		cluster.addChild(last_old);
 		cluster.addChildren(current.clone({insert: false, deep: true}).children);
 	}
-	console.log(cluster.clone({insert: false}).children.map(child => (child as paper.Path).segments));
+	console.log("Combined:", cluster.clone({insert: false}).children.map(child => (child as paper.Path).segments));
 	return cluster;
 }
 
