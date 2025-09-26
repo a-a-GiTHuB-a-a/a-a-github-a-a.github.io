@@ -36,8 +36,8 @@ function rectangularize(magnitude:number, direction:number):paper.Point {
  * @returns 
  */
 function weld(past:paper.CompoundPath, current:paper.CompoundPath):paper.CompoundPath {
-	console.log(past.children);
-	console.log(current.children);
+	console.log(past.clone({insert: false}).children);
+	console.log(current.clone({insert: false}).children);
 	let cluster = new paper.CompoundPath({style: past.style, children: past.children.slice(0, -1)});
 	let last_old:paper.Path = past.lastChild as paper.Path;
 	let first_new:paper.Path = current.firstChild as paper.Path;
@@ -115,6 +115,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					partial_path.scale(scale * value / position.getDistance(endpoint), position);
 					partial_path.scale(flipped ? -1 : 1, mirrored ? -1 : 1, position.add(endpoint).divide(2));
 					partial_path.rotate(rotation, position);
+					console.log(partial_path.clone({insert: false}));
 					cluster = weld(cluster, partial_path);
 					partial_path.remove();
 					break;
