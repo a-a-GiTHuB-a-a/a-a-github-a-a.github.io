@@ -136,6 +136,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					partial_path.rotate(rotation, origin);
 					partial_path.translate(position);
 					console.log("processed result:", formatItem(partial_path));
+					console.log("pre-welding cluster:", formatItem(cluster));
 					cluster = weldCompound(cluster, partial_path);
 					partial_path.remove();
 					break;
