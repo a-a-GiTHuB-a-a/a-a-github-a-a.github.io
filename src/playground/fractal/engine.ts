@@ -16,8 +16,7 @@ let current_config:StyleConfig = {
 	strokeColor: new paper.Color(0xbf, 0x7f, 0xff),
 	strokeWidth: 1
 };
-let current_path = draw_recurse(current_fractal, current_config);
-center(current_path);
+let current_path;
 
 /**
  * @returns A {@link paper.Point} with the given magnitude and direction.
@@ -233,6 +232,7 @@ function redraw():void {
 	current_path = Draw(current_fractal, current_config);
 	center(current_path);
 }
+redraw();
 
 let oldPointViewCoords:paper.Point;
 paper.tool.on("mousedown", function(e:paper.ToolEvent) {
