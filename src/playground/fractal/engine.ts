@@ -56,6 +56,20 @@ function weldRaw(first:paper.Path, second:paper.Path):paper.CompoundPath {
 	return union;
 }
 
+function formatItem(thing:paper.Item|paper.Segment|paper.Point):string {
+	if (thing instanceof paper.CompoundPath) {
+		return thing.children.map(formatItem).toString();
+	} else if (thing instanceof paper.Path) {
+		return thing.segments.map(formatItem).toString();
+	} else if (thing instanceof paper.Segment) {
+		return formatItem(thing.point);
+	} else if (thing instanceof paper.Point) {
+		return `(${thing.x}, ${thing.y})`;
+	} else if (thing instanceof paper.Item) {
+		return thing.toString();
+	}
+}
+
 function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 	console.log("Drawing new fractal!");
 	return draw_recurse(fractal, config);
@@ -111,12 +125,14 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						scale: 1,
 						commands: fractal.commands,
 					}, config);
+					console.log("raw result:", formatItem(partial_path));
 					let endpoint = partial_path.lastSegment.point;
 					partial_path.rotate(-endpoint.angle, origin);
 					partial_path.scale(scale * value / endpoint.length, origin);
 					partial_path.scale(flipped ? -1 : 1, mirrored ? -1 : 1, endpoint.divide(2));
 					partial_path.rotate(rotation, origin);
 					partial_path.translate(position);
+					console.log("processed result:", formatItem(partial_path));
 					cluster = weldCompound(cluster, partial_path);
 					partial_path.remove();
 					break;
@@ -191,7 +207,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 			cluster.addChild(new paper.Path(position));
 		}
 	}
-	console.log("Final product:", cluster.children.map(p => (p as paper.Path).segments.map(s => s.point)));
+	console.log("Final product:", formatItem(cluster));
 	console.groupEnd();
 	return cluster;
 }
