@@ -134,7 +134,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					let endpoint = partial_path.lastSegment.point;
 					partial_path.rotate(-endpoint.angle, origin);
 					partial_path.scale(scale * value / endpoint.length, origin);
-					partial_path.scale(flipped ? -1 : 1, mirrored ? -1 : 1, endpoint.divide(2));
+					partial_path.scale(mirrored ? -1 : 1, flipped ? -1 : 1, endpoint.divide(2));
 					partial_path.rotate(rotation, origin);
 					partial_path.translate(position);
 					cluster = weldCompound(cluster, partial_path);
