@@ -2,6 +2,7 @@ import {Compile, FracSyntaxError, Fractal} from "./compiler";
 import {ContextObject} from "./AST";
 import paper from "paper";
 import $ from "jquery";
+import { Rectangle } from "paper/dist/paper-core";
 
 paper.setup($("canvas#content")[0] as HTMLCanvasElement);
 const tool = new paper.Tool();
@@ -130,18 +131,15 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						scale: 1,
 						commands: fractal.commands,
 					}, config);
-					console.log("raw result:", formatItem(partial_path));
 					let endpoint = partial_path.lastSegment.point;
 					partial_path.rotate(-endpoint.angle, origin);
 					partial_path.scale(scale * value / endpoint.length, origin);
-					console.log("After rotate+scale:", formatItem(partial_path));
 					partial_path.scale(flipped ? -1 : 1, mirrored ? -1 : 1, endpoint.divide(2));
 					partial_path.rotate(rotation, origin);
 					partial_path.translate(position);
-					console.log("fully processed result:", formatItem(partial_path));
-					console.log("pre-welding cluster:", formatItem(cluster));
 					cluster = weldCompound(cluster, partial_path);
 					partial_path.remove();
+					position = position.add(rectangularize(scale, rotation));
 					break;
 				}
 				case "absoluteline": {
@@ -214,7 +212,6 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 			cluster.addChild(new paper.Path(position));
 		}
 	}
-	console.log("Final product:", formatItem(cluster));
 	console.groupEnd();
 	return cluster;
 }
