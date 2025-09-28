@@ -54,6 +54,7 @@ function weldRaw(first:paper.Path, second:paper.Path):paper.CompoundPath {
 	} else {
 		union.addChildren([first, second]);
 	}
+	console.log("Welded single path:", formatItem(union));
 	return union;
 }
 
