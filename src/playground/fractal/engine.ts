@@ -113,7 +113,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 				}
 				case "rotate": {
 					console.log("Rotating by angle", value);
-					rotation += value; //counterclockwise is better.
+					rotation -= value; //counterclockwise is better.
 					break;
 				}
 				case "flippedline":
