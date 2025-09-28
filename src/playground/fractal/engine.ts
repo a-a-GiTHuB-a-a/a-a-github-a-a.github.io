@@ -77,6 +77,7 @@ function formatItem(thing:Formattable):string {
 function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 	console.log("Drawing new fractal!");
 	let result = draw_recurse(fractal, config);
+	result.addTo(paper.project);
 	console.log("Fractal:", formatItem(result));
 	return result;
 }
@@ -217,6 +218,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 			cluster.addChild(new paper.Path(position));
 		}
 	}
+	cluster.remove();
 	console.groupEnd();
 	return cluster;
 }
