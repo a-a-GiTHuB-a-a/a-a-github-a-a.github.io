@@ -39,12 +39,10 @@ function weldCompound(first:paper.CompoundPath, second:paper.CompoundPath):paper
 	let cluster = new paper.CompoundPath({style: first.style});
 	let last_first = first.removeChildren(first.children.length - 1)[0] as paper.Path;
 	let first_last = second.removeChildren(0, 1)[0] as paper.Path;
-	console.log("new first:", formatItem(first));
-	console.log("new second:", formatItem(second));
 	cluster.addChildren([...first.children, ...weldRaw(last_first, first_last).children, ...second.children]);
 	first.remove();
 	second.remove();
-	console.log("returned cluster:", cluster);
+	console.log("returned cluster:", formatItem(cluster));
 	return cluster;
 }
 
