@@ -39,6 +39,8 @@ function weldCompound(first:paper.CompoundPath, second:paper.CompoundPath):paper
 	let cluster = new paper.CompoundPath({style: first.style});
 	let last_first = first.removeChildren(first.children.length - 1)[0] as paper.Path;
 	let first_last = second.removeChildren(0, 1)[0] as paper.Path;
+	console.log("new first:", formatItem(first));
+	console.log("new second:", formatItem(second));
 	cluster.addChildren([...first.children, ...weldRaw(last_first, first_last).children, ...second.children]);
 	first.remove();
 	second.remove();
@@ -54,7 +56,6 @@ function weldRaw(first:paper.Path, second:paper.Path):paper.CompoundPath {
 	} else {
 		union.addChildren([first, second]);
 	}
-	console.log("Welded single path:", formatItem(union));
 	return union;
 }
 
@@ -133,13 +134,10 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					console.log("raw result:", formatItem(partial_path));
 					let endpoint = partial_path.lastSegment.point;
 					partial_path.rotate(-endpoint.angle, origin);
-					console.log("After rotate:", formatItem(partial_path));
 					partial_path.scale(scale * value / endpoint.length, origin);
-					console.log("After scale:", formatItem(partial_path));
+					console.log("After rotate+scale:", formatItem(partial_path));
 					partial_path.scale(flipped ? -1 : 1, mirrored ? -1 : 1, endpoint.divide(2));
-					console.log("After flips:", formatItem(partial_path));
 					partial_path.rotate(rotation, origin);
-					console.log("After rotate:", formatItem(partial_path));
 					partial_path.translate(position);
 					console.log("fully processed result:", formatItem(partial_path));
 					console.log("pre-welding cluster:", formatItem(cluster));
