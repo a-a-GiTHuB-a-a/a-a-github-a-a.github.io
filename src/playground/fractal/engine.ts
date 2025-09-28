@@ -44,6 +44,7 @@ function weldCompound(first:paper.CompoundPath, second:paper.CompoundPath):paper
 	cluster.addChildren([...first.children, ...weldRaw(last_first, first_last).children, ...second.children]);
 	first.remove();
 	second.remove();
+	console.log("returned cluster:", cluster);
 	return cluster;
 }
 
