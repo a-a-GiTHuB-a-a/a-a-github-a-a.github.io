@@ -30,10 +30,9 @@ function rectangularize(magnitude:number, direction:number):paper.Point {
 }
 
 /**
- * Attempts to weld two compound paths together.
- * @param past The path
- * @param current 
- * @returns 
+ * @param past The first path.
+ * @param current The second path.
+ * @returns A "welded" combination of the two paths.
  */
 function weld(past:paper.CompoundPath, current:paper.CompoundPath):paper.CompoundPath {
 	console.log("Past:", past.clone({insert: false}).children.map(child => (child as paper.Path).segments));
@@ -190,6 +189,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 			cluster.addChild(new paper.Path(position));
 		}
 	}
+	console.log("Final product:", cluster);
 	console.groupEnd();
 	return cluster;
 }
