@@ -143,7 +143,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					break;
 				}
 				case "absoluteline": {
-					console.log("drawing depth-ignorant line");
+					console.log("Drawing depth-ignorant line");
 					position = position.add(rectangularize(scale * value, rotation));
 					const newSegment = new paper.Segment({
 						point: position,
