@@ -136,10 +136,10 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					partial_path.scale(scale * value / endpoint.length, origin);
 					partial_path.scale(flipped ? -1 : 1, mirrored ? -1 : 1, endpoint.divide(2));
 					partial_path.rotate(rotation, origin);
-					partial_path.translate(position);
+					partial_path.translate(position.multiply(value));
 					cluster = weldCompound(cluster, partial_path);
 					partial_path.remove();
-					position = position.add(rectangularize(scale, rotation));
+					position = position.add(rectangularize(scale * value, rotation));
 					break;
 				}
 				case "absoluteline": {
