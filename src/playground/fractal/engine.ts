@@ -39,14 +39,13 @@ function weldCompound(first:paper.CompoundPath, second:paper.CompoundPath):paper
 	let cluster = new paper.CompoundPath({style: first.style});
 	let last_first = first.lastChild as paper.Path;
 	let first_last = second.firstChild as paper.Path;
-	cluster.addChildren([...first.children.slice(0, -1), weldRaw(last_first, first_last), ...second.children.slice(1)]);
+	cluster.addChildren([...first.children.slice(0, -1), ...weldRaw(last_first, first_last).children, ...second.children.slice(1)]);
 	first.remove();
 	second.remove();
 	return cluster;
 }
 
 function weldRaw(first:paper.Path, second:paper.Path):paper.CompoundPath {
-	console.log("Paths to weld:", formatItem([first, second]));
 	let union = new paper.CompoundPath({style: first.style});
 	if (first.lastSegment.point.equals(second.firstSegment.point)) {
 		first.addSegments(second.segments.slice(1));
