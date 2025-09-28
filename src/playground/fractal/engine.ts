@@ -61,19 +61,19 @@ function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 	return draw_recurse(fractal, config);
 }
 function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
+	let {position, scale, depth, rotation} = fractal;
 	let cluster:paper.CompoundPath;
 	console.groupCollapsed("subdraw");
 	if (fractal.depth <= 0) {
 		console.log("Degenerate case found");
 		cluster = new paper.CompoundPath({
 			children: [new paper.Path.Line({
-				from: fractal.position,
-				to: fractal.position.add(rectangularize(fractal.scale, fractal.rotation)),
+				from: position,
+				to: position.add(rectangularize(scale, rotation)),
 				...config,
 			})]
 		});
 	} else {
-		let {position, scale, depth, rotation} = fractal;
 		cluster = new paper.CompoundPath({children: [new paper.Path([position])], style: config});
 		let context:ContextObject = {};
 		let anchors:Array<{line:number,id:number}> = [];
