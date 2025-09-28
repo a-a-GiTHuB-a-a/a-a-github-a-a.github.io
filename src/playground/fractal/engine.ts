@@ -6,6 +6,7 @@ import $ from "jquery";
 paper.setup($("canvas#content")[0] as HTMLCanvasElement);
 const tool = new paper.Tool();
 tool.activate();
+const origin = new paper.Point(0, 0);
 
 type StyleConfig = Partial<Omit<paper.Style, "view">>;
 
@@ -104,18 +105,18 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					let mirrored = command.name.includes("mirrored");
 					let partial_path:paper.CompoundPath = draw_recurse({
 						...context,
-						position,
+						position: origin,
 						rotation: 0,
 						depth,
 						scale: 1,
 						commands: fractal.commands,
 					}, config);
 					let endpoint = partial_path.lastSegment.point;
-					let diff = endpoint.subtract(position);
-					partial_path.rotate(-diff.angle, position);
-					partial_path.scale(scale * value / position.getDistance(endpoint), position);
-					partial_path.scale(flipped ? -1 : 1, mirrored ? -1 : 1, position.add(endpoint).divide(2));
-					partial_path.rotate(rotation, position);
+					partial_path.rotate(-endpoint.angle, origin);
+					partial_path.scale(scale * value / endpoint.length, origin);
+					partial_path.scale(flipped ? -1 : 1, mirrored ? -1 : 1, endpoint.divide(2));
+					partial_path.rotate(rotation, origin);
+					partial_path.translate(position);
 					cluster = weldCompound(cluster, partial_path);
 					partial_path.remove();
 					break;
