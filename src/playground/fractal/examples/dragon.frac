@@ -1,6 +1,6 @@
-depth=5;
-Rotate 45;
-MirroredLine sqrt(.5);
-Rotate -90;
+depth=2;
+Rotate -45;
 Line sqrt(.5);
-Rotate 45;
+Rotate 90;
+FlippedLine sqrt(.5);
+Rotate -45;
