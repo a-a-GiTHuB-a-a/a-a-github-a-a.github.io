@@ -39,6 +39,8 @@ function weldCompound(first:paper.CompoundPath, second:paper.CompoundPath):paper
 	let last_first = first.lastChild as paper.Path;
 	let first_last = second.firstChild as paper.Path;
 	cluster.addChildren([...first.children.slice(0, -1), weldRaw(last_first, first_last), ...second.children.slice(1)]);
+	first.remove();
+	second.remove();
 	return cluster;
 }
 
