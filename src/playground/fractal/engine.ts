@@ -46,6 +46,7 @@ function weldCompound(first:paper.CompoundPath, second:paper.CompoundPath):paper
 }
 
 function weldRaw(first:paper.Path, second:paper.Path):paper.CompoundPath {
+	console.log("Paths to weld:", formatItem([first, second]));
 	let union = new paper.CompoundPath({style: first.style});
 	if (first.lastSegment.point.equals(second.firstSegment.point)) {
 		first.addSegments(second.segments.slice(1));
@@ -61,7 +62,7 @@ function formatItem(thing:Formattable):string {
 	if (thing instanceof paper.CompoundPath) {
 		return formatItem(thing.children);
 	} else if (thing instanceof paper.Path) {
-		return formatItem(thing.segments);
+		return thing.segments.map(formatItem).join("--");
 	} else if (thing instanceof paper.Segment) {
 		return formatItem(thing.point);
 	} else if (thing instanceof paper.Point) {
