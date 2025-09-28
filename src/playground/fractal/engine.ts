@@ -56,17 +56,20 @@ function weldRaw(first:paper.Path, second:paper.Path):paper.CompoundPath {
 	return union;
 }
 
-function formatItem(thing:paper.Item|paper.Segment|paper.Point):string {
+type Formattable = paper.Item|paper.Segment|paper.Point|Array<Formattable>;
+function formatItem(thing:Formattable):string {
 	if (thing instanceof paper.CompoundPath) {
-		return thing.children.map(formatItem).toString();
+		return formatItem(thing.children);
 	} else if (thing instanceof paper.Path) {
-		return thing.segments.map(formatItem).toString();
+		return formatItem(thing.segments);
 	} else if (thing instanceof paper.Segment) {
 		return formatItem(thing.point);
 	} else if (thing instanceof paper.Point) {
-		return `(${thing.x}, ${thing.y})`;
+		return `(${thing.x},${thing.y})`;
 	} else if (thing instanceof paper.Item) {
 		return thing.toString();
+	} else {
+		return `[${thing.map(formatItem).join(",")}]`;
 	}
 }
 
