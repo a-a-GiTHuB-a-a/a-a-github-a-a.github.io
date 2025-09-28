@@ -30,28 +30,27 @@ function rectangularize(magnitude:number, direction:number):paper.Point {
 }
 
 /**
- * @param past The first path.
- * @param current The second path.
+ * @param first The first path.
+ * @param second The second path.
  * @returns A "welded" combination of the two paths.
  */
-function weld(past:paper.CompoundPath, current:paper.CompoundPath):paper.CompoundPath {
-	console.log("Past:", past.clone({insert: false}).children.map(child => (child as paper.Path).segments));
-	console.log("Current:", current.clone({insert: false}).children.map(child => (child as paper.Path).segments));
-	let cluster = new paper.CompoundPath({style: past.style, children: past.children.slice(0, -1)});
-	let last_old:paper.Path = past.lastChild as paper.Path;
-	let first_new:paper.Path = current.firstChild as paper.Path;
-	if (last_old.lastSegment.point.equals(first_new.firstSegment?.point)) {
-		console.log("Can weld");
-		last_old.addSegments(first_new.segments.slice(1, first_new.segments.length));
-		cluster.addChild(last_old);
-		cluster.addChildren(current.children.slice(1));
-		first_new.remove();
-	} else {
-		cluster.addChild(last_old);
-		cluster.addChildren(current.clone({insert: false, deep: true}).children);
-	}
-	console.log("Combined:", cluster.clone({insert: false}).children.map(child => (child as paper.Path).segments));
+function weldCompound(first:paper.CompoundPath, second:paper.CompoundPath):paper.CompoundPath {
+	let cluster = new paper.CompoundPath({style: first.style});
+	let last_first = first.lastChild as paper.Path;
+	let first_last = second.firstChild as paper.Path;
+	cluster.addChildren([...first.children.slice(0, -1), weldRaw(last_first, first_last), ...second.children.slice(1)]);
 	return cluster;
+}
+
+function weldRaw(first:paper.Path, second:paper.Path):paper.CompoundPath {
+	let union = new paper.CompoundPath({style: first.style});
+	if (first.lastSegment.point.equals(second.firstSegment.point)) {
+		first.addSegments(second.segments.slice(1));
+		union.addChild(first);
+	} else {
+		union.addChildren([first, second]);
+	}
+	return union;
 }
 
 function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
@@ -115,7 +114,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					partial_path.scale(scale * value / position.getDistance(endpoint), position);
 					partial_path.scale(flipped ? -1 : 1, mirrored ? -1 : 1, position.add(endpoint).divide(2));
 					partial_path.rotate(rotation, position);
-					cluster = weld(cluster, partial_path);
+					cluster = weldCompound(cluster, partial_path);
 					partial_path.remove();
 					break;
 				}
@@ -125,7 +124,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					const newSegment = new paper.Segment({
 						point: position,
 					});
-					cluster = weld(cluster, new paper.CompoundPath({children: newSegment}));
+					cluster = weldCompound(cluster, new paper.CompoundPath({children: newSegment}));
 					break;
 				}
 				case "jump": {
