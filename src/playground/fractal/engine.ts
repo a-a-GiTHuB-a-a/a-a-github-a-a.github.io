@@ -37,9 +37,9 @@ function rectangularize(magnitude:number, direction:number):paper.Point {
  */
 function weldCompound(first:paper.CompoundPath, second:paper.CompoundPath):paper.CompoundPath {
 	let cluster = new paper.CompoundPath({style: first.style});
-	let last_first = first.lastChild as paper.Path;
-	let first_last = second.firstChild as paper.Path;
-	cluster.addChildren([...first.children.slice(0, -1), ...weldRaw(last_first, first_last).children, ...second.children.slice(1)]);
+	let last_first = first.removeChildren(first.children.length - 1)[0] as paper.Path;
+	let first_last = second.removeChildren(0, 1)[0] as paper.Path;
+	cluster.addChildren([...first.children, ...weldRaw(last_first, first_last).children, ...second.children]);
 	first.remove();
 	second.remove();
 	return cluster;
