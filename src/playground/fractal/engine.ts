@@ -191,7 +191,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 			cluster.addChild(new paper.Path(position));
 		}
 	}
-	console.log("Final product:", cluster);
+	console.log("Final product:", cluster.children.map(p => (p as paper.Path).segments.map(s => s.point)));
 	console.groupEnd();
 	return cluster;
 }
