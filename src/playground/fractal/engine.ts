@@ -76,7 +76,9 @@ function formatItem(thing:Formattable):string {
 
 function Draw(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 	console.log("Drawing new fractal!");
-	return draw_recurse(fractal, config);
+	let result = draw_recurse(fractal, config);
+	console.log("Fractal:", formatItem(result));
+	return result;
 }
 function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 	let {position, scale, depth, rotation} = fractal;
