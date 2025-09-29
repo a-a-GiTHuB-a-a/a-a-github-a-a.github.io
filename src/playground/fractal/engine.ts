@@ -287,5 +287,7 @@ $(".examplefile").on("click", function(this:HTMLLinkElement, e:JQuery.ClickEvent
 			current_fractal = Compile(data);
 			redraw();
 		}
+	}).done(() => {
+		console.log("ajax success");
 	});
 });
