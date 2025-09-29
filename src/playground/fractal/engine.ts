@@ -285,11 +285,12 @@ $(".examplefile").on("click", function(this:HTMLLinkElement, e:JQuery.ClickEvent
 		dataType: "string",
 		async: false,
 		success(data) {
-			console.log("File gotten!", data.toString());
-			current_fractal = Compile(data);
-			redraw();
+			console.log("File gotten!", typeof data);
+			//current_fractal = Compile(data);
+			//redraw();
+		},
+		error(xhr) {
+			console.log("noooo");
 		}
-	}).done(() => {
-		console.log("ajax success");
 	});
 });
