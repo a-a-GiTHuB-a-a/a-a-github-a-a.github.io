@@ -2,7 +2,6 @@ import {Compile, FracSyntaxError, Fractal} from "./compiler";
 import {ContextObject} from "./AST";
 import paper from "paper";
 import $ from "jquery";
-import { Rectangle } from "paper/dist/paper-core";
 
 paper.setup($("canvas#content")[0] as HTMLCanvasElement);
 const tool = new paper.Tool();
