@@ -282,8 +282,9 @@ $(".examplefile").on("click", function(this:HTMLLinkElement, e:JQuery.ClickEvent
 	e.stopPropagation();
 	$.ajax(this.href, {
 		dataType: "string",
-	}).done((data) => {
-		current_fractal = Compile(data);
-		redraw();
+		success(data) {
+			current_fractal = Compile(data);
+			redraw();
+		}
 	});
 });
