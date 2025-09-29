@@ -59,7 +59,7 @@ async function process_file(file_path, opts) {
 		case ".json":
 			break;
 		default: {
-			await fsPromises.writeFile(build_path, file);
+			await fsPromises.copyFile(file_path, build_path);
 			break;
 		}
 	}
