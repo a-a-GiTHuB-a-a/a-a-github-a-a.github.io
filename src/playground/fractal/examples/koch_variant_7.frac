@@ -1,4 +1,4 @@
-depth=8;angle=75;sublength=1/(2 + (sqrt(6) - sqrt(2))/2);
+depth=7;angle=75;sublength=1/(2 + (sqrt(6) - sqrt(2))/2);
 Line sublength;
 Rotate angle;
 Line sublength;
