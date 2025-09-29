@@ -277,3 +277,13 @@ $("#style").on("submit", function(this:HTMLFormElement, e:JQuery.SubmitEvent) {
 	} 
 	return false;
 });
+$(".examplefile").on("click", function(this:HTMLLinkElement, e:JQuery.ClickEvent) {
+	e.preventDefault();
+	e.stopPropagation();
+	$.ajax(this.href, {
+		dataType: "string",
+	}).done((data) => {
+		current_fractal = Compile(data);
+		redraw();
+	});
+});
