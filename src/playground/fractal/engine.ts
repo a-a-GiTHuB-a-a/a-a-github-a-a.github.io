@@ -144,11 +144,9 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 				}
 				case "absoluteline": {
 					console.log("Drawing depth-ignorant line");
-					position = position.add(rectangularize(scale * value, rotation));
-					const newSegment = new paper.Segment({
-						point: position,
-					});
-					cluster = weldCompound(cluster, new paper.CompoundPath({children: newSegment}));
+					let new_position = position.add(rectangularize(scale * value, rotation));
+					cluster = weldCompound(cluster, new paper.CompoundPath({children: new paper.Path.Line({from: position, to: new_position})}));
+					position = new_position;
 					break;
 				}
 				case "jump": {
