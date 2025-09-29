@@ -281,15 +281,16 @@ $(".examplefile").on("click", function(this:HTMLLinkElement, e:JQuery.ClickEvent
 	e.preventDefault();
 	e.stopPropagation();
 	$.ajax(this.href, {
-		dataType: "text/plain",
+		dataType: "text",
 		async: false,
 		success(data) {
-			console.log("File gotten!", typeof data);
+			console.log("File gotten!")
+			console.log(data);
 			current_fractal = Compile(data);
 			redraw();
 		},
 		error(xhr, status, error) {
-			console.log("ajax did a fail");
+			console.error("ajax did a fail");
 			console.log("status:", status);
 			console.log("error:", error);
 		}
