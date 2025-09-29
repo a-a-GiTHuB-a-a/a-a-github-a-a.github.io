@@ -289,8 +289,10 @@ $(".examplefile").on("click", function(this:HTMLLinkElement, e:JQuery.ClickEvent
 			//current_fractal = Compile(data);
 			//redraw();
 		},
-		error(xhr) {
+		error(xhr, status, error) {
 			console.log("noooo");
+			console.log("status:", status);
+			console.log("error:", error);
 		}
 	});
 });
