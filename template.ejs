@@ -4,7 +4,7 @@
 		<meta charset = "UTF-8"/>
 		<meta name = "viewport" content = "width = device-width, initial-scale = 1"/>
 		<link href = "/main.css" rel = "stylesheet" type = "text/css"/>
-		<link rel = "icon" type = "image/png" id = "favicon" href = "/images/Logo.png"/>
+		<link rel = "icon" type = "image/png" href = "/images/Logo.png"/>
 		<% if ((typeof includeJquery === "undefined") || (includeJquery === true)) { %>
 			<script
 				src = "https://code.jquery.com/jquery-3.7.1.min.js"
@@ -13,9 +13,6 @@
 				referrerpolicy = "no-referrer"
 			></script>
 		<% } %>
-		<script
-			src = "/logo.js"
-		></script>
 		<% if ((typeof removeButtonGlint === "undefined") || (removeButtonGlint === false)) { %>
 		<script
 			src = "/buttons.js"
