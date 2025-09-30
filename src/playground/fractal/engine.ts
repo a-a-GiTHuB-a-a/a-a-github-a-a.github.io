@@ -108,8 +108,12 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 			});
 			switch (command.name) {
 				case "assign": {
+					let {varname} = command;
+					if (varname === undefined) {
+						throw new FracSyntaxError(index, null, "Malformed assignment");
+					}
 					console.log("Evaluating live assignment");
-					context[command.varname] = value;
+					context[varname] = value;
 					break;
 				}
 				case "rotate": {
