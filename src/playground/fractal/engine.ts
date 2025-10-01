@@ -102,7 +102,8 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 		for (let index = 0; index < fractal.commands.length; index++) {
 			let command = fractal.commands[index];
 			let value = command.value.evaluate({
-				...context
+				...context,
+				depth,
 			});
 			switch (command.name) {
 				case "assign": {
@@ -214,6 +215,12 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 			cluster.addChild(new paper.Path(position));
 		}
 	}
+	let startpoint = cluster.firstSegment.point;
+	let endpoint = cluster.lastSegment.point;
+	let diff = endpoint.subtract(startpoint);
+	cluster.rotate(-diff.angle, startpoint);
+	cluster.scale(scale / diff.length, startpoint);
+	cluster.rotate(rotation, startpoint);
 	cluster.remove();
 	console.groupEnd();
 	return cluster;
