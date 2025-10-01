@@ -102,9 +102,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 		for (let index = 0; index < fractal.commands.length; index++) {
 			let command = fractal.commands[index];
 			let value = command.value.evaluate({
-				...context,
-				scale,
-				depth,
+				...context
 			});
 			switch (command.name) {
 				case "assign": {
