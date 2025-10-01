@@ -1,5 +1,5 @@
-depth = 15;
-scale = 200;
+initial_depth = 15;
+initial_scale = 200;
 length = sqrt(.5);
 Rotate 45;
 Line length;

@@ -1,4 +1,4 @@
-depth=10;
+initial_depth=10;
 Rotate -45;
 Line sqrt(.5);
 Rotate 90;

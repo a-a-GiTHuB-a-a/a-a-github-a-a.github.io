@@ -234,15 +234,15 @@ function Compile(contents:string):Fractal {
 			let value = Parse(assign.groups?.value as string);
 			if (value === undefined) continue;
 			switch (assign.groups?.varname as string) {
-				case "scale": {
+				case "initial_scale": {
 					frac.scale = value.evaluate({});
 					break;
 				}
-				case "depth": {
+				case "initial_depth": {
 					frac.depth = value.evaluate({});
 					break;
 				}
-				case "rotation": {
+				case "initial_rotation": {
 					frac.rotation = value.evaluate({});
 					break;
 				}
