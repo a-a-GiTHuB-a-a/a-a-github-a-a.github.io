@@ -26,7 +26,9 @@ const function_objs = [
 	new AST.SpecialFunction("sin", Math.sin, 1),
 	new AST.SpecialFunction("cos", Math.cos, 1),
 	new AST.SpecialFunction("tan", Math.tan, 1),
-	new AST.SpecialFunction("atan2", Math.atan2, 2),
+	new AST.SpecialFunction("asin", Math.asin, 1),
+	new AST.SpecialFunction("acos", Math.acos, 1),
+	new AST.SpecialFunction("atan", Math.atan, 1),
 ];
 
 /**
