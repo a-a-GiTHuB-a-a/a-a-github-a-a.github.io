@@ -166,9 +166,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						id: new NumExpr(value)
 					};
 					let r;
-					if ((r = anchors.findIndex((v)=>v.line === index)) !== -1) {
-						anchors[r] = anchorpoint;
-					} else {
+					if ((r = anchors.findIndex((v)=>v.line === index)) === -1) {
 						anchors.push(anchorpoint);
 					}
 					break;
@@ -217,9 +215,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 									id: new NumExpr(altvalue)
 								};
 								let r;
-								if ((r = anchors.findIndex((v)=>v.line === altindex)) !== -1) {
-									anchors[r] = anchorpoint;
-								} else {
+								if ((r = anchors.findIndex((v)=>v.line === altindex)) === -1) {
 									anchors.push(anchorpoint);
 								}
 								if (altvalue === value) {
