@@ -121,13 +121,15 @@ export class VarExpr implements Expression {
  * @implements Expression
  */
 export class NumExpr implements Expression {
-	num:string;
+	num:number;
 
-	constructor(num:string) {
-		this.num = num;
+	constructor(num:string);
+	constructor(num:number);
+	constructor(num:string|number) {
+		this.num = +num;
 	}
 
 	evaluate(context:ContextObject):number {
-		return +this.num;
+		return this.num;
 	}
 }

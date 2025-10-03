@@ -1,5 +1,5 @@
 import {Compile, FracSyntaxError, Fractal} from "./compiler";
-import {ContextObject} from "./AST";
+import {ContextObject, Expression, NumExpr} from "./AST";
 import paper from "paper";
 import $ from "jquery";
 
@@ -97,14 +97,15 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 	} else {
 		cluster = new paper.CompoundPath({children: [new paper.Path([position])], style: config});
 		let context:ContextObject = {};
-		let anchors:Array<{line:number,id:number}> = [];
+		let anchors:Array<{line:number,id:Expression}> = [];
 		depth--;
 		for (let index = 0; index < fractal.commands.length; index++) {
 			let command = fractal.commands[index];
-			let value = command.value.evaluate({
+			let visible_context = {
 				...context,
 				depth,
-			});
+			};
+			let value = command.value.evaluate(visible_context);
 			switch (command.name) {
 				case "assign": {
 					let {varname} = command;
@@ -159,10 +160,23 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					position = position.add(rectangularize(scale * value, rotation));
 					break;
 				}
+				case "fixedanchor": {
+					let anchorpoint = {
+						line: index,
+						id: new NumExpr(value)
+					};
+					let r;
+					if ((r = anchors.findIndex((v)=>v.line === index)) !== -1) {
+						anchors[r] = anchorpoint;
+					} else {
+						anchors.push(anchorpoint);
+					}
+					break;
+				}
 				case "anchor": {
 					let anchorpoint = {
 						line: index,
-						id: value
+						id: command.value
 					};
 					let r;
 					if ((r = anchors.findIndex((v)=>v.line === index)) !== -1) {
@@ -174,20 +188,16 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 				}
 				case "warp": {
 					console.log(`Warping to anchor #${value}`);
-					let newLine = anchors.find((v) => v.id === value)?.line;
+					let newLine = anchors.find((v) => v.id.evaluate(visible_context) === value)?.line;
 					if (newLine === undefined) {
 						for (let altindex = index; altindex < fractal.commands.length; altindex++) {
 							let altcommand = fractal.commands[altindex];
 							if (altcommand.name === "anchor") {
-								let altvalue = altcommand.value.evaluate({
-									...context,
-									scale,
-									depth,
-									rotation,
-								});
+								let altexpr = altcommand.value;
+								let altvalue = altexpr.evaluate(visible_context);
 								let anchorpoint = {
 									line: altindex,
-									id: altvalue
+									id: altexpr
 								};
 								let r;
 								if ((r = anchors.findIndex((v)=>v.line === altindex)) !== -1) {
