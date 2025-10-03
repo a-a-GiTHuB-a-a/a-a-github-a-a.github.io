@@ -200,9 +200,7 @@ function get_anchors(fractal:Fractal):Array<{line:number,id:Expression}> {
 				line: i,
 				id: expr
 			};
-			if (anchors.findIndex((v)=>v.line === i) === -1) {
-				anchors.push(anchorpoint);
-			}
+			anchors.push(anchorpoint);
 		}
 	}
 	return anchors;
