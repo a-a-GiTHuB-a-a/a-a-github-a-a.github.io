@@ -97,7 +97,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 	} else {
 		cluster = new paper.CompoundPath({children: [new paper.Path([position])], style: config});
 		let context:ContextObject = {};
-		let anchors:Array<{line:number,id:Expression}> = [];
+		let anchors = get_anchors(fractal);
 		depth--;
 		for (let index = 0; index < fractal.commands.length; index++) {
 			let command = fractal.commands[index];
@@ -160,71 +160,17 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					position = position.add(rectangularize(scale * value, rotation));
 					break;
 				}
-				case "fixedanchor": {
-					let anchorpoint = {
-						line: index,
-						id: new NumExpr(value)
-					};
-					let r;
-					if ((r = anchors.findIndex((v)=>v.line === index)) === -1) {
-						anchors.push(anchorpoint);
-					}
-					break;
-				}
-				case "anchor": {
-					let anchorpoint = {
-						line: index,
-						id: command.value
-					};
-					let r;
-					if ((r = anchors.findIndex((v)=>v.line === index)) === -1) {
-						anchors.push(anchorpoint);
-					}
-					break;
-				}
 				case "warp": {
 					console.log(`Warping to anchor #${value}`);
 					let newLine = anchors.find((v) => v.id.evaluate(visible_context) === value)?.line;
 					if (newLine === undefined) {
-						for (let altindex = index; altindex < fractal.commands.length; altindex++) {
-							let altcommand = fractal.commands[altindex];
-							if (altcommand.name === "anchor") {
-								let altexpr = altcommand.value;
-								let altvalue = altexpr.evaluate(visible_context);
-								let anchorpoint = {
-									line: altindex,
-									id: altexpr
-								};
-								let r;
-								if ((r = anchors.findIndex((v)=>v.line === altindex)) === -1) {
-									anchors.push(anchorpoint);
-								}
-								if (altvalue === value) {
-									index = altindex;
-									break;
-								}
-							} else if (altcommand.name === "fixedanchor") {
-								let altexpr = altcommand.value;
-								let altvalue = altexpr.evaluate(visible_context);
-								let anchorpoint = {
-									line: altindex,
-									id: new NumExpr(altvalue)
-								};
-								let r;
-								if ((r = anchors.findIndex((v)=>v.line === altindex)) === -1) {
-									anchors.push(anchorpoint);
-								}
-								if (altvalue === value) {
-									index = altindex;
-									break;
-								}
-							}
-						}
 						throw new FracSyntaxError(index, null, `No anchor with id ${value} found`);
 					}
 					index = newLine;
 					break;
 				}
+				case "anchor":
+					break;
 				default: {
 					console.log(`Non-recognized command ${command.name}; skipping`);
 				}
@@ -243,6 +189,23 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 	cluster.remove();
 	console.groupEnd();
 	return cluster;
+}
+function get_anchors(fractal:Fractal):Array<{line:number,id:Expression}> {
+	let anchors:Array<{line:number,id:Expression}> = [];
+	for (let i = 0; i < fractal.commands.length; i++) {
+		let command = fractal.commands[i];
+		if (command.name === "anchor") {
+			let expr = command.value;
+			let anchorpoint = {
+				line: i,
+				id: expr
+			};
+			if (anchors.findIndex((v)=>v.line === i) === -1) {
+				anchors.push(anchorpoint);
+			}
+		}
+	}
+	return anchors;
 }
 
 function center(path:paper.CompoundPath):void {
