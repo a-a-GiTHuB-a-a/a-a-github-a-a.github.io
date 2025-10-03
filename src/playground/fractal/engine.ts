@@ -209,6 +209,23 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 									index = altindex;
 									break;
 								}
+							} else if (altcommand.name === "fixedanchor") {
+								let altexpr = altcommand.value;
+								let altvalue = altexpr.evaluate(visible_context);
+								let anchorpoint = {
+									line: altindex,
+									id: new NumExpr(altvalue)
+								};
+								let r;
+								if ((r = anchors.findIndex((v)=>v.line === altindex)) !== -1) {
+									anchors[r] = anchorpoint;
+								} else {
+									anchors.push(anchorpoint);
+								}
+								if (altvalue === value) {
+									index = altindex;
+									break;
+								}
 							}
 						}
 						throw new FracSyntaxError(index, null, `No anchor with id ${value} found`);
