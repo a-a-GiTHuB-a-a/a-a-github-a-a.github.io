@@ -164,7 +164,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					console.log(`Warping to anchor #${value}`);
 					let newLine = anchors.find((v) => v.id.evaluate(visible_context) === value)?.line;
 					if (newLine === undefined) {
-						throw new FracSyntaxError(index, null, `No anchor with id ${value} found`);
+						console.log(`No anchor with id ${value} found; refusing to warp`);
 					}
 					index = newLine;
 					break;
