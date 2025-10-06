@@ -1,5 +1,5 @@
 import {Compile, FracSyntaxError, Fractal} from "./compiler";
-import {ContextObject, Expression, NumExpr} from "./AST";
+import {ContextObject, Expression} from "./AST";
 import paper from "paper";
 import $ from "jquery";
 
@@ -140,6 +140,9 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					partial_path.rotate(-endpoint.angle, origin);
 					partial_path.scale(scale * value / endpoint.length, origin);
 					partial_path.scale(mirrored ? -1 : 1, flipped ? -1 : 1, endpoint.divide(2));
+					if (mirrored) {
+						partial_path.reverse();
+					}
 					partial_path.rotate(rotation, origin);
 					partial_path.translate(position);
 					cluster = weldCompound(cluster, partial_path);
