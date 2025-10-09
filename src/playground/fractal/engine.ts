@@ -40,7 +40,7 @@ function weldCompound(first:paper.CompoundPath, second:paper.CompoundPath):paper
 	let cluster = new paper.CompoundPath({style: first.style});
 	let last_first = first.removeChildren(first.children.length - 1)[0] as paper.Path;
 	let first_last = second.removeChildren(0, 1)[0] as paper.Path;
-	cluster.addChildren([...first.children, ...weldRaw(last_first, first_last).children, ...second.children]);
+	cluster.insertChildren(0, [...first.children, ...weldRaw(last_first, first_last).children, ...second.children]);
 	first.remove();
 	second.remove();
 	return cluster;
@@ -50,9 +50,9 @@ function weldRaw(first:paper.Path, second:paper.Path):paper.CompoundPath {
 	let union = new paper.CompoundPath({style: first.style});
 	if (first.lastSegment.point.equals(second.firstSegment.point)) {
 		first.addSegments(second.segments.slice(1));
-		union.addChild(first);
+		union.insertChild(0, first);
 	} else {
-		union.addChildren([first, second]);
+		union.insertChildren(0, [first, second]);
 	}
 	return union;
 }
