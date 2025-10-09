@@ -98,7 +98,6 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 		cluster = new paper.CompoundPath({children: [new paper.Path([position])], style: config});
 		let context:ContextObject = {};
 		let anchors = get_anchors(fractal);
-		depth--;
 		for (let index = 0; index < fractal.commands.length; index++) {
 			let command = fractal.commands[index];
 			let visible_context = {
@@ -132,7 +131,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 						...context,
 						position: origin,
 						rotation: 0,
-						depth,
+						depth: depth - 1,
 						scale: 1,
 						commands: fractal.commands,
 					}, config);
