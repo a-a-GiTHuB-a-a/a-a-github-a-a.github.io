@@ -7,6 +7,7 @@
     "allowJs": true,
     "baseUrl": "./",
     "paths": {
+      "lua": ["node_modules/lua/index.js"],
       "paper": ["node_modules/paper/dist/paper-core.min.js"],
       "regex": ["node_modules/regex/dist/esm/regex"]
     },

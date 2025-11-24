@@ -1,0 +1,34 @@
+#structure {
+	display: flex;
+	flex-direction: column;
+}
+body {
+	background-color: #7f7f7f;
+	color: #ffffff;
+}
+.dynamic {
+	background-color: #3f3f3f;
+}
+#double-source {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: top;
+}
+#transpile {
+	align-self: center;
+}
+.codebox {
+	width: 45%;
+}
+.btn {
+	background-color: #bfbfbf;
+	glint-color: #9f9f9f; /*fake property used in glint code*/
+	border: 1px solid black;
+	border-radius: 5px;
+}
+.btn:hover {
+	background-color: #7f7f7f;
+	cursor: pointer;
+}

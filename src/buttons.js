@@ -5,16 +5,17 @@ $(function() {
 			duration: 2000,
 			step(val, _) {
 				const color = elem.css("background-color");
+				const glint_color = elem.css("glint-color") ?? "#9f9f9f";
 				if (val < 0) {
-					elem.css("background-image", `linear-gradient(90deg, #9f9f9f ${val}%, ${color} ${val+10}%, ${color})`);
+					elem.css("background-image", `linear-gradient(90deg, ${glint_color} ${val}%, ${color} ${val+10}%, ${color})`);
 				} else if (val > 100) {
-					elem.css("background-image", `linear-gradient(90deg, ${color}, ${color} ${val-10}%, #9f9f9f ${val}%)`);
+					elem.css("background-image", `linear-gradient(90deg, ${color}, ${color} ${val-10}%, ${glint_color} ${val}%)`);
 				} else if (val < animate.width) {
-					elem.css("background-image", `linear-gradient(90deg, ${color} ${val-10}%, #9f9f9f ${val}%, ${color} ${val+10}%, ${color})`);
+					elem.css("background-image", `linear-gradient(90deg, ${color} ${val-10}%, ${glint_color} ${val}%, ${color} ${val+10}%, ${color})`);
 				} else if (val > (100 - animate.width)) {
-					elem.css("background-image", `linear-gradient(90deg, ${color}, ${color} ${val-10}%, #9f9f9f ${val}%, ${color} ${val+10}%)`);
+					elem.css("background-image", `linear-gradient(90deg, ${color}, ${color} ${val-10}%, ${glint_color} ${val}%, ${color} ${val+10}%)`);
 				} else {
-					elem.css("background-image", `linear-gradient(90deg, ${color}, ${color} ${val-10}%, #9f9f9f ${val}%, ${color} ${val+10}%, ${color})`);
+					elem.css("background-image", `linear-gradient(90deg, ${color}, ${color} ${val-10}%, ${glint_color} ${val}%, ${color} ${val+10}%, ${color})`);
 				}
 			}
 		});
