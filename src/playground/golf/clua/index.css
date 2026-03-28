@@ -17,10 +17,15 @@ body {
 	align-items: top;
 }
 #transpile {
+	display: block;
 	align-self: center;
+	width: 10%;
 }
 .codebox {
 	width: 45%;
+	resize: none;
+	color: #ffffff;
+	font-family: "Courier New", Courier, monospace;
 }
 .btn {
 	background-color: #bfbfbf;
