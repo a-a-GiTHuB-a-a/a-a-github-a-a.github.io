@@ -27,6 +27,11 @@ const config = {
                 loader: "ts-loader",
                 exclude: ["/node_modules/"],
             },
+            {
+                test: /\.js$/i,
+                loader: "babel-loader",
+                exclude: ["/node_modules/"],
+            },
             /*{
                 test: /\.css$/i,
                 use: [stylesHandler,"css-loader"],
@@ -41,7 +46,7 @@ const config = {
         ],
     },
     resolve: {
-        extensions: [".tsx", ".ts", /* ".jsx", ".js",*/"..."],
+        extensions: [".tsx", ".ts", ".jsx", ".js", "..."],
     },
 };
 
