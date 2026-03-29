@@ -12,6 +12,10 @@ const config = {
             import: path.resolve(__dirname, "src/playground/fractal/engine"),
             filename: "./playground/fractal/engine.js",
         },
+        clua: {
+            import: path.resolve(__dirname, "src/playground/golf/clua/page_handler"),
+            filename: "./playground/golf/clua/page_handler.js",
+        },
     },
     output: {
         path: path.resolve(__dirname, "site"),
