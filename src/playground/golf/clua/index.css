@@ -41,6 +41,16 @@ textarea {
 	color: #ffffff;
 	font-family: "Courier New", Courier, monospace;
 }
+#chars {
+	display: flex;
+	flex-direction: row;
+	overflow-x: scroll;
+}
+.symb {
+	box-sizing: border-box;
+	width: 50px;
+	border-radius: 10px;
+}
 .btn {
 	background-color: #bfbfbf;
 	glint-color: #9f9f9f; /*fake property used in glint code*/
