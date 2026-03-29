@@ -23,14 +23,20 @@ body {
 }
 .source {
 	width: 45%;
+	display: flex;
+	flex-direction: column;
 	min-height: min(200px, 50%);
+}
+.source-hangoff {
+	width: 100%;
+	overflow-x: scroll;
+	height: 50px;
 }
 textarea {
 	box-sizing: border-box;
 }
 .codebox {
 	width: 100%;
-	height: 100%;
 	resize: none;
 	color: #ffffff;
 	font-family: "Courier New", Courier, monospace;
