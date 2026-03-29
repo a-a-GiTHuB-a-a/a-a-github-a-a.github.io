@@ -1,4 +1,4 @@
-let simple_subs:Record<string, string> = {
+let simple_substitutions:Record<string, string> = {
 	"λ": " function ",
 	"∧": " and ",
 	"∨": " or ",
@@ -8,11 +8,12 @@ let simple_subs:Record<string, string> = {
 	"→": " return ",
 	"≡": " == ",
 };
+export {simple_substitutions};
 
 export function count_bytes(compressed_code:string):number {
 	let s = 0;
 	for (let char of compressed_code) {
-		if (char in Object.keys(simple_subs)) {
+		if (char in Object.keys(simple_substitutions)) {
 			s++;
 		} else {
 			s += new Blob([char]).size;
@@ -25,7 +26,7 @@ export function count_chars(compressed_code:string):number {
 }
 
 function unpack_symbols(code:string):string {
-	for (let [key, value] of Object.entries(simple_subs)) {
+	for (let [key, value] of Object.entries(simple_substitutions)) {
 		code = code.replaceAll(key, value);
 	}
 	return code;
