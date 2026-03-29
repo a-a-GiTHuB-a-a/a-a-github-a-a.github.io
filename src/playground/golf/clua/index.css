@@ -23,7 +23,10 @@ body {
 }
 .source {
 	width: 45%;
-	height: 100px;
+	min-height: min(200px, 50%);
+}
+textarea {
+	box-sizing: border-box;
 }
 .codebox {
 	width: 100%;
