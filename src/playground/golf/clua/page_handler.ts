@@ -59,6 +59,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		return bufferDecoder.decode(outputArray);
 	}
 	function byteArrayToBase64(byteArray:Uint8Array):string {
+		// @ts-ignore
 		return byteArray.toBase64().replace(/\+/g, "@").replace(/=+/, "");
 	}
 	function textToByteString(string:string) {
