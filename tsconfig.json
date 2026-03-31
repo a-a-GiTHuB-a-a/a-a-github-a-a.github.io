@@ -9,7 +9,7 @@
     "paths": {
       "paper": ["node_modules/paper/dist/paper-core.min.js"],
       "regex": ["node_modules/regex/dist/esm/regex"],
-      "pako": ["node_modules/pako/dist/pako.js"]
+      "pako": ["node_modules/pako/index.js"]
     },
     "types": ["paper", "regex", "pako"]
   },
