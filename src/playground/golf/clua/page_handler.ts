@@ -80,17 +80,19 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 				return;
 			stateString += fieldSeparator + textToByteString(textArea.value);
 		}
-		iterate($("#interpreter > textarea, #interpreter > :not([data-mask]) textarea"), saveTextArea);
+		saveTextArea($("#lua")[0] as HTMLTextAreaElement);
+		/*iterate($("#interpreter > textarea, #interpreter > :not([data-mask]) textarea"), saveTextArea);
 		iterate($("#interpreter > [data-mask=false]"), function(element) {
 			if ($("textarea", element) === null)
 				return;
 			stateString += startOfExtraFields + (element.dataset.if || element.dataset.ifNot);
 			iterate($("textarea", element), saveTextArea);
-		});
+		});*/
 		/*var settings = getSettings();
 		if (settings != "/")
 			stateString += startOfSettings + settings.slice(1,-1);*/
 		const deflatedArray = await deflate(stateString);
+		console.log(stateString);
 		return `https://tio.run/##${byteArrayToBase64(new Uint8Array(deflatedArray))}`;
 	}
 
