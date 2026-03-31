@@ -1,10 +1,9 @@
 $(function() {
-	const grammarly_props = [
-		"data-gramm",
-		"data-gramm_editor",
-		"data-enable-grammarly"
-	];
-	for (const property of grammarly_props) {
-		$(".code,.no-grammar").data(property, "false");
-	}
+	const grammarly_disabler = {
+		"data-gramm": false,
+		"data-gramm_editor": false,
+		"data-enable-grammarly": false,
+		"spellcheck": false,
+	};
+	$(".code,.no-grammar").attr(grammarly_disabler);
 });
