@@ -33,7 +33,7 @@ function unpack_symbols(code:string):string {
 }
 
 export function decompress(code:string):string {
-	let augmented_code = `S=setmetatable p=print s=string s.f = s.format t=table function(...) a=arg n=a.n x=a[1] y=a[2] z=a[3] X=a[n] Y=a[n-1] Z=a[n-2] ${code} end`;
+	let augmented_code = `S=setmetatable p=print s=string s.f=s.format t=table f=function(...) a=arg n=a.n x=a[1] y=a[2] z=a[3] X=a[n] Y=a[n-1] Z=a[n-2] ${code} end`;
 	let unpacked_code = unpack_symbols(augmented_code);
 	return unpacked_code;
 }
