@@ -86,7 +86,6 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		saveData(""); //no header
 		saveTextArea($("#lua")[0] as HTMLTextAreaElement);
 		saveData(""); //no footer (yet)
-		saveData(""); //no input (yet)
 		/*iterate($("#interpreter > textarea, #interpreter > :not([data-mask]) textarea"), saveTextArea);
 		iterate($("#interpreter > [data-mask=false]"), function(element) {
 			if ($("textarea", element) === null)
