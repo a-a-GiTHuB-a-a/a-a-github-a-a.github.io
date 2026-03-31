@@ -35,14 +35,9 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	const startOfExtraFields = "\xfe";
 	//const startOfSettings = "\xf5";
 	const languageId = "lua";
-	function iterate<T>(iterable:ArrayLike<T>, monad:(a:T)=>any) {
-		if (!iterable)
-			return;
-		for (var i = 0; i < iterable.length; i++)
-			monad(iterable[i]);
-	}
+
 	function deflate(byteString:string):Uint8Array {
-		return pako.deflateRaw(byteString, {"level": 9});
+		return pako.deflateRaw(bufferEncoder.encode(byteString), {"level": 9});
 	}
 	function inflate(byteString:Uint8Array):string {
 		return bufferDecoder.decode(pako.inflateRaw(byteString) as Uint8Array);
