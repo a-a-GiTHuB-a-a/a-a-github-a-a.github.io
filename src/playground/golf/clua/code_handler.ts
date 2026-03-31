@@ -13,8 +13,7 @@ export {simple_substitutions};
 export function count_bytes(compressed_code:string):number {
 	let s = 0;
 	for (let char of compressed_code) {
-		console.log(char);
-		if (char in Object.keys(simple_substitutions)) {
+		if (Object.keys(simple_substitutions).some(k => char === k)) {
 			s++;
 		} else {
 			s += new Blob([char]).size;
