@@ -75,12 +75,18 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	 */
 	async function generateTIOLink():Promise<string> {
 		let stateString = languageId;
-		var saveTextArea = function(textArea:HTMLTextAreaElement) {
+		function saveData(data:string) {
+			stateString += fieldSeparator + textToByteString(data);
+		}
+		const saveTextArea = function(textArea:HTMLTextAreaElement) {
 			if (textArea.readOnly)
 				return;
-			stateString += fieldSeparator + textToByteString(textArea.value);
+			saveData(textArea.value);
 		}
+		saveData(""); //no header
 		saveTextArea($("#lua")[0] as HTMLTextAreaElement);
+		saveData(""); //no footer (yet)
+		saveData(""); //no input (yet)
 		/*iterate($("#interpreter > textarea, #interpreter > :not([data-mask]) textarea"), saveTextArea);
 		iterate($("#interpreter > [data-mask=false]"), function(element) {
 			if ($("textarea", element) === null)
