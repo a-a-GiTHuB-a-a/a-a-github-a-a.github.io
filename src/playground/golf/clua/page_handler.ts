@@ -66,13 +66,6 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	function byteStringToBase64(byteString:string) {
 		return btoa(byteString).replace(/\+/g, "@").replace(/=+/, "");
 	}
-	function byteStringToByteArray(byteString:string) {
-		var byteArray = new Uint8Array(byteString.length);
-		for(var index = 0; index < byteString.length; index++)
-			byteArray[index] = byteString.charCodeAt(index);
-		byteArray.head = 0;
-		return byteArray;
-	}
 	function textToByteString(string:string) {
 		return unescape(encodeURIComponent(string));
 	}
@@ -102,7 +95,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		if (settings != "/")
 			stateString += startOfSettings + settings.slice(1,-1);*/
 		const deflatedString = await deflate(stateString);
-		return `https://tio.run/##${byteStringToBase64(byteArrayToByteString(deflatedString))}`;
+		return `https://tio.run/##${byteStringToBase64(deflatedString)}`;
 	}
 
 	for (let char in code_handler.simple_substitutions) {
