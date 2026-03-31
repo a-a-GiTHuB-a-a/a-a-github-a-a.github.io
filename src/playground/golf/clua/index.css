@@ -39,7 +39,6 @@ textarea {
 	width: 100%;
 	resize: none;
 	color: #ffffff;
-	font-family: "Courier New", Courier, monospace;
 }
 #chars {
 	display: flex;
