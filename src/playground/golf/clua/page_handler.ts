@@ -44,7 +44,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	function deflate(byteString:string):Uint8Array {
 		return pako.deflateRaw(byteString, {"level": 9});
 	}
-	function inflate(byteString:string):string {
+	function inflate(byteString:Uint8Array):string {
 		return (pako.inflateRaw(byteString) as Uint8Array).toString();
 	}
 	function byteArrayToBase64(byteArray:Uint8Array):string {
@@ -90,7 +90,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		if (settings != "/")
 			stateString += startOfSettings + settings.slice(1,-1);*/
 		const deflatedArray = deflate(stateString);
-		console.log(stateString);
+		console.log(inflate(deflatedArray));
 		return `https://tio.run/##${byteArrayToBase64(new Uint8Array(deflatedArray))}`;
 	}
 
