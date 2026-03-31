@@ -40,14 +40,14 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		for (var i = 0; i < iterable.length; i++)
 			monad(iterable[i]);
 	}
-	async function deflate(byteString:string) {
+	async function deflate(byteString:string):Promise<ArrayBuffer> {
 		const outputStream = new Blob([byteString]).stream().pipeThrough(new CompressionStream("deflate"));
 		let outputList:Uint8Array<ArrayBuffer>[] = [];
 		for await (const chunk of outputStream) {
 			outputList.push(chunk);
 		}
 		const outputArray = await new Blob(outputList).arrayBuffer();
-		return bufferDecoder.decode(outputArray);
+		return outputArray;
 	}
 	async function inflate(byteString:string):Promise<string> {
 		const outputStream = new Blob([byteString]).stream().pipeThrough(new DecompressionStream("deflate"));
@@ -58,13 +58,8 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		const outputArray = await new Blob(outputList).arrayBuffer();
 		return bufferDecoder.decode(outputArray);
 	}
-	function byteArrayToByteString(byteArray:Uint8Array):string {
-		var retval = "";
-		iterate(byteArray, function(byte) { retval += String.fromCharCode(byte); });
-		return retval;
-	}
-	function byteStringToBase64(byteString:string) {
-		return btoa(byteString).replace(/\+/g, "@").replace(/=+/, "");
+	function byteArrayToBase64(byteArray:Uint8Array):string {
+		return byteArray.toBase64().replace(/\+/g, "@").replace(/=+/, "");
 	}
 	function textToByteString(string:string) {
 		return unescape(encodeURIComponent(string));
@@ -94,8 +89,8 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		/*var settings = getSettings();
 		if (settings != "/")
 			stateString += startOfSettings + settings.slice(1,-1);*/
-		const deflatedString = await deflate(stateString);
-		return `https://tio.run/##${byteStringToBase64(deflatedString)}`;
+		const deflatedArray = await deflate(stateString);
+		return `https://tio.run/##${byteArrayToBase64(new Uint8Array(deflatedArray))}`;
 	}
 
 	for (let char in code_handler.simple_substitutions) {
