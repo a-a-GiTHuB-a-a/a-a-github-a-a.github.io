@@ -41,23 +41,11 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		for (var i = 0; i < iterable.length; i++)
 			monad(iterable[i]);
 	}
-	async function deflate(byteString:string):Promise<ArrayBuffer> {
-		const outputStream = new Blob([byteString]).stream().pipeThrough(new CompressionStream("deflate-raw"));
-		let outputList:Uint8Array<ArrayBuffer>[] = [];
-		for await (const chunk of outputStream) {
-			outputList.push(chunk);
-		}
-		const outputArray = await new Blob(outputList).arrayBuffer();
-		return outputArray;
+	function deflate(byteString:string):Uint8Array {
+		return pako.deflateRaw(byteString, {"level": 9});
 	}
-	async function inflate(byteString:string):Promise<string> {
-		const outputStream = new Blob([byteString]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
-		let outputList:Uint8Array<ArrayBuffer>[] = [];
-		for await (const chunk of outputStream) {
-			outputList.push(chunk);
-		}
-		const outputArray = await new Blob(outputList).arrayBuffer();
-		return bufferDecoder.decode(outputArray);
+	function inflate(byteString:string):string {
+		return (pako.inflateRaw(byteString) as Uint8Array).toString();
 	}
 	function byteArrayToBase64(byteArray:Uint8Array):string {
 		// @ts-ignore base64 compat isn't recognized
@@ -78,7 +66,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	 * @param data All code information required for this function to run.
 	 * @returns The URL that links to a TIO instance with the given code.
 	 */
-	async function generateTIOLink():Promise<string> {
+	function generateTIOLink():string {
 		let stateString = languageId;
 		function saveData(data:string) {
 			stateString += fieldSeparator + textToByteString(data);
@@ -101,7 +89,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		/*var settings = getSettings();
 		if (settings != "/")
 			stateString += startOfSettings + settings.slice(1,-1);*/
-		const deflatedArray = await deflate(stateString);
+		const deflatedArray = deflate(stateString);
 		console.log(stateString);
 		return `https://tio.run/##${byteArrayToBase64(new Uint8Array(deflatedArray))}`;
 	}
@@ -132,7 +120,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		clua.selectionStart = newPos;
 		clua.selectionEnd = newPos;
 	});
-	$("#tio").on("click", async function(e) {
-		window.open(await generateTIOLink(), "_blank");
+	$("#tio").on("click", function(e) {
+		window.open(generateTIOLink(), "_blank");
 	});
 });
