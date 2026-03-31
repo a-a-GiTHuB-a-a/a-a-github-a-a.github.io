@@ -8,9 +8,10 @@
     "baseUrl": "./",
     "paths": {
       "paper": ["node_modules/paper/dist/paper-core.min.js"],
-      "regex": ["node_modules/regex/dist/esm/regex"]
+      "regex": ["node_modules/regex/dist/esm/regex"],
+      "pako": ["node_modules/pako/dist/pako.min.js"]
     },
-    "types": ["paper", "regex"]
+    "types": ["paper", "regex", "pako"]
   },
   "moduleResolution": "nodenext"
 }

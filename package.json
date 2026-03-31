@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@types/jquery": "^3.5.31",
+    "@types/pako": "^2.0.4",
     "ejs": "^3.1.10",
     "jquery": "^3.7.1",
+    "pako": "^2.1.0",
     "paper": "^0.12.18",
     "regex": "^5.1.1"
   },

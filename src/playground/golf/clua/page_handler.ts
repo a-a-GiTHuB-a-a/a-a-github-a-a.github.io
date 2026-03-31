@@ -1,4 +1,5 @@
 import * as code_handler from "./code_handler";
+import * as pako from "pako";
 
 $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	/*
@@ -59,8 +60,12 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		return bufferDecoder.decode(outputArray);
 	}
 	function byteArrayToBase64(byteArray:Uint8Array):string {
-		// @ts-ignore
+		// @ts-ignore base64 compat isn't recognized
 		return byteArray.toBase64().replace(/\+/g, "@").replace(/=+/, "");
+	}
+	function base64ToByteString(base64String:string):Uint8Array {
+		// @ts-ignore base64 compat isn't recognized
+		return Uint8Array.fromBase64(unescape(base64String).replace(/@|-/g, "+").replace(/_/g, "/"));
 	}
 	function textToByteString(string:string) {
 		return unescape(encodeURIComponent(string));
