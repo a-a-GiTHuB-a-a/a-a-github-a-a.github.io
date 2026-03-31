@@ -41,7 +41,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 			monad(iterable[i]);
 	}
 	async function deflate(byteString:string):Promise<ArrayBuffer> {
-		const outputStream = new Blob([byteString]).stream().pipeThrough(new CompressionStream("deflate"));
+		const outputStream = new Blob([byteString]).stream().pipeThrough(new CompressionStream("deflate-raw"));
 		let outputList:Uint8Array<ArrayBuffer>[] = [];
 		for await (const chunk of outputStream) {
 			outputList.push(chunk);
@@ -50,7 +50,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		return outputArray;
 	}
 	async function inflate(byteString:string):Promise<string> {
-		const outputStream = new Blob([byteString]).stream().pipeThrough(new DecompressionStream("deflate"));
+		const outputStream = new Blob([byteString]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
 		let outputList:Uint8Array<ArrayBuffer>[] = [];
 		for await (const chunk of outputStream) {
 			outputList.push(chunk);
