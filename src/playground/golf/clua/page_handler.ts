@@ -29,7 +29,6 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	/*
 		All of this code up to generatTIOLink is yoinked code from TIO itself
 	*/
-	const bufferEncoder = new TextEncoder();
 	const bufferDecoder = new TextDecoder();
 	const fieldSeparator = "\xff";
 	const startOfExtraFields = "\xfe";
@@ -37,10 +36,17 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	const languageId = "lua";
 
 	function deflate(byteString:string):Uint8Array {
-		return pako.deflateRaw(bufferEncoder.encode(byteString), {"level": 9});
+		return pako.deflateRaw(byteStringToByteArray(byteString), {"level": 9});
 	}
 	function inflate(byteString:Uint8Array):string {
 		return bufferDecoder.decode(pako.inflateRaw(byteString) as Uint8Array);
+	}
+	function byteStringToByteArray(byteString:string):Uint8Array {
+		let byteArray = new Uint8Array(byteString.length);
+		for(let index = 0; index < byteString.length; index++)
+			byteArray[index] = byteString.charCodeAt(index);
+		//byteArray.head = 0;
+		return byteArray;
 	}
 	function byteStringToBase64(byteString:string):string { //I hate you. So. Much. TIO why are you doing this to me.
 		return btoa(byteString).replace(/\+/g, "@").replace(/=+/, "");
