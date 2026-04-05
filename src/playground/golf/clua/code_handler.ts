@@ -20,10 +20,10 @@ export function count_bytes(compressed_code:string):number {
 		}
 	}
 	return s;
-}
+};
 export function count_chars(compressed_code:string):number {
 	return compressed_code.length;
-}
+};
 
 function unpack_symbols(code:string):string {
 	for (let [key, value] of Object.entries(simple_substitutions)) {
@@ -32,8 +32,17 @@ function unpack_symbols(code:string):string {
 	return code;
 }
 
-export function decompress(code:string):string {
-	let augmented_code = `S=setmetatable p=print s=string s.f=s.format t=table f=function(...) a=arg n=a.n x=a[1] y=a[2] z=a[3] X=a[n] Y=a[n-1] Z=a[n-2] ${code} end`;
-	let unpacked_code = unpack_symbols(augmented_code);
-	return unpacked_code;
-}
+export interface CodeObject {
+	header?: string;
+	code: string;
+	footer?: string;
+	input?: string;
+};
+export function decompress(code:string):CodeObject {
+	let unpacked_code = unpack_symbols(code);
+	return {
+		header: "S=setmetatable p=print s=string s.f=s.format t=table f=function(...) a=arg n=a.n x=a[1] y=a[2] z=a[3] X=a[n] Y=a[n-1] Z=a[n-2] ",
+		code: unpacked_code,
+		footer: "end",
+	};
+};

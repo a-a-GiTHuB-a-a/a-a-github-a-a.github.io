@@ -69,19 +69,22 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	 * @returns The URL that links to a TIO instance with the given code.
 	 */
 	function generateTIOLink():string {
+		const code_object = code_handler.decompress($("#clua").val() as string);
 		let stateString = languageId;
 		function saveData(data:string) {
 			stateString += fieldSeparator + textToByteString(data);
 		}
-		const saveTextArea = function(textArea:HTMLTextAreaElement) {
-			if (textArea.readOnly)
-				return;
-			saveData(textArea.value);
-		}
-		saveData(""); //no header
-		saveTextArea($("#lua")[0] as HTMLTextAreaElement);
-		saveData(""); //no footer (yet)
-		saveData(""); //I think this one's input?
+		let footer = code_object.footer + "\n\nlocal cases = ";
+		let cases = [];
+		$("#cases").children().each((_,el:HTMLElement) => {
+			cases.push(`{${$(el).children(".input").val()}, ${$(el).children(".output").val()}}`);
+		});
+		footer += `{${cases.join(",")}}\n\n`;
+		footer += "for _,c in ipairs(cases) do print(f(c[1]) == c[2]) end";
+		saveData(code_object.header);
+		saveData(code_object.code);
+		saveData(footer);
+		saveData(code_object.input);
 		/*iterate($("#interpreter > textarea, #interpreter > :not([data-mask]) textarea"), saveTextArea);
 		iterate($("#interpreter > [data-mask=false]"), function(element) {
 			if ($("textarea", element) === null)
@@ -100,13 +103,15 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		$("#chars").append($(`<button class = "symb">${char}</button>`));
 	}
 
-	$("#clua").on("input change", function(e) {
-		let code = (this as HTMLTextAreaElement).value;
+	$("#add-case").on("click", function() {
+		$("#cases").append(`<div class = "test-case"><textarea class = "code dynamic input"></textarea><div class = "to">⇒</div><textarea class = "code dynamic output"></textarea></div>`);
+	});
+
+	function updateLength() {
+		let code:string = $("#clua").val() as string;
 		$("#code-info").text(`${code_handler.count_chars(code)} characters, ${code_handler.count_bytes(code)} bytes`);
-	});
-	$("#transpile").on("click", function(e:JQuery.ClickEvent) {
-		$("#lua").val(code_handler.decompress($("#clua").val().toString()));
-	});
+	}
+	$("#clua").on("input change", updateLength);
 	$(".symb").on("click", function(e) {
 		let clua = document.getElementById("clua") as HTMLTextAreaElement;
 		let char = this.innerText;
@@ -122,6 +127,8 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		let newPos = start + char.length;
 		clua.selectionStart = newPos;
 		clua.selectionEnd = newPos;
+
+		updateLength();
 	});
 	$("#tio").on("click", function(e) {
 		window.open(generateTIOLink(), "_blank");
