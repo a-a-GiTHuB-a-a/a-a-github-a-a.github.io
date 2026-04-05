@@ -118,6 +118,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		let end = clua.selectionEnd;
 		let text = clua.value;
 
+		clua.focus();
 		clua.value = text.slice(0, start) + char + text.slice(end);
 
 		// Move cursor after inserted text
