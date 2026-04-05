@@ -29,7 +29,6 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	/*
 		All of this code up to generatTIOLink is yoinked code from TIO itself
 	*/
-	const bufferDecoder = new TextDecoder();
 	const fieldSeparator = "\xff";
 	const startOfExtraFields = "\xfe";
 	//const startOfSettings = "\xf5";
@@ -39,7 +38,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		return pako.deflateRaw(byteStringToByteArray(byteString), {"level": 9});
 	}
 	function inflate(byteString:Uint8Array):string {
-		return bufferDecoder.decode(pako.inflateRaw(byteString) as Uint8Array);
+		return byteArrayToByteString(pako.inflateRaw(byteString) as Uint8Array);
 	}
 	function byteStringToByteArray(byteString:string):Uint8Array {
 		let byteArray = new Uint8Array(byteString.length);
