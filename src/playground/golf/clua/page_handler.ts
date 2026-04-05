@@ -93,9 +93,6 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		if (settings != "/")
 			stateString += startOfSettings + settings.slice(1,-1);*/
 		const deflatedArray = deflate(stateString);
-		console.log(stateString);
-		console.log(deflatedArray);
-		console.log(inflate(deflatedArray));
 		return `https://tio.run/##${byteStringToBase64(byteArrayToByteString(deflatedArray))}`;
 	}
 
