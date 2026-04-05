@@ -42,13 +42,15 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	function inflate(byteString:Uint8Array):string {
 		return bufferDecoder.decode(pako.inflateRaw(byteString) as Uint8Array);
 	}
-	function byteArrayToBase64(byteArray:Uint8Array):string {
-		// @ts-ignore base64 compat isn't recognized
-		return byteArray.toBase64().replace(/\+/g, "@").replace(/=+/, "");
+	function byteStringToBase64(byteString:string):string { //I hate you. So. Much. TIO why are you doing this to me.
+		return btoa(byteString).replace(/\+/g, "@").replace(/=+/, "");
 	}
-	function base64ToByteString(base64String:string):Uint8Array {
-		// @ts-ignore base64 compat isn't recognized
-		return Uint8Array.fromBase64(unescape(base64String).replace(/@|-/g, "+").replace(/_/g, "/"));
+	function byteArrayToByteString(byteArray:Uint8Array):string {
+		let retval = "";
+		for (let byte of byteArray) {
+			retval += String.fromCharCode(byte);
+		}
+		return retval;
 	}
 	function textToByteString(string:string) {
 		return unescape(encodeURIComponent(string));
@@ -88,7 +90,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		console.log(stateString);
 		console.log(deflatedArray);
 		console.log(inflate(deflatedArray));
-		return `https://tio.run/##${byteArrayToBase64(new Uint8Array(deflatedArray))}`;
+		return `https://tio.run/##${byteStringToBase64(byteArrayToByteString(deflatedArray))}`;
 	}
 
 	for (let char in code_handler.simple_substitutions) {
