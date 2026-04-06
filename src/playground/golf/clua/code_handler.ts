@@ -1,6 +1,6 @@
 let simple_substitutions:Record<string, string> = {
 	"λ": " function ",
-	"¬": "not",
+	"¬": " not ",
 	"∧": " and ",
 	"∨": " or ",
 	"⟩": " end ",
