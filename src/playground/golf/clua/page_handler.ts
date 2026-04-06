@@ -4,12 +4,14 @@ import * as pako from "pako";
 $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	let url = new URL(location.toString());
 	let params = url.searchParams;
-	$("#clua").val(decodeURIComponent(params.get("code")));
-	const cases = JSON.parse(decodeURIComponent(params.get("cases")));
-	for (let [input, output] of cases) {
-		let this_case = addCase();
-		this_case.children(".input").val(input);
-		this_case.children(".output").val(output);
+	$("#clua").val(decodeURIComponent(params.get("code") ?? ""));
+	if (params.has("cases")) {
+		const cases = JSON.parse(decodeURIComponent(params.get("cases")));
+		for (let [input, output] of cases) {
+			let this_case = addCase();
+			this_case.children(".input").val(input);
+			this_case.children(".output").val(output);
+		}
 	}
 	$("#save").on("click", function() {
 		url.searchParams.set("code", $("#clua").val() as string);
