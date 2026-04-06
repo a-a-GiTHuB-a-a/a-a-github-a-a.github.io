@@ -72,7 +72,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 			stateString += fieldSeparator + textToByteString(data);
 		}
 		let footer = code_object.footer + "\n\nlocal cases = ";
-		let cases = [];
+		let cases:string[] = [];
 		$("#cases").children().each((_,el:HTMLElement) => {
 			cases.push(`{${$(el).children(".input").val()}, ${$(el).children(".output").val()}}`);
 		});
