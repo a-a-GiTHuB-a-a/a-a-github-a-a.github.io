@@ -96,8 +96,8 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		return `https://tio.run/##${byteStringToBase64(byteArrayToByteString(deflatedArray))}`;
 	}
 
-	for (let char in code_handler.simple_substitutions) {
-		$("#chars").append($(`<button class = "symb">${char}</button>`));
+	for (let [char,sub] of Object.entries(code_handler.simple_substitutions)) {
+		$("#chars").append($(`<button class = "symb" title = 'becomes "${sub}"'>${char}</button>`));
 	}
 
 	function addCase() {
