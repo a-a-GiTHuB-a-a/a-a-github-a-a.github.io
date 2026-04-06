@@ -8,6 +8,7 @@ body {
 }
 .dynamic {
 	background-color: #3f3f3f;
+	color: #ffffff;
 	resize: none;
 }
 #sources {
@@ -31,7 +32,6 @@ textarea {
 .codebox {
 	min-height: 200px;
 	width: 100%;
-	color: #ffffff;
 }
 #chars {
 	display: flex;
