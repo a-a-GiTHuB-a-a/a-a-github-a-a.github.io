@@ -78,10 +78,10 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		});
 		footer += `{${cases.join(",")}}\n\n`;
 		footer += "for _,c in ipairs(cases) do print(f(c[1]) == c[2]) end";
-		saveData(code_object.header);
-		saveData(code_object.code);
-		saveData(footer);
-		saveData(code_object.input);
+		saveData(code_object.header ?? "");
+		saveData(code_object.code ?? "");
+		saveData(footer ?? "");
+		saveData(code_object.input ?? "");
 		/*iterate($("#interpreter > textarea, #interpreter > :not([data-mask]) textarea"), saveTextArea);
 		iterate($("#interpreter > [data-mask=false]"), function(element) {
 			if ($("textarea", element) === null)
