@@ -101,7 +101,8 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	}
 
 	function addCase() {
-		return $(`<div class = "test-case"><textarea class = "code dynamic input"></textarea><div class = "to">⇒</div><textarea class = "code dynamic output"></textarea></div>`).appendTo($("#cases"));
+		let element = $(`<div class = "test-case"><textarea class = "code dynamic input"></textarea><div class = "to">⇒</div><textarea class = "code dynamic output"></textarea></div>`).appendTo($("#cases"));
+		return disableGrammarly(element);
 	}
 	$("#add-case").on("click", addCase);
 
