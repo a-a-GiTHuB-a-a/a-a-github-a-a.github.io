@@ -3,6 +3,7 @@ let simple_substitutions:Record<string, string> = {
 	"∧": " and ",
 	"∨": " or ",
 	"⟩": " end ",
+	"∀": " for",
 	"∈": " in ",
 	"⟨": " do ",
 	"…": " then ",
