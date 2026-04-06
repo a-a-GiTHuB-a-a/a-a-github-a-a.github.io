@@ -110,6 +110,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		let code:string = $("#clua").val() as string;
 		$("#code-info").text(`${code_handler.count_chars(code)} characters, ${code_handler.count_bytes(code)} bytes`);
 	}
+	updateLength();
 	$("#clua").on("input change", updateLength);
 	$(".symb").on("click", function(e) {
 		let clua = document.getElementById("clua") as HTMLTextAreaElement;
