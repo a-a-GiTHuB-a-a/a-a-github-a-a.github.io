@@ -48,7 +48,7 @@ export interface CodeObject {
 export function decompress(code:string):CodeObject {
 	let unpacked_code = unpack_symbols(code);
 	return {
-		header: `S=setmetatable p=print s=string s.f=s.format T=table f=function(t) if type(t)=="table" then n=#t x=t[1] y=t[2] z=t[3] X=t[n] Y=t[n-1] Z=t[n-2] end`,
+		header: `S=setmetatable p=print s=string s.f=s.find s.F=s.format T=table f=function(t) if type(t)=="table" then n=#t x=t[1] y=t[2] z=t[3] X=t[n] Y=t[n-1] Z=t[n-2] end`,
 		code: unpacked_code,
 		footer: "end",
 	};
