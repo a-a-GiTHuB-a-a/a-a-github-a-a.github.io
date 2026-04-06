@@ -2,32 +2,27 @@ import * as code_handler from "./code_handler";
 import * as pako from "pako";
 
 $(function() { //does nothing. i just like having it all bundled up and cozy <3
+	let url = new URL(location.toString());
+	let params = url.searchParams;
+	$("#clua").val(decodeURIComponent(params.get("code")));
+	const cases = JSON.parse(decodeURIComponent(params.get("cases")));
+	for (let [input, output] of cases) {
+		let this_case = addCase();
+		this_case.children(".input").val(input);
+		this_case.children(".output").val(output);
+	}
+	$("#save").on("click", function() {
+		url.searchParams.set("code", $("#clua").val() as string);
+
+		let cases = [];
+		$("#cases").children().each((_,el:HTMLElement) => {
+			cases.push([$(el).children(".input").val(), $(el).children(".output").val()]);
+		});
+		url.searchParams.set("cases", JSON.stringify(cases));
+		history.pushState({}, "", url); //mmm yes param 2 is "unused" what's even the point???
+	});
 	/*
-		function saveState(saveIfEmpty) {
-			if (!languageId)
-				return;
-			var stateString = languageId;
-			var saveTextArea = function(textArea) {
-				if (textArea.readOnly)
-					return;
-				stateString += fieldSeparator + textToByteString(textArea.value);
-			}
-			iterate($$("#interpreter > textarea, #interpreter > :not([data-mask]) textarea"), saveTextArea);
-			iterate($$("#interpreter > [data-mask=false]"), function(element) {
-				if ($("textarea", element) === null)
-					return;
-				stateString += startOfExtraFields + (element.dataset.if || element.dataset.ifNot);
-				iterate($$("textarea", element), saveTextArea);
-			});
-			var settings = getSettings();
-			if (settings != "/")
-				stateString += startOfSettings + settings.slice(1,-1);
-			if (saveIfEmpty || ! rEmptyStateString.test(stateString))
-				history.pushState({}, "", "##" + byteStringToBase64(byteArrayToByteString(deflate(stateString))));
-		}
-	*/
-	/*
-		All of this code up to generatTIOLink is yoinked code from TIO itself
+		All of this code up to generateTIOLink is yoinked code from TIO itself
 	*/
 	const fieldSeparator = "\xff";
 	const startOfExtraFields = "\xfe";
@@ -103,9 +98,10 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		$("#chars").append($(`<button class = "symb">${char}</button>`));
 	}
 
-	$("#add-case").on("click", function() {
-		$("#cases").append(`<div class = "test-case"><textarea class = "code dynamic input"></textarea><div class = "to">⇒</div><textarea class = "code dynamic output"></textarea></div>`);
-	});
+	function addCase() {
+		return $(`<div class = "test-case"><textarea class = "code dynamic input"></textarea><div class = "to">⇒</div><textarea class = "code dynamic output"></textarea></div>`).appendTo($("#cases"));
+	}
+	$("#add-case").on("click", addCase);
 
 	function updateLength() {
 		let code:string = $("#clua").val() as string;
