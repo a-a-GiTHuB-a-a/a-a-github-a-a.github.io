@@ -5,11 +5,10 @@
     "module": "ES2022",
     "target": "ES2022",
     "allowJs": true,
-    "baseUrl": "./",
     "paths": {
-      "paper": ["node_modules/paper/dist/paper-core.min.js"],
-      "regex": ["node_modules/regex/dist/esm/regex"],
-      "msgpack": ["node_modules/@msgpack/msgpack"]
+      "paper": ["./node_modules/paper/dist/paper-core.min.js"],
+      "regex": ["./node_modules/regex/dist/esm/regex"],
+      "msgpack": ["./node_modules/@msgpack/msgpack"]
     },
     "types": ["paper", "regex"]
   },
