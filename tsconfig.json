@@ -10,6 +10,7 @@
       "paper": ["node_modules/paper/dist/paper-core.min.js"],
       "regex": ["node_modules/regex/dist/esm/regex"],
       "pako": ["node_modules/pako/dist/pako.esm.mjs"],
+      "@msgpack/msgpack": ["node_modules/@msgpack/msgpack/mod.ts"],
       "@types/pako": ["node_modules/@types/pako/index.d.ts"]
     },
     "types": ["paper", "regex"/*, "pako"*/]

@@ -1,28 +1,65 @@
 import * as code_handler from "./code_handler";
 import * as pako from "pako";
+import * as msgpack from "node_modules/@msgpack/msgpack";
+import { fromUint8Array } from "node_modules/js-base64/base64";
 
 $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	let url = new URL(location.toString());
 	let params = url.searchParams;
 	$("#clua").val(decodeURIComponent(params.get("code") ?? ""));
 	if (params.has("cases")) {
-		const cases = JSON.parse(decodeURIComponent(params.get("cases")));
+		const cases = JSON.parse(decodeURIComponent(params.get("cases")!));
 		for (let [input, output] of cases) {
 			let this_case = addCase();
 			this_case.children(".input").val(input);
 			this_case.children(".output").val(output);
 		}
 	}
-	$("#save").on("click", function() {
+	function saveState() {
 		url.searchParams.set("code", $("#clua").val() as string);
 
-		let cases = [];
+		let cases:string[][] = [];
 		$("#cases").children().each((_,el:HTMLElement) => {
-			cases.push([$(el).children(".input").val(), $(el).children(".output").val()]);
+			cases.push([$(el).children(".input").val() as string, $(el).children(".output").val() as string]);
 		});
 		url.searchParams.set("cases", JSON.stringify(cases));
 		history.pushState({}, "", url); //mmm yes param 2 is "unused" what's even the point???
-	});
+	}
+	$("#save").on("click", saveState);
+	/**
+	 * This function generates a link to https://ato.pxeger.com/ based on the given code
+	 * @returns The ATO link with the given decompressed code.
+	 */
+	function generateATOLink():string {
+		const code_object = code_handler.decompress($("#clua").val() as string);
+		let footer = code_object.footer + "\n\nlocal cases = ";
+		let cases:string[] = [];
+		$("#cases").children().each((_,el:HTMLElement) => {
+			cases.push(`{${$(el).children(".input").val()}, ${$(el).children(".output").val()}}`);
+		});
+		footer += `{${cases.join(",")}}\n\n`;
+		footer += "for _,c in ipairs(cases) do print(f(c[1]) == c[2]) end";
+		
+		const dataToSquash:any[] = [
+			languageId,
+			[], //no options
+			code_object.header ?? "",
+			"utf-8",
+			code_object.code,
+			"utf-8",
+			footer,
+			"utf-8",
+			"", //who needs arguments
+			code_object.input ?? "",
+			"utf-8",
+		];
+		const squashed = msgpack.encode(dataToSquash);
+		const deflatedArray = pako.deflateRaw(squashed);
+		const b64 = fromUint8Array(deflatedArray, true); //true for URL-safe
+		let params = new URLSearchParams();
+		params.set("1", b64);
+		return `https://ato.pxeger.com/run?${params}`;
+	}
 	/*
 		All of this code up to generateTIOLink is yoinked code from TIO itself
 	*/
@@ -62,7 +99,6 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	}
 	/**
 	 * This function generates a link to TIO.run based on the given code. This function was taken from TIO itself.
-	 * @param data All code information required for this function to run.
 	 * @returns The URL that links to a TIO instance with the given code.
 	 */
 	function generateTIOLink():string {
@@ -130,7 +166,12 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 
 		updateLength();
 	});
+	$("#ato").on("click", function(e) {
+		saveState();
+		window.open(generateATOLink(), "_blank");
+	});
 	$("#tio").on("click", function(e) {
+		saveState();
 		window.open(generateTIOLink(), "_blank");
 	});
 });
