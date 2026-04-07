@@ -1,7 +1,7 @@
 import * as code_handler from "./code_handler";
 import * as pako from "pako";
-import * as msgpack from "ext/@msgpack/msgpack/dist.esm/index";
-import { fromUint8Array } from "ext/js-base64/base64";
+import * as msgpack from "ext/@msgpack/msgpack/mod";
+import { fromUint8Array } from "ext/js-base64/base64.mjs";
 
 $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	let url = new URL(location.toString());
