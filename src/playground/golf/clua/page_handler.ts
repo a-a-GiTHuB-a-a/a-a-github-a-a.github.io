@@ -1,6 +1,6 @@
 import * as code_handler from "./code_handler";
 import * as pako from "pako";
-import * as msgpack from "../../../../node_modules/@msgpack/msgpack";
+import * as msgpack from "msgpack";
 import { fromUint8Array } from "../../../../node_modules/js-base64/base64";
 
 $(function() { //does nothing. i just like having it all bundled up and cozy <3
