@@ -7,7 +7,8 @@
     "allowJs": true,
     "paths": {
       "paper": ["./node_modules/paper/dist/paper-core.min.js"],
-      "regex": ["./node_modules/regex/dist/esm/regex"]
+      "regex": ["./node_modules/regex/dist/esm/regex"],
+      "@msgpack/*": ["./node_modules/@msgpack/*"]
     },
     "types": ["paper", "regex"]
   },
