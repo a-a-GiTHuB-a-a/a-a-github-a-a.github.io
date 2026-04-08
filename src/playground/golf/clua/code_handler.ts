@@ -1,5 +1,5 @@
 let simple_substitutions:Record<string, string> = {
-	"λ": " function ",
+	"λ": " function(",
 	"¬": " not ",
 	"∧": " and ",
 	"∨": " or ",
