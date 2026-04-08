@@ -40,9 +40,9 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		footer += `{${cases.join(",")}}\n\n`;
 		footer += "for _,c in ipairs(cases) do print(f(c[1]) == c[2]) end";
 		
-		const dataToSquash:any[] = [
+		const dataToSquash:string[] = [
 			languageId,
-			[], //no options
+			"", //no options
 			code_object.header ?? "",
 			"utf-8",
 			code_object.code,
