@@ -3,17 +3,20 @@ let simple_substitutions:Record<string, string> = {
 	"¬": " not ",
 	"∧": " and ",
 	"∨": " or ",
-	"⟩": " end ",
 	"∀": " for ",
 	"…": " while ",
 	"∈": " in ",
 	"⟨": " do ",
 	"¿": " if ",
 	"ː": " then ",
+	"⟩": " end ",
 	"‥": " repeat ",
 	"¡": " until ",
 	"→": " return ",
 	"≡": " == ",
+	"≠": " ~= ",
+	"≥": " >= ",
+	"≤": " <= "
 };
 export {simple_substitutions};
 
