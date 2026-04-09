@@ -12,7 +12,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	try {
 		switch (params.get("v")) {
 			case "1":
-				$("#clua").val(decoder.decode(pako.inflateRaw(Base64.decode(params.get("code") ?? ""))));
+				$("#clua").val(decoder.decode(pako.inflateRaw(Base64.atob(params.get("code") ?? "")))); //apparently atob returns bytes…
 				if (params.has("cases")) {
 					const cases = JSON.parse(decodeURIComponent(params.get("cases")!));
 					for (let [input, output] of cases) {
