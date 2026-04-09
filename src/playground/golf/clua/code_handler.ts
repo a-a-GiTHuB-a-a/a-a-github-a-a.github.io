@@ -16,7 +16,8 @@ let simple_substitutions:Record<string, string> = {
 	"≡": " == ",
 	"≠": " ~= ",
 	"≥": " >= ",
-	"≤": " <= "
+	"≤": " <= ",
+	"⫽": " // ",
 };
 export {simple_substitutions};
 
