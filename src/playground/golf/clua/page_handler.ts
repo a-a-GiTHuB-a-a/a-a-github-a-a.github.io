@@ -35,7 +35,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	}
 	function saveState() {
 		url.searchParams.set("v", "1"); //current version
-		url.searchParams.set("code", toBase64(decoder.decode(pako.deflateRaw($("#clua").val() as string))));
+		url.searchParams.set("code", toBase64(decoder.decode(pako.deflateRaw($("#clua").val() as string)), true));
 
 		let cases:string[][] = [];
 		$("#cases").children().each((_,el:HTMLElement) => {
