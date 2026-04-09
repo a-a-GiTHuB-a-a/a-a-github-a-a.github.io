@@ -1,7 +1,7 @@
 import * as code_handler from "./code_handler";
 import * as pako from "pako";
 import * as msgpack from "../../../../node_modules/@msgpack/msgpack/dist.esm/index";
-import { toBase64, fromBase64, fromUint8Array } from "../../../../node_modules/js-base64/base64";
+import Base64 from "../../../../node_modules/js-base64/base64";
 
 $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	const encoder = new TextEncoder();
@@ -11,7 +11,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	let params = url.searchParams;
 	switch (params.get("v")) {
 		case "1":
-			$("#clua").val(decodeURIComponent(decoder.decode(pako.inflateRaw(fromBase64(params.get("code") ?? "")))));
+			$("#clua").val(decoder.decode(pako.inflateRaw(Base64.decode(params.get("code") ?? ""))));
 			if (params.has("cases")) {
 				const cases = JSON.parse(decodeURIComponent(params.get("cases")!));
 				for (let [input, output] of cases) {
@@ -35,7 +35,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	}
 	function saveState() {
 		url.searchParams.set("v", "1"); //current version
-		url.searchParams.set("code", toBase64(decoder.decode(pako.deflateRaw($("#clua").val() as string)), true));
+		url.searchParams.set("code", Base64.fromUint8Array(pako.deflateRaw($("#clua").val() as string), true));
 
 		let cases:string[][] = [];
 		$("#cases").children().each((_,el:HTMLElement) => {
@@ -74,7 +74,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		];
 		const squashed = msgpack.encode(dataToSquash);
 		const deflatedArray = pako.deflateRaw(squashed);
-		const b64 = fromUint8Array(deflatedArray, true); //true for URL-safe
+		const b64 = Base64.fromUint8Array(deflatedArray, true); //true for URL-safe
 		let params = new URLSearchParams();
 		params.set("1", b64);
 		return `https://ato.pxeger.com/run?${params}`;
