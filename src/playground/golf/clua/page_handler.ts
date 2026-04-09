@@ -23,7 +23,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 				}
 				break;
 			case null:
-				$("#clua").val(decodeURIComponent(params.get("code")!));
+				$("#clua").val(decodeURIComponent(params.get("code") ?? ""));
 				if (params.has("cases")) {
 					const cases = JSON.parse(decodeURIComponent(params.get("cases")!));
 					for (let [input, output] of cases) {
