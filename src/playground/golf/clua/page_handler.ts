@@ -12,7 +12,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	try {
 		switch (params.get("v")) {
 			case "1":
-				$("#clua").val(decoder.decode(pako.inflateRaw(Base64.toUint8Array(params.get("code") ?? ""))));
+				$("#clua").val(msgpack.decode(pako.inflateRaw(Base64.toUint8Array(params.get("code")!))) as string);
 				if (params.has("cases")) {
 					const cases = JSON.parse(decodeURIComponent(params.get("cases")!));
 					for (let [input, output] of cases) {
@@ -23,7 +23,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 				}
 				break;
 			case null:
-				$("#clua").val(decodeURIComponent(params.get("code") ?? ""));
+				$("#clua").val(decodeURIComponent(params.get("code")!));
 				if (params.has("cases")) {
 					const cases = JSON.parse(decodeURIComponent(params.get("cases")!));
 					for (let [input, output] of cases) {
@@ -40,7 +40,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	}
 	function saveState() {
 		url.searchParams.set("v", "1"); //current version
-		url.searchParams.set("code", Base64.fromUint8Array(pako.deflateRaw($("#clua").val() as string), true));
+		url.searchParams.set("code", Base64.fromUint8Array(pako.deflateRaw(msgpack.encode($("#clua").val() as string))/*, true*/));
 
 		let cases:string[][] = [];
 		$("#cases").children().each((_,el:HTMLElement) => {
