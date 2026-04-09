@@ -9,6 +9,8 @@ let simple_substitutions:Record<string, string> = {
 	"⟨": " do ",
 	"¿": " if ",
 	"ː": " then ",
+	"ʕ": " elseif ",
+	"ʔ": " else ",
 	"⟩": " end ",
 	"‥": " repeat ",
 	"¡": " until ",
