@@ -34,8 +34,9 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 				}
 				break;
 		}
-	} catch {
+	} catch (e) {
 		console.error("Loading saved code failed!");
+		console.trace(e);
 	}
 	function saveState() {
 		url.searchParams.set("v", "1"); //current version
