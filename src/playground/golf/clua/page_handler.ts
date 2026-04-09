@@ -1,22 +1,41 @@
 import * as code_handler from "./code_handler";
 import * as pako from "pako";
 import * as msgpack from "../../../../node_modules/@msgpack/msgpack/dist.esm/index";
-import { fromUint8Array } from "../../../../node_modules/js-base64/base64";
+import { toBase64, fromBase64, fromUint8Array } from "../../../../node_modules/js-base64/base64";
 
 $(function() { //does nothing. i just like having it all bundled up and cozy <3
+	const encoder = new TextEncoder();
+	const decoder = new TextDecoder();
+
 	let url = new URL(location.toString());
 	let params = url.searchParams;
-	$("#clua").val(decodeURIComponent(params.get("code") ?? ""));
-	if (params.has("cases")) {
-		const cases = JSON.parse(decodeURIComponent(params.get("cases")!));
-		for (let [input, output] of cases) {
-			let this_case = addCase();
-			this_case.children(".input").val(input);
-			this_case.children(".output").val(output);
-		}
+	switch (params.get("v")) {
+		case "1":
+			$("#clua").val(decodeURIComponent(decoder.decode(pako.inflateRaw(fromBase64(params.get("code") ?? "")))));
+			if (params.has("cases")) {
+				const cases = JSON.parse(decodeURIComponent(params.get("cases")!));
+				for (let [input, output] of cases) {
+					let this_case = addCase();
+					this_case.children(".input").val(input);
+					this_case.children(".output").val(output);
+				}
+			}
+			break;
+		case null:
+			$("#clua").val(decodeURIComponent(params.get("code") ?? ""));
+			if (params.has("cases")) {
+				const cases = JSON.parse(decodeURIComponent(params.get("cases")!));
+				for (let [input, output] of cases) {
+					let this_case = addCase();
+					this_case.children(".input").val(input);
+					this_case.children(".output").val(output);
+				}
+			}
+			break;
 	}
 	function saveState() {
-		url.searchParams.set("code", $("#clua").val() as string);
+		url.searchParams.set("v", "1"); //current version
+		url.searchParams.set("code", toBase64(decoder.decode(pako.deflateRaw($("#clua").val() as string))));
 
 		let cases:string[][] = [];
 		$("#cases").children().each((_,el:HTMLElement) => {
