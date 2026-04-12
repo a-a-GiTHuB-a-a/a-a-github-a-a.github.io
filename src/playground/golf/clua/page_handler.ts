@@ -11,7 +11,24 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	let params = url.searchParams;
 	try {
 		switch (params.get("v")) {
-			case "1":
+			case "2": {
+				let byted_string = msgpack.decode(pako.inflateRaw(Base64.toUint8Array(params.get("code")!))) as string;
+				let decoded_string = byted_string;
+				for (let symbol of code_handler.simple_substitutions) {
+					decoded_string = decoded_string.replace(symbol.bytechar, symbol.character);
+				}
+				$("#clua").val(decoded_string);
+				if (params.has("cases")) {
+					const cases = JSON.parse(decodeURIComponent(params.get("cases")!));
+					for (let [input, output] of cases) {
+						let this_case = addCase();
+						this_case.children(".input").val(input);
+						this_case.children(".output").val(output);
+					}
+				}
+				break;
+			}
+			case "1": {
 				$("#clua").val(msgpack.decode(pako.inflateRaw(Base64.toUint8Array(params.get("code")!))) as string);
 				if (params.has("cases")) {
 					const cases = JSON.parse(decodeURIComponent(params.get("cases")!));
@@ -22,7 +39,8 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 					}
 				}
 				break;
-			case null:
+			}
+			case null: {
 				$("#clua").val(decodeURIComponent(params.get("code") ?? ""));
 				if (params.has("cases")) {
 					const cases = JSON.parse(decodeURIComponent(params.get("cases")!));
@@ -33,11 +51,13 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 					}
 				}
 				break;
+			}
 		}
 	} catch (e) {
 		console.error("Loading saved code failed!");
 		console.trace(e);
 	}
+	updateLength();
 
 	let categoryColors:Record<code_handler.Category, string|undefined> = {
 		"none": undefined,
@@ -56,8 +76,12 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	}
 
 	function saveState() {
-		url.searchParams.set("v", "1"); //current version
-		url.searchParams.set("code", Base64.fromUint8Array(pako.deflateRaw(msgpack.encode($("#clua").val() as string))/*, true*/));
+		url.searchParams.set("v", "2"); //current version
+		let code = $("#clua").val() as string;
+		for (let symbol of code_handler.simple_substitutions) {
+			code = code.replace(symbol.character, symbol.bytechar);
+		}
+		url.searchParams.set("code", Base64.fromUint8Array(pako.deflateRaw(msgpack.encode(code))/*, true*/));
 
 		let cases:string[][] = [];
 		$("#cases").children().each((_,el:HTMLElement) => {
@@ -101,77 +125,6 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		params.set("1", b64);
 		return `https://ato.pxeger.com/run?${params}`;
 	}
-	/*
-		All of this code up to generateTIOLink is yoinked code from TIO itself
-	*/
-	const fieldSeparator = "\xff";
-	const startOfExtraFields = "\xfe";
-	//const startOfSettings = "\xf5";
-	const languageId = "lua";
-
-	function deflate(byteString:string):Uint8Array {
-		return pako.deflateRaw(byteStringToByteArray(byteString), {"level": 9});
-	}
-	function inflate(byteString:Uint8Array):string {
-		return byteArrayToByteString(pako.inflateRaw(byteString) as Uint8Array);
-	}
-	function byteStringToByteArray(byteString:string):Uint8Array {
-		let byteArray = new Uint8Array(byteString.length);
-		for(let index = 0; index < byteString.length; index++)
-			byteArray[index] = byteString.charCodeAt(index);
-		//byteArray.head = 0;
-		return byteArray;
-	}
-	function byteStringToBase64(byteString:string):string { //I hate you. So. Much. TIO why are you doing this to me.
-		return btoa(byteString).replace(/\+/g, "@").replace(/=+/, "");
-	}
-	function byteArrayToByteString(byteArray:Uint8Array):string {
-		let retval = "";
-		for (let byte of byteArray) {
-			retval += String.fromCharCode(byte);
-		}
-		return retval;
-	}
-	function textToByteString(string:string) {
-		return unescape(encodeURIComponent(string));
-	}
-	function byteStringToText(byteString:string) {
-		return decodeURIComponent(escape(byteString));
-	}
-	/**
-	 * This function generates a link to TIO.run based on the given code. This function was taken from TIO itself.
-	 * @returns The URL that links to a TIO instance with the given code.
-	 */
-	function generateTIOLink():string {
-		const code_object = code_handler.decompress($("#clua").val() as string);
-		let stateString = languageId;
-		function saveData(data:string) {
-			stateString += fieldSeparator + textToByteString(data);
-		}
-		let footer = code_object.footer + "\n\nlocal cases = ";
-		let cases:string[] = [];
-		$("#cases").children().each((_,el:HTMLElement) => {
-			cases.push(`{${$(el).children(".input").val()}, ${$(el).children(".output").val()}}`);
-		});
-		footer += `{${cases.join(",")}}\n\n`;
-		footer += "for _,c in ipairs(cases) do print(f(c[1]) == c[2]) end";
-		saveData(code_object.header ?? "");
-		saveData(code_object.code ?? "");
-		saveData(footer ?? "");
-		saveData(code_object.input ?? "");
-		/*iterate($("#interpreter > textarea, #interpreter > :not([data-mask]) textarea"), saveTextArea);
-		iterate($("#interpreter > [data-mask=false]"), function(element) {
-			if ($("textarea", element) === null)
-				return;
-			stateString += startOfExtraFields + (element.dataset.if || element.dataset.ifNot);
-			iterate($("textarea", element), saveTextArea);
-		});*/
-		/*var settings = getSettings();
-		if (settings != "/")
-			stateString += startOfSettings + settings.slice(1,-1);*/
-		const deflatedArray = deflate(stateString);
-		return `https://tio.run/##${byteStringToBase64(byteArrayToByteString(deflatedArray))}`;
-	}
 
 	function addCase() {
 		let element = $(`<div class = "test-case"><textarea class = "code dynamic input"></textarea><div class = "to">⇒</div><textarea class = "code dynamic output"></textarea></div>`).appendTo($("#cases"));
@@ -183,7 +136,6 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		let code:string = $("#clua").val() as string;
 		$("#code-info").text(`${code_handler.count_chars(code)} characters, ${code_handler.count_bytes(code)} bytes`);
 	}
-	updateLength();
 	$("#clua").on("input change", updateLength);
 	$(".symb").on("click", function(e) {
 		let clua = document.getElementById("clua") as HTMLTextAreaElement;
@@ -206,9 +158,5 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	$("#ato").on("click", function(e) {
 		saveState();
 		window.open(generateATOLink(), "_blank");
-	});
-	$("#tio").on("click", function(e) {
-		saveState();
-		window.open(generateTIOLink(), "_blank");
 	});
 });
