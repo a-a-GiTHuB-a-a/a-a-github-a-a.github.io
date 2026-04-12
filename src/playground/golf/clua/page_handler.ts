@@ -38,6 +38,23 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		console.error("Loading saved code failed!");
 		console.trace(e);
 	}
+
+	let categoryColors:Record<code_handler.Category, string|undefined> = {
+		"none": undefined,
+		"keyword": "red",
+		"operator": "yellow",
+		"function": "green",
+	};
+
+	for (let symb of code_handler.simple_substitutions) {
+		let button = $(`<button class = "symb" title = 'becomes "${symb.replacement}"'>${symb.character}</button>`)
+		let color = categoryColors[symb.category];
+		if (color) {
+			button.css("background-color", color);
+		}
+		$("#chars").append(button);
+	}
+
 	function saveState() {
 		url.searchParams.set("v", "1"); //current version
 		url.searchParams.set("code", Base64.fromUint8Array(pako.deflateRaw(msgpack.encode($("#clua").val() as string))/*, true*/));
@@ -154,10 +171,6 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 			stateString += startOfSettings + settings.slice(1,-1);*/
 		const deflatedArray = deflate(stateString);
 		return `https://tio.run/##${byteStringToBase64(byteArrayToByteString(deflatedArray))}`;
-	}
-
-	for (let [char,sub] of Object.entries(code_handler.simple_substitutions)) {
-		$("#chars").append($(`<button class = "symb" title = 'becomes "${sub}"'>${char}</button>`));
 	}
 
 	function addCase() {

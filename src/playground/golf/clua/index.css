@@ -40,7 +40,8 @@ textarea {
 }
 .symb {
 	box-sizing: border-box;
-	width: 50px;
+	width: 25px;
+	height: 25px;
 	border-radius: 10px;
 }
 #add-case {

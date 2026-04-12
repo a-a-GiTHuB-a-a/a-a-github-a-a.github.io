@@ -1,26 +1,47 @@
-let simple_substitutions:Record<string, string> = {
-	"λ": " function(",
-	"¬": " not ",
-	"∧": " and ",
-	"∨": " or ",
-	"∀": " for ",
-	"…": " while ",
-	"∈": " in ",
-	"⟨": " do ",
-	"¿": " if ",
-	"ː": " then ",
-	"ʕ": " elseif ",
-	"ʔ": " else ",
-	"⟩": " end ",
-	"‥": " repeat ",
-	"¡": " until ",
-	"→": " return ",
-	"≡": " == ",
-	"≠": " ~= ",
-	"≥": " >= ",
-	"≤": " <= ",
-	"⫽": " // ",
+export type Category = "none" | "keyword" | "operator" | "function";
+
+/**
+ * Represents a single-character symbol which is expanded at transpile-time.
+ */
+export interface Character {
+	character: string;
+	replacement: string;
+	category: Category;
 };
+
+export function symb(...args:[string,string,Category?]):Character {
+	return {
+		character: args[0],
+		replacement: args[1],
+		category: args[2] ?? "none",
+	};
+};
+
+let simple_substitutions:Character[] = [
+	symb("λ", " function(", "keyword"),
+	symb("¬", " not ", "keyword"),
+	symb("∧", " and ", "keyword"),
+	symb("∨", " or ", "keyword"),
+	symb("∀", " for ", "keyword"),
+	symb("…", " while ", "keyword"),
+	symb("∈", " in ", "keyword"),
+	symb("⟨", " do ", "keyword"),
+	symb("¿", " if ", "keyword"),
+	symb("ː", " then ", "keyword"),
+	symb("ʕ", " elseif ", "keyword"),
+	symb("ʔ", " else ", "keyword"),
+	symb("⟩", " end ", "keyword"),
+	symb("‥", " repeat ", "keyword"),
+	symb("¡", " until ", "keyword"),
+	symb("→", " return ", "keyword"),
+	symb("≡", " == ", "operator"),
+	symb("≠", " ~= ", "operator"),
+	symb("≥", " >= ", "operator"),
+	symb("≤", " <= ", "operator"),
+	symb("⫽", " // ", "operator"),
+	symb("Μ", " math.max(", "function"),
+	symb("µ", " math.min(", "function"),
+];
 export {simple_substitutions};
 
 export function count_bytes(compressed_code:string):number {
@@ -39,8 +60,8 @@ export function count_chars(compressed_code:string):number {
 };
 
 function unpack_symbols(code:string):string {
-	for (let [key, value] of Object.entries(simple_substitutions)) {
-		code = code.replaceAll(key, value);
+	for (let symbol of simple_substitutions) {
+		code = code.replaceAll(symbol.character, symbol.replacement);
 	}
 	return code;
 }
