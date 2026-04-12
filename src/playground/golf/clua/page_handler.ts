@@ -106,7 +106,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		footer += "for _,c in ipairs(cases) do print(f(c[1]) == c[2]) end";
 		
 		const dataToSquash:string[] = [
-			languageId,
+			"lua",
 			"", //no options
 			code_object.header ?? "",
 			"utf-8",
