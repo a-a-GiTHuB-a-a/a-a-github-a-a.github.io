@@ -41,9 +41,9 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 
 	let categoryColors:Record<code_handler.Category, string|undefined> = {
 		"none": undefined,
-		"keyword": "red",
-		"operator": "yellow",
-		"function": "green",
+		"keyword": "#ff7f7f",
+		"operator": "#ffff7f",
+		"function": "#7fff7f",
 	};
 
 	for (let symb of code_handler.simple_substitutions) {
