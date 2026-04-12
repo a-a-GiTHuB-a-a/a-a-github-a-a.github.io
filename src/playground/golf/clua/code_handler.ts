@@ -7,40 +7,44 @@ export interface Character {
 	character: string;
 	replacement: string;
 	category: Category;
+	byte: number;
+	bytechar: string;
 };
 
-export function symb(...args:[string,string,Category?]):Character {
+export function symb(...args:[string,string,Category,number]):Character {
 	return {
 		character: args[0],
 		replacement: args[1],
-		category: args[2] ?? "none",
+		category: args[2],
+		byte: args[3],
+		bytechar: new TextDecoder().decode(new Uint8Array([args[3]])),
 	};
 };
 
 let simple_substitutions:Character[] = [
-	symb("λ", " function(", "keyword"),
-	symb("¬", " not ", "keyword"),
-	symb("∧", " and ", "keyword"),
-	symb("∨", " or ", "keyword"),
-	symb("∀", " for ", "keyword"),
-	symb("…", " while ", "keyword"),
-	symb("∈", " in ", "keyword"),
-	symb("⟨", " do ", "keyword"),
-	symb("¿", " if ", "keyword"),
-	symb("ː", " then ", "keyword"),
-	symb("ʕ", " elseif ", "keyword"),
-	symb("ʔ", " else ", "keyword"),
-	symb("⟩", " end ", "keyword"),
-	symb("‥", " repeat ", "keyword"),
-	symb("¡", " until ", "keyword"),
-	symb("→", " return ", "keyword"),
-	symb("≡", " == ", "operator"),
-	symb("≠", " ~= ", "operator"),
-	symb("≥", " >= ", "operator"),
-	symb("≤", " <= ", "operator"),
-	symb("⫽", " // ", "operator"),
-	symb("Μ", " math.max(", "function"),
-	symb("µ", " math.min(", "function"),
+	symb("λ", " function(", "keyword",   1),
+	symb("¬", " not ",      "keyword",   2),
+	symb("∧", " and ",      "keyword",   3),
+	symb("∨", " or ",       "keyword",   4),
+	symb("∀", " for ",      "keyword",   5),
+	symb("…", " while ",    "keyword",   6),
+	symb("∈", " in ",       "keyword",   7),
+	symb("⟨", " do ",       "keyword",   8),
+	symb("¿", " if ",       "keyword",  11),
+	symb("ː", " then ",     "keyword",  12),
+	symb("ʕ", " elseif ",   "keyword",  13),
+	symb("ʔ", " else ",     "keyword",  14),
+	symb("⟩", " end ",      "keyword",  15),
+	symb("‥", " repeat ",   "keyword",  16),
+	symb("¡", " until ",    "keyword",  17),
+	symb("→", " return ",   "keyword",  18),
+	symb("≡", " == ",       "operator", 19),
+	symb("≠", " ~= ",       "operator", 20),
+	symb("≥", " >= ",       "operator", 21),
+	symb("≤", " <= ",       "operator", 22),
+	symb("⫽", " // ",       "operator", 23),
+	symb("Μ", " math.max(", "function", 24),
+	symb("µ", " math.min(", "function", 25),
 ];
 export {simple_substitutions};
 
