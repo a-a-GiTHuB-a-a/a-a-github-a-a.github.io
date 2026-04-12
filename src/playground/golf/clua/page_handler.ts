@@ -47,7 +47,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	};
 
 	for (let symb of code_handler.simple_substitutions) {
-		let button = $(`<button class = "symb" title = 'becomes "${symb.replacement}"'>${symb.character}</button>`)
+		let button = $(`<button class = "symb" title = 'becomes "${symb.replacement}"'>${symb.character}</button>`);
 		let color = categoryColors[symb.category];
 		if (color) {
 			button.css("background-color", color);
