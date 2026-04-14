@@ -38,7 +38,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 				if (params.has("custom-test")) {
 					$("#custom-test-footer").val(msgpack.decode(pako.inflateRaw(Base64.toUint8Array(params.get("custom-test")!))) as string);
 				}
-				if (params.has("custom-test-enabled")) {
+				if (params.get("custom-test-enabled") === "1") {
 					$("#custom-test-toggle").prop("checked", true);
 				}
 				break;
@@ -91,6 +91,8 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 
 		if ($("#custom-test-toggle").prop("checked")) {
 			url.searchParams.set("custom-test-enabled", "1");
+		} else {
+			url.searchParams.set("custom-test-enabled", "");
 		}
 
 		let test:string = $("#custom-test-footer").val() as string;
