@@ -36,7 +36,7 @@ export function symb(...args:[string,string,Category,number?]):Character {
 
 let simple_substitutions:Character[] = [
 	symb("λ", " function(",       "keyword"),
-	symb("¬", " not ",            "keyword"), //U+00AC, but keep this for backwards compat
+	symb("¬", " not ",            "keyword",   172), //U+00AC
 	symb("∧", " and ",            "keyword"),
 	symb("∨", " or ",             "keyword"),
 	symb("∀", " for ",            "keyword"),
@@ -49,7 +49,7 @@ let simple_substitutions:Character[] = [
 	symb("ʔ", " else ",           "keyword"),
 	symb("⟩", " end ",            "keyword"),
 	symb("‥", " repeat ",         "keyword"),
-	symb("¡", " until ",          "keyword"), //U+00A1, but keep this for backwards compat
+	symb("¡", " until ",          "keyword",   161), //U+00A1
 	symb("→", " return ",         "keyword"),
 	symb("≡", " == ",             "operator"),
 	symb("≠", " ~= ",             "operator"),
@@ -61,13 +61,15 @@ let simple_substitutions:Character[] = [
 	symb("｜", " math.abs(",       "function"),
 	symb("⌊", " math.floor(",     "function"),
 	symb("⌈", " math.ceil(",      "function"),
+	symb("π", " math.pi ",        "function"),
+	symb("π", " math.pi ",        "function"),
 ];
 export {simple_substitutions};
 
 export function count_bytes(compressed_code:string):number {
 	let s = 0;
 	for (let char of compressed_code) {
-		if (Object.keys(simple_substitutions).some(k => char === k)) {
+		if (simple_substitutions.some(s => char === s.character)) {
 			s++;
 		} else {
 			s += new Blob([char]).size;
