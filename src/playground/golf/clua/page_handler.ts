@@ -168,7 +168,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 
 		updateLength();
 	});
-	$("#custom-test-toggle").on("change", function() {
+	function toggle_custom_testcase(this:HTMLElement) {
 		if ($(this).prop("checked")) {
 			$("#custom-test-on").show();
 			$("#custom-test-off").hide();
@@ -176,7 +176,8 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 			$("#custom-test-on").hide();
 			$("#custom-test-off").show();
 		}
-	});
+	}
+	$("#custom-test-toggle").on("change", toggle_custom_testcase); toggle_custom_testcase.call($("#custom-test-toggle")[0]);
 	$("#ato").on("click", function(e) {
 		saveState();
 		window.open(generateATOLink(), "_blank");
