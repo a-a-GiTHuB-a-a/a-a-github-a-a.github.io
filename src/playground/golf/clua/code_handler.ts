@@ -62,7 +62,6 @@ let simple_substitutions:Character[] = [
 	symb("⌊", " math.floor(",     "function"),
 	symb("⌈", " math.ceil(",      "function"),
 	symb("π", " math.pi ",        "function"),
-	symb("π", " math.pi ",        "function"),
 ];
 export {simple_substitutions};
 
