@@ -170,11 +170,11 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	});
 	function toggle_custom_testcase(this:HTMLElement) {
 		if ($(this).prop("checked")) {
-			$("#custom-test-on").show();
-			$("#custom-test-off").hide();
+			$(".custom-test-on").show();
+			$(".custom-test-off").hide();
 		} else {
-			$("#custom-test-on").hide();
-			$("#custom-test-off").show();
+			$(".custom-test-on").hide();
+			$(".custom-test-off").show();
 		}
 	}
 	$("#custom-test-toggle").on("change", toggle_custom_testcase); toggle_custom_testcase.call($("#custom-test-toggle")[0]);
