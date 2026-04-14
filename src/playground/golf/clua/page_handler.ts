@@ -13,10 +13,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		switch (params.get("v")) {
 			case "2": {
 				let byted_string = msgpack.decode(pako.inflateRaw(Base64.toUint8Array(params.get("code")!))) as string;
-				let decoded_string = byted_string;
-				for (let symbol of code_handler.simple_substitutions) {
-					decoded_string = decoded_string.replace(symbol.bytechar, symbol.character);
-				}
+				let decoded_string = code_handler.decode_sbcs(byted_string);
 				$("#clua").val(decoded_string);
 				if (params.has("cases")) {
 					const cases = JSON.parse(decodeURIComponent(params.get("cases")!));
@@ -78,9 +75,6 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	function saveState() {
 		url.searchParams.set("v", "1"); //current version
 		let code = $("#clua").val() as string;
-		/*for (let symbol of code_handler.simple_substitutions) {
-			code = code.replace(symbol.character, symbol.bytechar);
-		}*/
 		url.searchParams.set("code", Base64.fromUint8Array(pako.deflateRaw(msgpack.encode(code))/*, true*/));
 
 		let cases:string[][] = [];

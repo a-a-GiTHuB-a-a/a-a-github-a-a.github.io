@@ -11,40 +11,56 @@ export interface Character {
 	bytechar: string;
 };
 
-export function symb(...args:[string,string,Category,number]):Character {
+let free_bytes:number[] = [];
+for (let i = 0; i <= 31; i++) {
+	free_bytes.push(i);
+}
+free_bytes = free_bytes.filter((v)=>![9.10].includes(v));
+
+export function symb(...args:[string,string,Category,number?]):Character {
+	let [character, replacement, category, byte] = args;
+	if (typeof byte === "undefined") {
+		byte = free_bytes.shift();
+		if (byte === undefined) {
+			throw new Error("Out of usable bytes! Try to find more unused/pointless ones or trim down useless symbols.");
+		}
+	}
 	return {
-		character: args[0],
-		replacement: args[1],
-		category: args[2],
-		byte: args[3],
-		bytechar: new TextDecoder().decode(new Uint8Array([args[3]])),
+		character,
+		replacement,
+		category,
+		byte,
+		bytechar: new TextDecoder().decode(new Uint8Array([byte])),
 	};
 };
 
 let simple_substitutions:Character[] = [
-	symb("λ", " function(", "keyword",   1),
-	symb("¬", " not ",      "keyword",   2),
-	symb("∧", " and ",      "keyword",   3),
-	symb("∨", " or ",       "keyword",   4),
-	symb("∀", " for ",      "keyword",   5),
-	symb("…", " while ",    "keyword",   6),
-	symb("∈", " in ",       "keyword",   7),
-	symb("⟨", " do ",       "keyword",   8),
-	symb("¿", " if ",       "keyword",  11),
-	symb("ː", " then ",     "keyword",  12),
-	symb("ʕ", " elseif ",   "keyword",  13),
-	symb("ʔ", " else ",     "keyword",  14),
-	symb("⟩", " end ",      "keyword",  15),
-	symb("‥", " repeat ",   "keyword",  16),
-	symb("¡", " until ",    "keyword",  17),
-	symb("→", " return ",   "keyword",  18),
-	symb("≡", " == ",       "operator", 19),
-	symb("≠", " ~= ",       "operator", 20),
-	symb("≥", " >= ",       "operator", 21),
-	symb("≤", " <= ",       "operator", 22),
-	symb("⫽", " // ",       "operator", 23),
-	symb("Μ", " math.max(", "function", 24),
-	symb("µ", " math.min(", "function", 25),
+	symb("λ", " function(",       "keyword"),
+	symb("¬", " not ",            "keyword"), //U+00AC, but keep this for backwards compat
+	symb("∧", " and ",            "keyword"),
+	symb("∨", " or ",             "keyword"),
+	symb("∀", " for ",            "keyword"),
+	symb("…", " while ",          "keyword"),
+	symb("∈", " in ",             "keyword"),
+	symb("⟨", " do ",             "keyword"),
+	symb("¿", " if ",             "keyword"),
+	symb("ː", " then ",           "keyword"),
+	symb("ʕ", " elseif ",         "keyword"),
+	symb("ʔ", " else ",           "keyword"),
+	symb("⟩", " end ",            "keyword"),
+	symb("‥", " repeat ",         "keyword"),
+	symb("¡", " until ",          "keyword"), //U+00A1, but keep this for backwards compat
+	symb("→", " return ",         "keyword"),
+	symb("≡", " == ",             "operator"),
+	symb("≠", " ~= ",             "operator"),
+	symb("≥", " >= ",             "operator"),
+	symb("≤", " <= ",             "operator"),
+	symb("⫽", " // ",             "operator"),
+	symb("Μ", " math.max(",       "function"),
+	symb("µ", " math.min(",       "function"),
+	symb("｜", " math.abs(",       "function"),
+	symb("⌊", " math.floor(",     "function"),
+	symb("⌈", " math.ceil(",      "function"),
 ];
 export {simple_substitutions};
 
@@ -62,6 +78,20 @@ export function count_bytes(compressed_code:string):number {
 export function count_chars(compressed_code:string):number {
 	return compressed_code.length;
 };
+
+export function encode_sbcs(visual_code:string):string {
+	for (let symbol of simple_substitutions) {
+		visual_code = visual_code.replace(symbol.character, symbol.bytechar);
+	}
+	return visual_code;
+}
+export function decode_sbcs(byted_code:string):string {
+	let decoded_string = byted_code;
+	for (let symbol of simple_substitutions) {
+		decoded_string = decoded_string.replace(symbol.bytechar, symbol.character);
+	}
+	return decoded_string;
+}
 
 function unpack_symbols(code:string):string {
 	for (let symbol of simple_substitutions) {
