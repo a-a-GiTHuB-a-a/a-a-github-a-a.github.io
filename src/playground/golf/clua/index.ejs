@@ -11,7 +11,11 @@
 				<div id = "code-info"></div>
 			</div>
 		</div>
-		<div class = "source" id = "test-cases">
+		<input type = "checkbox" id = "custom-test-toggle"/><label for = "custom-test-toggle">Add Custom Test Footer</label>
+		<div class = "source custom-test-on" id = "test-cases">
+			<textarea class = "code dynamic codebox" id = "custom-test-footer"></textarea>
+		</div>
+		<div class = "source custom-test-off" id = "test-cases">
 			<button id = "add-case" class = "btn">+</button>
 			<div id = "cases">
 				<!-- test cases go here -->

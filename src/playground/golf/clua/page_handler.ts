@@ -35,6 +35,12 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 						this_case.children(".output").val(output);
 					}
 				}
+				if (params.has("custom-test")) {
+					$("#custom-test-footer").val(msgpack.decode(pako.inflateRaw(Base64.toUint8Array(params.get("custom-test")!))) as string);
+				}
+				if (params.has("custom-test-enabled")) {
+					$("#custom-test-toggle").prop("checked", true);
+				}
 				break;
 			}
 			case null: {
@@ -82,6 +88,13 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 			cases.push([$(el).children(".input").val() as string, $(el).children(".output").val() as string]);
 		});
 		url.searchParams.set("cases", JSON.stringify(cases));
+
+		if ($("#custom-test-toggle").prop("checked")) {
+			url.searchParams.set("custom-test-enabled", "1");
+		}
+
+		let test:string = $("#custom-test-footer").val() as string;
+		url.searchParams.set("custom-test", Base64.fromUint8Array(pako.deflateRaw(msgpack.encode(test))));
 		history.pushState({}, "", url); //mmm yes param 2 is "unused" what's even the point???
 	}
 	$("#save").on("click", saveState);
@@ -91,14 +104,20 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	 */
 	function generateATOLink():string {
 		const code_object = code_handler.decompress($("#clua").val() as string);
-		let footer = code_object.footer + "\n\nlocal cases = ";
-		let cases:string[] = [];
-		$("#cases").children().each((_,el:HTMLElement) => {
-			cases.push(`{${$(el).children(".input").val()}, ${$(el).children(".output").val()}}`);
-		});
-		footer += `{${cases.join(",")}}\n\n`;
-		footer += "for _,c in ipairs(cases) do print(f(c[1]) == c[2]) end";
+		let footer:string = code_object.footer ?? "";
 		
+		if ($("#custom-test-toggle").prop("checked")) {
+			footer += $("#custom-test-footer").val() as string;
+		} else {
+			footer += "\n\nlocal cases = ";
+			let cases:string[] = [];
+			$("#cases").children().each((_,el:HTMLElement) => {
+				cases.push(`{${$(el).children(".input").val()}, ${$(el).children(".output").val()}}`);
+			});
+			footer += `{${cases.join(",")}}\n\n`;
+			footer += "for _,c in ipairs(cases) do print(f(c[1]) == c[2]) end";
+		}
+
 		const dataToSquash:string[] = [
 			"lua",
 			"", //no options
@@ -148,6 +167,15 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		clua.selectionEnd = newPos;
 
 		updateLength();
+	});
+	$("#custom-test-toggle").on("change", function() {
+		if ($(this).prop("checked")) {
+			$("#custom-test-on").show();
+			$("#custom-test-off").hide();
+		} else {
+			$("#custom-test-on").hide();
+			$("#custom-test-off").show();
+		}
 	});
 	$("#ato").on("click", function(e) {
 		saveState();
