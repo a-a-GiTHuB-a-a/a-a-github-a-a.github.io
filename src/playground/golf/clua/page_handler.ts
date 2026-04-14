@@ -117,7 +117,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 				cases.push(`{${$(el).children(".input").val()}, ${$(el).children(".output").val()}}`);
 			});
 			footer += `{${cases.join(",")}}\n\n`;
-			footer += `for i,c in ipairs(cases) do print("Case %d: f(%s) == %s -> %s":format(i, prettify(c[1]), prettify(c[2]), prettify(f(c[1]) == c[2]))) end`;
+			footer += `for i,c in ipairs(cases) do print(("Case %d: f(%s) == %s -> %s"):format(i, prettify(c[1]), prettify(c[2]), prettify(f(c[1]) == c[2]))) end`;
 		}
 
 		const dataToSquash:string[] = [
