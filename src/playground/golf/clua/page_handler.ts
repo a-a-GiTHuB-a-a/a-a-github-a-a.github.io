@@ -76,11 +76,11 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	}
 
 	function saveState() {
-		url.searchParams.set("v", "2"); //current version
+		url.searchParams.set("v", "1"); //current version
 		let code = $("#clua").val() as string;
-		for (let symbol of code_handler.simple_substitutions) {
+		/*for (let symbol of code_handler.simple_substitutions) {
 			code = code.replace(symbol.character, symbol.bytechar);
-		}
+		}*/
 		url.searchParams.set("code", Base64.fromUint8Array(pako.deflateRaw(msgpack.encode(code))/*, true*/));
 
 		let cases:string[][] = [];
