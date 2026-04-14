@@ -11,7 +11,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 	let params = url.searchParams;
 	try {
 		switch (params.get("v")) {
-			case "2": {
+			/*case "2": {
 				let byted_string = msgpack.decode(pako.inflateRaw(Base64.toUint8Array(params.get("code")!))) as string;
 				let decoded_string = code_handler.decode_sbcs(byted_string);
 				$("#clua").val(decoded_string);
@@ -24,7 +24,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 					}
 				}
 				break;
-			}
+			}*/
 			case "1": {
 				$("#clua").val(msgpack.decode(pako.inflateRaw(Base64.toUint8Array(params.get("code")!))) as string);
 				if (params.has("cases")) {
