@@ -111,7 +111,7 @@ export interface CodeObject {
 export function decompress(code:string):CodeObject {
 	let unpacked_code = unpack_symbols(code);
 	return {
-		header: `S=setmetatable p=print s=string s.f=s.find s.F=s.format T=table\nfunction prettify(item) if type(item)=="string" then return item elseif type(item)=="number" or type(item)=="boolean" then return tostring(item) elseif type(item)=="table" then newtable = {} for k,v in ipairs(item) do newtable[k] = prettify(item[k]) end return ("{%s}"):format(T.join(newtable, ",")) end end\n\nf=function(t) if type(t)=="table" then n=#t x=t[1] y=t[2] z=t[3] X=t[n] Y=t[n-1] Z=t[n-2] elseif type(t)=="string" then n=#t end`,
+		header: `S=setmetatable p=print s=string s.f=s.find s.F=s.format T=table\nfunction prettify(item) if type(item)=="string" then return item elseif type(item)=="number" or type(item)=="boolean" then return tostring(item) elseif type(item)=="table" then newtable = {} for k,v in ipairs(item) do newtable[k] = prettify(item[k]) end return ("{%s}"):format(T.concat(newtable, ",")) end end\n\nf=function(t) if type(t)=="table" then n=#t x=t[1] y=t[2] z=t[3] X=t[n] Y=t[n-1] Z=t[n-2] elseif type(t)=="string" then n=#t end`,
 		code: unpacked_code,
 		footer: "end\n",
 	};
