@@ -111,7 +111,7 @@ $(function() { //does nothing. i just like having it all bundled up and cozy <3
 		if ($("#custom-test-toggle").prop("checked")) {
 			footer += $("#custom-test-footer").val() as string;
 		} else {
-			footer += "\n\nlocal cases = ";
+			footer += "\nlocal cases = ";
 			let cases:string[] = [];
 			$("#cases").children().each((_,el:HTMLElement) => {
 				cases.push(`{${$(el).children(".input").val()}, ${$(el).children(".output").val()}}`);
