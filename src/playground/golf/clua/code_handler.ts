@@ -35,6 +35,7 @@ export function symb(...args:[string,string,Category,number?]):Character {
 };
 
 let simple_substitutions:Character[] = [
+	symb("ℓ", " local ",          "keyword"),
 	symb("λ", " function(",       "keyword"),
 	symb("¬", " not ",            "keyword",   172), //U+00AC
 	symb("∧", " and ",            "keyword"),
