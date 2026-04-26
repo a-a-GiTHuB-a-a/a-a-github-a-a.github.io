@@ -88,387 +88,387 @@
 		"symbol": "Ti"
 	},
 	{
-		"name": "",
-		"symbol": ""
+		"name": "Vanadium",
+		"symbol": "V"
 	},
 	{
-		"name": "",
-		"symbol": ""
+		"name": "Chromium",
+		"symbol": "Cr"
 	},
 	{
-		"name": "",
-		"symbol": ""
+		"name": "Manganese",
+		"symbol": "Mn"
 	},
 	{
-		"name": "",
-		"symbol": ""
+		"name": "Iron",
+		"symbol": "Fe"
 	},
 	{
-		"name": "",
-		"symbol": ""
+		"name": "Cobalt",
+		"symbol": "Co"
 	},
 	{
-		"name": "",
-		"symbol": ""
+		"name": "Nickel",
+		"symbol": "Ni"
 	},
 	{
-		"name": "",
-		"symbol": ""
+		"name": "Copper",
+		"symbol": "Cu"
 	},
 	{
-		"name": "",
-		"symbol": ""
+		"name": "Zinc",
+		"symbol": "Zn"
 	},
 	{
-		"name": "",
-		"symbol": ""
+		"name": "Gallium",
+		"symbol": "Ga"
 	},
 	{
-		"name": "",
-		"symbol": ""
+		"name": "Germanium",
+		"symbol": "Ge"
 	},
 	{
-		"name": "",
-		"symbol": ""
+		"name": "Arsenic",
+		"symbol": "As"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Se"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Br"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Kr"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Rb"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Sr"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Y"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Zr"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Nb"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Mo"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Tc"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Ru"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Rh"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Pd"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Ag"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Cd"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "In"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Sn"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Sb"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Te"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "I"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Xe"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Cs"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Ba"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "La"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Ce"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Pr"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Nd"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Pm"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Sm"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Eu"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Gd"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Tb"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Dy"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Ho"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Er"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Tm"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Yb"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Lu"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Hf"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Ta"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "W"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Re"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Os"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Ir"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Pt"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Au"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Hg"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Tl"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Pb"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Bi"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Po"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "At"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Rn"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Fr"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Ra"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Ac"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Th"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Pa"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "U"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Np"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Pu"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Am"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Cm"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Bk"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Cf"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Es"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Fm"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Md"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "No"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Lr"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Rf"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Db"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Sg"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Bh"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Hs"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Mt"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Ds"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Rg"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Cn"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Nh"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Fl"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Mc"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Lv"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Ts"
 	},
 	{
 		"name": "",
-		"symbol": ""
+		"symbol": "Og"
 	}
 ]
