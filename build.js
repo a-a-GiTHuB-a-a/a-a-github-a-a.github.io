@@ -1,3 +1,4 @@
+const fs = require("node:fs");
 const fsPromises = require("node:fs/promises");
 const path = require("node:path");
 const ejs = require("ejs");
@@ -56,8 +57,12 @@ async function process_file(file_path, opts) {
 		case ".ts":
 		case ".tsx":
 		case ".jsx":
-		case ".json":
 			break;
+		case ".json": {
+			if (fs.existsSync(source_path.replace(".json", ".ejs"))) break;
+			await fsPromises.copyFile(source_path, build_path);
+			break;
+		}
 		default: {
 			await fsPromises.copyFile(source_path, build_path);
 			break;
