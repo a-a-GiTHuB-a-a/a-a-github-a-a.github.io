@@ -1,0 +1,474 @@
+[
+	{
+		"name": "Hydrogen",
+		"symbol": "H"
+	},
+	{
+		"name": "Helium",
+		"symbol": "He"
+	},
+	{
+		"name": "Lithium",
+		"symbol": "Li"
+	},
+	{
+		"name": "Beryllium",
+		"symbol": "Be"
+	},
+	{
+		"name": "Boron",
+		"symbol": "B"
+	},
+	{
+		"name": "Carbon",
+		"symbol": "C"
+	},
+	{
+		"name": "Nitrogen",
+		"symbol": "N"
+	},
+	{
+		"name": "Oxygen",
+		"symbol": "O"
+	},
+	{
+		"name": "Fluorine",
+		"symbol": "F"
+	},
+	{
+		"name": "Neon",
+		"symbol": "Ne"
+	},
+	{
+		"name": "Sodium",
+		"symbol": "Na"
+	},
+	{
+		"name": "Magnesium",
+		"symbol": "Mg"
+	},
+	{
+		"name": "Aluminium",
+		"symbol": "Al"
+	},
+	{
+		"name": "Silicon",
+		"symbol": "Si"
+	},
+	{
+		"name": "Phosphorus",
+		"symbol": "P"
+	},
+	{
+		"name": "Sulfur",
+		"symbol": "S"
+	},
+	{
+		"name": "Chlorine",
+		"symbol": "Cl"
+	},
+	{
+		"name": "Argon",
+		"symbol": "Ar"
+	},
+	{
+		"name": "Potassium",
+		"symbol": "K"
+	},
+	{
+		"name": "Calcium",
+		"symbol": "Ca"
+	},
+	{
+		"name": "Scandium",
+		"symbol": "Sc"
+	},
+	{
+		"name": "Titanium",
+		"symbol": "Ti"
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	},
+	{
+		"name": "",
+		"symbol": ""
+	}
+]
