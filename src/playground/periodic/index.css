@@ -8,3 +8,6 @@
 	box-sizing: border-box;
 	border: 5px solid black;
 }
+.element > .name {
+	font-size: 8pt;
+}

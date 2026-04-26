@@ -32,8 +32,10 @@ $(function() { //keepin it warm for winter <3
 				let element = periodicData[atomicNumber-1];
 				let {name, symbol} = element;
 				let elementElement = $(`<div class = "element">
-					<div class = "symbol">${symbol}</div>
+					<data class = "index" value = "${atomicNumber}">${atomicNumber}</data>
+					<abbr class = "symbol">${symbol}</abbr>
 					<div class = "name">${name}</div>
+					<!-- add atomic mass -->
 				</div>`);
 				elementElement.css("grid-area", `${period} / ${absoluteColumnNumber + 1} / span 1 / span 1`);
 				elementElement.appendTo($("#table"));
