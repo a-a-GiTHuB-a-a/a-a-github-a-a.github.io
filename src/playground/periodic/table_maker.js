@@ -35,7 +35,7 @@ $(function() { //keepin it warm for winter <3
 					<div class = "symbol">${symbol}</div>
 					<div class = "name">${name}</div>
 				</div>`);
-				elementElement.css("grid-area", `${absoluteColumnNumber + 1} / ${period} / span 1 / span 1`);
+				elementElement.css("grid-area", `${period} / ${absoluteColumnNumber + 1} / span 1 / span 1`);
 				elementElement.appendTo($("#table"));
 				atomicNumber++;
 			});
