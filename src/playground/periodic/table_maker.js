@@ -21,18 +21,19 @@ $(function() { //keepin it warm for winter <3
 		[0, 1, 2, ...range(-29, -1)], //we don't segregate in this table…if you're on a phone, DEAL WITH IT
 		[0, 1, 2, ...range(-29, -1)],
 	];
+	$("#table").css("grid-template-columns", `repeat(${width}, 1fr)`);
 
 	$.getJSON("table.json").done(function(periodicData) {
 		let atomicNumber = 1;
 		periods.forEach((periodArray, rowNumber) => {
 			periodArray.forEach((columnNumber) => {
 				const period = rowNumber + 1;
-				let absoluteColumnNumber = columnNumber + 32*(columnNumber < 0);
+				let absoluteColumnNumber = columnNumber + width*(columnNumber < 0);
 				let element = periodicData[atomicNumber-1];
-				let {elementName, elementSymbol} = element;
+				let {name, symbol} = element;
 				let elementElement = $(`<div class = "element">
-					<div class = "symbol">${elementSymbol}</div>
-					<div class = "name">${elementName}</div>
+					<div class = "symbol">${symbol}</div>
+					<div class = "name">${name}</div>
 				</div>`);
 				elementElement.css("grid-area", `${rowNumber} / ${absoluteColumnNumber} / span 1 / span 1`);
 				elementElement.appendTo($("#table"));
