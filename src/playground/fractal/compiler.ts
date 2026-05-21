@@ -95,13 +95,13 @@ function Parse(expr:string):AST.Expression {
 					((token.priority === last.priority) && token.assoc)
 				)
 			) {
-				output.push(ops.pop());
+				output.push(ops.pop()!); //safe because we specifically check for `ops.length`
 			}
 			if ((token.name === ")")) {
 				if (ops[ops.length - 1].name !== "(") throw new FracSyntaxError(null, char, "mismatched parentheses");
 				ops.pop();
 				if (ops[ops.length - 1].constructor.name === "SpecialFunction") {
-					output.push(ops.pop());
+					output.push(ops.pop()!); //again safe because we know the object exists
 				}
 			} else if ((token.name === ",")) {
 				//idk man
@@ -144,6 +144,9 @@ function Parse(expr:string):AST.Expression {
 			}
 			let b = stacc.pop();
 			let a = stacc.pop();
+			if (a === undefined || b === undefined) {
+				throw new FracSyntaxError(null, null, "wtf are you adding");
+			}
 			stacc.push(new AST.BinaryExpr(value, a, b));
 		} else if (value instanceof AST.SpecialFunction) {
 			let func = new AST.FunctionExpr(value);

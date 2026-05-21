@@ -9,13 +9,14 @@ paper.setup($("canvas#content")[0] as HTMLCanvasElement);
 const tool = new paper.Tool();
 tool.activate();
 const origin = new paper.Point(0, 0);
+const defaultStrokeWidth = 1;
 
 type StyleConfig = Partial<Omit<paper.Style, "view">>;
 
 let current_fractal = Compile("Line 1");
 let current_config:StyleConfig = {
 	strokeColor: new paper.Color(0xbf, 0x7f, 0xff),
-	strokeWidth: 1
+	strokeWidth: defaultStrokeWidth,
 };
 let current_path;
 
@@ -167,6 +168,7 @@ function draw_recurse(fractal:Fractal, config:StyleConfig):paper.CompoundPath {
 					let newLine = anchors.find((v) => v.id.evaluate(visible_context) === value)?.line;
 					if (newLine === undefined) {
 						console.log(`No anchor with id ${value} found; refusing to warp`);
+						break;
 					}
 					index = newLine;
 					break;
@@ -237,12 +239,14 @@ $("#zoom_out").on("click", function(e:JQuery.ClickEvent) {
 	paper.view.scale(1/scaleFactor);
 });
 
-$("#fracfile").on("change", function(this:HTMLInputElement) {
-	const file = this.files[0];
-	file.text().then((data:string) => {
-		current_fractal = Compile(data);
-		redraw();
-	});
+$("#fracfile").on("change", function(this:HTMLElement) {
+	const file = (this as HTMLInputElement).files?.[0];
+	if (file) {
+		file.text().then((data:string) => {
+			current_fractal = Compile(data);
+			redraw();
+		});
+	}
 });
 
 /**
@@ -253,25 +257,27 @@ $("#fracfile").on("change", function(this:HTMLInputElement) {
 function isNumeric(str:string):boolean {
 	return !isNaN(+str) && !isNaN(parseFloat(str));
 }
-$("#style").on("submit", function(this:HTMLFormElement, e:JQuery.SubmitEvent) {
+$("#style").on("submit", function(this:HTMLElement, e:JQuery.SubmitEvent) {
 	e.preventDefault();
 	e.stopPropagation();
 	let old_config:StyleConfig = {...current_config};
 	let stroke_width_input:JQuery<HTMLInputElement> = $("#width") as JQuery<HTMLInputElement>;
-	if (!isNumeric(stroke_width_input.val())) {
+	let width:string = stroke_width_input.val() ?? (current_config.strokeWidth ?? defaultStrokeWidth).toString();
+	if (!isNumeric(width)) {
 		stroke_width_input.trigger("invalid");
 		return true;
 	}
-	current_config.strokeWidth = +stroke_width_input.val();
-	if (!Object.keys(old_config).map((k:keyof StyleConfig) => old_config[k] === current_config[k]).reduce((a,b)=>a&&b,true)) {
+	current_config.strokeWidth = +width;
+	if (!Object.keys(old_config).map((k:string) => old_config[k as keyof StyleConfig] === current_config[k as keyof StyleConfig]).reduce((a,b)=>a&&b,true)) {
 		redraw();
 	} 
 	return false;
 });
-$(".examplefile").on("click", function(this:HTMLLinkElement, e:JQuery.ClickEvent) {
+$(".examplefile").on("click", function(this:HTMLElement, e:JQuery.ClickEvent) {
+	let link = this as HTMLLinkElement;
 	e.preventDefault();
 	e.stopPropagation();
-	$.ajax(this.href, {
+	$.ajax(link.href, {
 		dataType: "text",
 		async: false,
 		success(data) {
